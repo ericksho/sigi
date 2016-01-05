@@ -22,6 +22,12 @@ class Other
     private $id;
 
     /**
+    * @OneToOne(targetEntity="User", inversedBy="other")
+    * @JoinColumn(name="user_id", referencedColumnName="id")
+    */
+    private $user;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)

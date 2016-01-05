@@ -29,6 +29,20 @@ class Notification
     private $message;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="sender_id", type="integer")
+     */
+    private $sender_id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="reciever_id", type="integer")
+     */
+    private $reciever_id;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="timestamp", type="datetime")
@@ -68,6 +82,54 @@ class Notification
     public function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * Set sender_id
+     *
+     * @param integer $sender_id
+     *
+     * @return Notification
+     */
+    public function setSenderId($sender_id)
+    {
+        $this->sender_id = $sender_id;
+
+        return $this;
+    }
+
+    /**
+     * Get sender_id
+     *
+     * @return string
+     */
+    public function getSenderId()
+    {
+        return $this->sender_id;
+    }
+
+    /**
+     * Set reciever_id
+     *
+     * @param integer $reciever_id
+     *
+     * @return Notification
+     */
+    public function setRecieverId($reciever_id)
+    {
+        $this->reciever_id = $reciever_id;
+
+        return $this;
+    }
+
+    /**
+     * Get reciever_id
+     *
+     * @return string
+     */
+    public function getRecieverId()
+    {
+        return $this->reciever_id;
     }
 
     /**

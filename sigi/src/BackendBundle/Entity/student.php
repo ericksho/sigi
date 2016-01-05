@@ -5,12 +5,12 @@ namespace BackendBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * student
+ * Student
  *
- * @ORM\Table(name="student")
- * @ORM\Entity(repositoryClass="BackendBundle\Repository\studentRepository")
+ * @ORM\Table(name="Student")
+ * @ORM\Entity(repositoryClass="BackendBundle\Repository\StudentRepository")
  */
-class student
+class Student
 {
     /**
      * @var int
@@ -22,6 +22,12 @@ class student
     private $id;
 
     /**
+    * @OneToOne(targetEntity="User", inversedBy="student")
+    * @JoinColumn(name="user_id", referencedColumnName="id")
+    */
+    private $user;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="uc", type="boolean")
@@ -31,9 +37,9 @@ class student
     /**
      * @var int
      *
-     * @ORM\Column(name="student_number", type="integer", unique=true)
+     * @ORM\Column(name="Student_number", type="integer", unique=true)
      */
-    private $studentNumber;
+    private $StudentNumber;
 
     /**
      * @var string
@@ -65,7 +71,7 @@ class student
      *
      * @param boolean $uc
      *
-     * @return student
+     * @return Student
      */
     public function setUc($uc)
     {
@@ -85,27 +91,27 @@ class student
     }
 
     /**
-     * Set studentNumber
+     * Set StudentNumber
      *
-     * @param integer $studentNumber
+     * @param integer $StudentNumber
      *
-     * @return student
+     * @return Student
      */
-    public function setStudentNumber($studentNumber)
+    public function setStudentNumber($StudentNumber)
     {
-        $this->studentNumber = $studentNumber;
+        $this->StudentNumber = $StudentNumber;
 
         return $this;
     }
 
     /**
-     * Get studentNumber
+     * Get StudentNumber
      *
      * @return int
      */
     public function getStudentNumber()
     {
-        return $this->studentNumber;
+        return $this->StudentNumber;
     }
 
     /**
@@ -113,7 +119,7 @@ class student
      *
      * @param string $specialty
      *
-     * @return student
+     * @return Student
      */
     public function setSpecialty($specialty)
     {
@@ -137,7 +143,7 @@ class student
      *
      * @param string $faculty
      *
-     * @return student
+     * @return Student
      */
     public function setFaculty($faculty)
     {

@@ -22,6 +22,21 @@ class User
     private $id;
 
     /**
+    * @OneToOne(targetEntity="Mentor", mappedBy="user")
+    */
+    private $mentor;
+
+    /**
+    * @OneToOne(targetEntity="Other", mappedBy="user")
+    */
+    private $other;
+
+    /**
+    * @OneToOne(targetEntity="Student", mappedBy="user")
+    */
+    private $student;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="user_type", type="integer")

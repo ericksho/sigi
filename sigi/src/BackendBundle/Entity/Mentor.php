@@ -22,6 +22,12 @@ class Mentor
     private $id;
 
     /**
+    * @OneToOne(targetEntity="User", inversedBy="mentor")
+    * @JoinColumn(name="user_id", referencedColumnName="id")
+    */
+    private $user;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="uc", type="boolean")
