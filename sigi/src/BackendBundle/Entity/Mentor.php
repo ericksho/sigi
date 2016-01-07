@@ -34,6 +34,11 @@ class Mentor
      */
     private $uc;
 
+    /**
+     * @ManyToOne(targetEntity="Department")
+     * @JoinColumn(name="department_id", referencedColumnName="id")
+     */
+    private $department;
 
     /**
      * Get id

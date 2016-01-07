@@ -29,18 +29,16 @@ class Notification
     private $message;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="sender_id", type="integer")
+     * @ManyToOne(targetEntity="User", inversedBy="sender")
+     * @JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $sender_id;
+    private $sender;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="reciever_id", type="integer")
+     * @ManyToOne(targetEntity="User", inversedBy="reciever")
+     * @JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $reciever_id;
+    private $reciever;
 
     /**
      * @var \DateTime

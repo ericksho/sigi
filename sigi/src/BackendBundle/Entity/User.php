@@ -37,6 +37,20 @@ class User
     private $student;
 
     /**
+     * @OneToMany(targetEntity="Notification", mappedBy="sender")
+     */
+    private $sendedNotifications;
+
+    /**
+     * @OneToMany(targetEntity="Notification", mappedBy="reciever")
+     */
+    private $recievedNotifications;
+
+    public function __construct() {
+        $this->features = new ArrayCollection();
+    }
+
+    /**
      * @var int
      *
      * @ORM\Column(name="user_type", type="integer")
