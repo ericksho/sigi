@@ -41,6 +41,51 @@ class Mentor
     private $department;
 
     /**
+     * @OneToMany(targetEntity="Keyword", mappedBy="mentor")
+     */
+    private $mentorKeywords;
+
+    /**
+     * @OneToMany(targetEntity="OportunityResearch", mappedBy="mainMentor")
+     */
+    private $oportunitiesAsMain;
+
+    /**
+     * @OneToMany(targetEntity="OportunityResearch", mappedBy="secondaryMentor")
+     */
+    private $oportunitiesAsSecondary;
+
+    /**
+     * @OneToMany(targetEntity="OportunityResearch", mappedBy="thertiaryMentor")
+     */
+    private $oportunitiesAsThertiary;
+
+    /**
+     * @OneToMany(targetEntity="Research", mappedBy="mainMentor")
+     */
+    private $researchAsMain;
+
+    /**
+     * @OneToMany(targetEntity="Research", mappedBy="secondaryMentor")
+     */
+    private $researchAsSecondary;
+
+    /**
+     * @OneToMany(targetEntity="Research", mappedBy="thertiaryMentor")
+     */
+    private $researchAsThertiary;
+
+    public function __construct() {
+        $this->mentorKeywords = new ArrayCollection();
+        $this->oportunitiesAsMain = new ArrayCollection();
+        $this->oportunitiesAsSecondary = new ArrayCollection();
+        $this->oportunitiesAsThertiary = new ArrayCollection();
+        $this->researchAsMain = new ArrayCollection();
+        $this->researchAsSecondary = new ArrayCollection();
+        $this->researchAsThertiary = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return int

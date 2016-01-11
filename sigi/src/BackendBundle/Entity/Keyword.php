@@ -5,12 +5,12 @@ namespace BackendBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Keywords
+ * Keyword
  *
- * @ORM\Table(name="keywords")
- * @ORM\Entity(repositoryClass="BackendBundle\Repository\KeywordsRepository")
+ * @ORM\Table(name="keyword")
+ * @ORM\Entity(repositoryClass="BackendBundle\Repository\KeywordRepository")
  */
-class Keywords
+class Keyword
 {
     /**
      * @var int
@@ -28,6 +28,17 @@ class Keywords
      */
     private $keyword;
 
+    /**
+     * @ManyToOne(targetEntity="Mentor", inversedBy="mentorKeywords")
+     * @JoinColumn(name="mentor_id", referencedColumnName="id")
+     */
+    private $mentor;
+
+    /**
+     * @ManyToOne(targetEntity="OportunityResearch", inversedBy="oportunityKeywords")
+     * @JoinColumn(name="oportunityResearch_id", referencedColumnName="id")
+     */
+    private $oportynityResearch;
 
     /**
      * Get id

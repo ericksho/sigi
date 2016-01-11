@@ -63,6 +63,32 @@ class OportunityResearch
      */
     private $publish;
 
+    /**
+     * @OneToMany(targetEntity="Keyword", mappedBy="oportunityResearch")
+     */
+    private $oportunityKeywords;
+
+    public function __construct() {
+        $this->oportunityKeywords = new ArrayCollection();
+    }
+
+    /**
+     * @ManyToOne(targetEntity="Mentor", inversedBy="oportunitiesAsMain")
+     * @JoinColumn(name="mentor_id", referencedColumnName="id")
+     */
+    private $mainMentor;
+
+    /**
+     * @ManyToOne(targetEntity="Mentor", inversedBy="oportunitiesAsSecondary")
+     * @JoinColumn(name="mentor_id", referencedColumnName="id")
+     */
+    private $secondaryMentor;
+
+    /**
+     * @ManyToOne(targetEntity="Mentor", inversedBy="oportunitiesAsThertiary")
+     * @JoinColumn(name="mentor_id", referencedColumnName="id")
+     */
+    private $thertiaryMentor;
 
     /**
      * Get id
