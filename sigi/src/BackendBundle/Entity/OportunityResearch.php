@@ -64,23 +64,23 @@ class OportunityResearch
     private $publish;
 
     /**
-     * @OneToOne(targetEntity="Research", inversedBy="research")
-     * @JoinColumn(name="research_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Research", inversedBy="research")
+     * @ORM\JoinColumn(name="research_id", referencedColumnName="id")
      */
     private $research;
 
     /**
-     * @OneToMany(targetEntity="Application", mappedBy="oportunityResearch")
+     * @ORM\OneToMany(targetEntity="Application", mappedBy="oportunityResearch")
      */
     private $applications;
 
     /**
-     * @OneToMany(targetEntity="Keyword", mappedBy="oportunityResearch")
+     * @ORM\OneToMany(targetEntity="Keyword", mappedBy="oportunityResearch")
      */
     private $oportunityKeywords;
 
     /**
-     * @OneToMany(targetEntity="Requirement", mappedBy="oportunityResearch")
+     * @ORM\OneToMany(targetEntity="Requirement", mappedBy="oportunityResearch")
      */
     private $requirements;
 
@@ -91,20 +91,20 @@ class OportunityResearch
     }
 
     /**
-     * @ManyToOne(targetEntity="Mentor", inversedBy="oportunitiesAsMain")
-     * @JoinColumn(name="mainMentor_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Mentor", inversedBy="oportunitiesAsMain")
+     * @ORM\JoinColumn(name="mainMentor_id", referencedColumnName="id")
      */
     private $mainMentor;
 
     /**
-     * @ManyToOne(targetEntity="Mentor", inversedBy="oportunitiesAsSecondary")
-     * @JoinColumn(name="secondaryMentor_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Mentor", inversedBy="oportunitiesAsSecondary")
+     * @ORM\JoinColumn(name="secondaryMentor_id", referencedColumnName="id")
      */
     private $secondaryMentor;
 
     /**
-     * @ManyToOne(targetEntity="Mentor", inversedBy="oportunitiesAsThertiary")
-     * @JoinColumn(name="thertiaryMentor_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Mentor", inversedBy="oportunitiesAsThertiary")
+     * @ORM\JoinColumn(name="thertiaryMentor_id", referencedColumnName="id")
      */
     private $thertiaryMentor;
 

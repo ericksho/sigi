@@ -43,31 +43,31 @@ class Research
     private $creationDate;
 
     /**
-     * @ManyToOne(targetEntity="Mentor", inversedBy="researchAsMain")
-     * @JoinColumn(name="mainMentor_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Mentor", inversedBy="researchAsMain")
+     * @ORM\JoinColumn(name="mainMentor_id", referencedColumnName="id")
      */
     private $mainMentor;
 
     /**
-     * @ManyToOne(targetEntity="Mentor", inversedBy="researchAsSecondary")
-     * @JoinColumn(name="secondaryMentor_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Mentor", inversedBy="researchAsSecondary")
+     * @ORM\JoinColumn(name="secondaryMentor_id", referencedColumnName="id")
      */
     private $secondaryMentor;
 
     /**
-     * @ManyToOne(targetEntity="Mentor", inversedBy="researchAsThertiary")
-     * @JoinColumn(name="thertiaryMentor_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Mentor", inversedBy="researchAsThertiary")
+     * @ORM\JoinColumn(name="thertiaryMentor_id", referencedColumnName="id")
      */
     private $thertiaryMentor;
 
     /**
-     * @ManyToOne(targetEntity="Student", inversedBy="researches")
-     * @JoinColumn(name="student_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Student", inversedBy="researches")
+     * @ORM\JoinColumn(name="student_id", referencedColumnName="id")
      */
     private $student;
 
     /**
-     * @OneToOne(targetEntity="OportunityResearch", mappedBy="research")
+     * @ORM\OneToOne(targetEntity="OportunityResearch", mappedBy="research")
      */
     private $oportunityResearch;
 

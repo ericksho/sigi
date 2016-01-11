@@ -43,8 +43,8 @@ class Requirement
     private $function;
 
     /**
-     * @ManyToOne(targetEntity="OportunityResearch", inversedBy="requirements")
-     * @JoinColumn(name="oportunityResearch_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="OportunityResearch", inversedBy="requirements")
+     * @ORM\JoinColumn(name="oportunityResearch_id", referencedColumnName="id")
      */
     private $oportunityResearch;
 

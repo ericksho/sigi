@@ -29,14 +29,14 @@ class Notification
     private $message;
 
     /**
-     * @ManyToOne(targetEntity="User", inversedBy="sender")
-     * @JoinColumn(name="sender_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="sender")
+     * @ORM\JoinColumn(name="sender_id", referencedColumnName="id")
      */
     private $sender;
 
     /**
-     * @ManyToOne(targetEntity="User", inversedBy="reciever")
-     * @JoinColumn(name="reciever_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="reciever")
+     * @ORM\JoinColumn(name="reciever_id", referencedColumnName="id")
      */
     private $reciever;
 

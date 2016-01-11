@@ -22,27 +22,27 @@ class User
     private $id;
 
     /**
-    * @OneToOne(targetEntity="Mentor", mappedBy="user")
+    * @ORM\OneToOne(targetEntity="Mentor", mappedBy="user")
     */
     private $mentor;
 
     /**
-    * @OneToOne(targetEntity="Other", mappedBy="user")
+    * @ORM\OneToOne(targetEntity="Other", mappedBy="user")
     */
     private $other;
 
     /**
-    * @OneToOne(targetEntity="Student", mappedBy="user")
+    * @ORM\OneToOne(targetEntity="Student", mappedBy="user")
     */
     private $student;
 
     /**
-     * @OneToMany(targetEntity="Notification", mappedBy="sender")
+     * @ORM\OneToMany(targetEntity="Notification", mappedBy="sender")
      */
     private $sendedNotifications;
 
     /**
-     * @OneToMany(targetEntity="Notification", mappedBy="reciever")
+     * @ORM\OneToMany(targetEntity="Notification", mappedBy="reciever")
      */
     private $recievedNotifications;
 

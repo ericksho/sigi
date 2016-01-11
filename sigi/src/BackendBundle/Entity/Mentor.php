@@ -22,8 +22,8 @@ class Mentor
     private $id;
 
     /**
-    * @OneToOne(targetEntity="User", inversedBy="mentor")
-    * @JoinColumn(name="user_id", referencedColumnName="id")
+    * @ORM\OneToOne(targetEntity="User", inversedBy="mentor")
+    * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
     */
     private $user;
 
@@ -35,43 +35,43 @@ class Mentor
     private $uc;
 
     /**
-     * @ManyToOne(targetEntity="Department")
-     * @JoinColumn(name="department_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Department")
+     * @ORM\JoinColumn(name="department_id", referencedColumnName="id")
      */
     private $department;
 
     /**
-     * @OneToMany(targetEntity="Keyword", mappedBy="mentor")
+     * @ORM\OneToMany(targetEntity="Keyword", mappedBy="mentor")
      */
     private $mentorKeywords;
 
     /**
-     * @OneToMany(targetEntity="OportunityResearch", mappedBy="mainMentor")
+     * @ORM\OneToMany(targetEntity="OportunityResearch", mappedBy="mainMentor")
      */
     private $oportunitiesAsMain;
 
     /**
-     * @OneToMany(targetEntity="OportunityResearch", mappedBy="secondaryMentor")
+     * @ORM\OneToMany(targetEntity="OportunityResearch", mappedBy="secondaryMentor")
      */
     private $oportunitiesAsSecondary;
 
     /**
-     * @OneToMany(targetEntity="OportunityResearch", mappedBy="thertiaryMentor")
+     * @ORM\OneToMany(targetEntity="OportunityResearch", mappedBy="thertiaryMentor")
      */
     private $oportunitiesAsThertiary;
 
     /**
-     * @OneToMany(targetEntity="Research", mappedBy="mainMentor")
+     * @ORM\OneToMany(targetEntity="Research", mappedBy="mainMentor")
      */
     private $researchAsMain;
 
     /**
-     * @OneToMany(targetEntity="Research", mappedBy="secondaryMentor")
+     * @ORM\OneToMany(targetEntity="Research", mappedBy="secondaryMentor")
      */
     private $researchAsSecondary;
 
     /**
-     * @OneToMany(targetEntity="Research", mappedBy="thertiaryMentor")
+     * @ORM\OneToMany(targetEntity="Research", mappedBy="thertiaryMentor")
      */
     private $researchAsThertiary;
 

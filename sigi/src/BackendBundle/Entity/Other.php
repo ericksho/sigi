@@ -22,8 +22,8 @@ class Other
     private $id;
 
     /**
-    * @OneToOne(targetEntity="User", inversedBy="other")
-    * @JoinColumn(name="user_id", referencedColumnName="id")
+    * @ORM\OneToOne(targetEntity="User", inversedBy="other")
+    * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
     */
     private $user;
 

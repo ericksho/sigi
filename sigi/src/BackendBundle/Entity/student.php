@@ -22,8 +22,8 @@ class Student
     private $id;
 
     /**
-    * @OneToOne(targetEntity="User", inversedBy="student")
-    * @JoinColumn(name="user_id", referencedColumnName="id")
+    * @ORM\OneToOne(targetEntity="User", inversedBy="student")
+    * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
     */
     private $user;
 
@@ -56,12 +56,12 @@ class Student
     private $faculty;
 
     /**
-     * @OneToMany(targetEntity="Application", mappedBy="student")
+     * @ORM\OneToMany(targetEntity="Application", mappedBy="student")
      */
     private $applications;
 
     /**
-     * @OneToMany(targetEntity="Research", mappedBy="student")
+     * @ORM\OneToMany(targetEntity="Research", mappedBy="student")
      */
     private $researches;
 

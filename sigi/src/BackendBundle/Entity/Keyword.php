@@ -29,14 +29,14 @@ class Keyword
     private $keyword;
 
     /**
-     * @ManyToOne(targetEntity="Mentor", inversedBy="mentorKeywords")
-     * @JoinColumn(name="mentor_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Mentor", inversedBy="mentorKeywords")
+     * @ORM\JoinColumn(name="mentor_id", referencedColumnName="id")
      */
     private $mentor;
 
     /**
-     * @ManyToOne(targetEntity="OportunityResearch", inversedBy="oportunityKeywords")
-     * @JoinColumn(name="oportunityResearch_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="OportunityResearch", inversedBy="oportunityKeywords")
+     * @ORM\JoinColumn(name="oportunityResearch_id", referencedColumnName="id")
      */
     private $oportynityResearch;
 
