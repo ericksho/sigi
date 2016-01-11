@@ -30,13 +30,13 @@ class Notification
 
     /**
      * @ManyToOne(targetEntity="User", inversedBy="sender")
-     * @JoinColumn(name="user_id", referencedColumnName="id")
+     * @JoinColumn(name="sender_id", referencedColumnName="id")
      */
     private $sender;
 
     /**
      * @ManyToOne(targetEntity="User", inversedBy="reciever")
-     * @JoinColumn(name="user_id", referencedColumnName="id")
+     * @JoinColumn(name="reciever_id", referencedColumnName="id")
      */
     private $reciever;
 

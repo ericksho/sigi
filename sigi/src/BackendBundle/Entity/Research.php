@@ -44,21 +44,33 @@ class Research
 
     /**
      * @ManyToOne(targetEntity="Mentor", inversedBy="researchAsMain")
-     * @JoinColumn(name="mentor_id", referencedColumnName="id")
+     * @JoinColumn(name="mainMentor_id", referencedColumnName="id")
      */
     private $mainMentor;
 
     /**
      * @ManyToOne(targetEntity="Mentor", inversedBy="researchAsSecondary")
-     * @JoinColumn(name="mentor_id", referencedColumnName="id")
+     * @JoinColumn(name="secondaryMentor_id", referencedColumnName="id")
      */
     private $secondaryMentor;
 
     /**
      * @ManyToOne(targetEntity="Mentor", inversedBy="researchAsThertiary")
-     * @JoinColumn(name="mentor_id", referencedColumnName="id")
+     * @JoinColumn(name="thertiaryMentor_id", referencedColumnName="id")
      */
     private $thertiaryMentor;
+
+    /**
+     * @ManyToOne(targetEntity="Student", inversedBy="researches")
+     * @JoinColumn(name="student_id", referencedColumnName="id")
+     */
+    private $student;
+
+    /**
+     * @OneToOne(targetEntity="OportunityResearch", mappedBy="research")
+     */
+    private $oportunityResearch;
+
 
     /**
      * Get id

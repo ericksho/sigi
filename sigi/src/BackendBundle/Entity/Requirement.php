@@ -42,6 +42,11 @@ class Requirement
      */
     private $function;
 
+    /**
+     * @ManyToOne(targetEntity="OportunityResearch", inversedBy="requirements")
+     * @JoinColumn(name="oportunityResearch_id", referencedColumnName="id")
+     */
+    private $oportunityResearch;
 
     /**
      * Get id

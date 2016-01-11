@@ -39,7 +39,7 @@ class Student
      *
      * @ORM\Column(name="Student_number", type="integer", unique=true)
      */
-    private $StudentNumber;
+    private $studentNumber;
 
     /**
      * @var string
@@ -55,6 +55,20 @@ class Student
      */
     private $faculty;
 
+    /**
+     * @OneToMany(targetEntity="Application", mappedBy="student")
+     */
+    private $applications;
+
+    /**
+     * @OneToMany(targetEntity="Research", mappedBy="student")
+     */
+    private $researches;
+
+    public function __construct() {
+        $this->researches = new ArrayCollection();
+        $this->applications = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -97,9 +111,9 @@ class Student
      *
      * @return Student
      */
-    public function setStudentNumber($StudentNumber)
+    public function setStudentNumber($studentNumber)
     {
-        $this->StudentNumber = $StudentNumber;
+        $this->studentNumber = $studentNumber;
 
         return $this;
     }

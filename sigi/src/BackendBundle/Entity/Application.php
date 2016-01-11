@@ -42,6 +42,18 @@ class Application
      */
     private $lastUpdateDate;
 
+    /**
+     * @ManyToOne(targetEntity="Student", inversedBy="applications")
+     * @JoinColumn(name="student_id", referencedColumnName="id")
+     */
+    private $student;
+
+    /**
+     * @ManyToOne(targetEntity="OportunityResearch", inversedBy="applications")
+     * @JoinColumn(name="oportunityResearch_id", referencedColumnName="id")
+     */
+    private $oportunityResearch;
+
 
     /**
      * Get id

@@ -64,29 +64,47 @@ class OportunityResearch
     private $publish;
 
     /**
+     * @OneToOne(targetEntity="Research", inversedBy="research")
+     * @JoinColumn(name="research_id", referencedColumnName="id")
+     */
+    private $research;
+
+    /**
+     * @OneToMany(targetEntity="Application", mappedBy="oportunityResearch")
+     */
+    private $applications;
+
+    /**
      * @OneToMany(targetEntity="Keyword", mappedBy="oportunityResearch")
      */
     private $oportunityKeywords;
 
+    /**
+     * @OneToMany(targetEntity="Requirement", mappedBy="oportunityResearch")
+     */
+    private $requirements;
+
     public function __construct() {
         $this->oportunityKeywords = new ArrayCollection();
+        $this->applications = new ArrayCollection();
+        $this->requirements = new ArrayCollection();
     }
 
     /**
      * @ManyToOne(targetEntity="Mentor", inversedBy="oportunitiesAsMain")
-     * @JoinColumn(name="mentor_id", referencedColumnName="id")
+     * @JoinColumn(name="mainMentor_id", referencedColumnName="id")
      */
     private $mainMentor;
 
     /**
      * @ManyToOne(targetEntity="Mentor", inversedBy="oportunitiesAsSecondary")
-     * @JoinColumn(name="mentor_id", referencedColumnName="id")
+     * @JoinColumn(name="secondaryMentor_id", referencedColumnName="id")
      */
     private $secondaryMentor;
 
     /**
      * @ManyToOne(targetEntity="Mentor", inversedBy="oportunitiesAsThertiary")
-     * @JoinColumn(name="mentor_id", referencedColumnName="id")
+     * @JoinColumn(name="thertiaryMentor_id", referencedColumnName="id")
      */
     private $thertiaryMentor;
 
