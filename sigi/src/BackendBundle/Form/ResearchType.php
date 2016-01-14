@@ -18,11 +18,13 @@ class ResearchType extends AbstractType
             ->add('code')
             ->add('section')
             ->add('creationDate', 'date')
+            /* comentados por relaciones, agregar luego
             ->add('mainMentor')
             ->add('secondaryMentor')
             ->add('thertiaryMentor')
             ->add('student')
             ->add('oportunityResearch')
+            */
         ;
     }
     

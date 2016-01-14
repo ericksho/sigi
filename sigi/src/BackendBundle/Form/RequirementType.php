@@ -18,7 +18,9 @@ class RequirementType extends AbstractType
             ->add('description')
             ->add('type')
             ->add('function')
+            /* comentados por relaciones, agregar luego
             ->add('oportunityResearch')
+            */
         ;
     }
     

@@ -18,8 +18,10 @@ class ApplicationType extends AbstractType
             ->add('state')
             ->add('applicationDate', 'date')
             ->add('lastUpdateDate', 'datetime')
+            /* comentados por relaciones, agregar luego
             ->add('student')
             ->add('oportunityResearch')
+            */
         ;
     }
     

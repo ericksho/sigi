@@ -25,9 +25,11 @@ class UserType extends AbstractType
             ->add('email')
             ->add('phone')
             ->add('picture')
+            /* comentados por relaciones, agregar luego
             ->add('mentor')
             ->add('other')
             ->add('student')
+            */
         ;
     }
     

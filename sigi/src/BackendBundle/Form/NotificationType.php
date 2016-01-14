@@ -17,8 +17,10 @@ class NotificationType extends AbstractType
         $builder
             ->add('message')
             ->add('timestamp', 'datetime')
+            /* comentados por relaciones, agregar luego
             ->add('sender')
             ->add('reciever')
+            */
         ;
     }
     

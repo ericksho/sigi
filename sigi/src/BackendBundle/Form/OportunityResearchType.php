@@ -21,10 +21,12 @@ class OportunityResearchType extends AbstractType
             ->add('public')
             ->add('modality')
             ->add('publish')
+            /* comentados por relaciones, agregar luego
             ->add('research')
             ->add('mainMentor')
             ->add('secondaryMentor')
             ->add('thertiaryMentor')
+            */
         ;
     }
     

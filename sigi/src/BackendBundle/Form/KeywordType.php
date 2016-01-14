@@ -16,8 +16,10 @@ class KeywordType extends AbstractType
     {
         $builder
             ->add('keyword')
+            /* comentados por relaciones, agregar luego
             ->add('mentor')
             ->add('oportynityResearch')
+            */
         ;
     }
     
