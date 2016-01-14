@@ -15,7 +15,7 @@ class NotificationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('message', null, array('label' => 'Mensaje'))
+            ->add('message', null, array('label' => 'Mensaje','attr' => array('class'=>'form-control')))
             ->add('timestamp', 'datetime', array('label' => 'fecha'))
             /* comentados por relaciones, agregar luego
             ->add('sender')
