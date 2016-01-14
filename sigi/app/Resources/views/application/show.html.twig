@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Application</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ application.id }}</td>
+            </tr>
+            <tr>
+                <th>State</th>
+                <td>{{ application.state }}</td>
+            </tr>
+            <tr>
+                <th>Applicationdate</th>
+                <td>{% if application.applicationDate %}{{ application.applicationDate|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Lastupdatedate</th>
+                <td>{% if application.lastUpdateDate %}{{ application.lastUpdateDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('application_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('application_edit', { 'id': application.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Research list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Code</th>
+                <th>Section</th>
+                <th>Creationdate</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for research in researches %}
+            <tr>
+                <td><a href="{{ path('research_show', { 'id': research.id }) }}">{{ research.id }}</a></td>
+                <td>{{ research.code }}</td>
+                <td>{{ research.section }}</td>
+                <td>{% if research.creationDate %}{{ research.creationDate|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('research_show', { 'id': research.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('research_edit', { 'id': research.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('research_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

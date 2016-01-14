@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Research</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ research.id }}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{ research.code }}</td>
+            </tr>
+            <tr>
+                <th>Section</th>
+                <td>{{ research.section }}</td>
+            </tr>
+            <tr>
+                <th>Creationdate</th>
+                <td>{% if research.creationDate %}{{ research.creationDate|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('research_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('research_edit', { 'id': research.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

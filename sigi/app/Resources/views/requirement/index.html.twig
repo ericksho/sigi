@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Requirement list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Function</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for requirement in requirements %}
+            <tr>
+                <td><a href="{{ path('requirement_show', { 'id': requirement.id }) }}">{{ requirement.id }}</a></td>
+                <td>{{ requirement.description }}</td>
+                <td>{{ requirement.type }}</td>
+                <td>{{ requirement.function }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('requirement_show', { 'id': requirement.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('requirement_edit', { 'id': requirement.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('requirement_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

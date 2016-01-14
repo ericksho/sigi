@@ -1,3 +1,35 @@
+backend_user:
+    resource: "@BackendBundle/Controller/UserController.php"
+    type:     annotation
+
+backend_research:
+    resource: "@BackendBundle/Controller/ResearchController.php"
+    type:     annotation
+
+backend_requirement:
+    resource: "@BackendBundle/Controller/RequirementController.php"
+    type:     annotation
+
+backend_oportunity_research:
+    resource: "@BackendBundle/Controller/OportunityResearchController.php"
+    type:     annotation
+
+backend_notification:
+    resource: "@BackendBundle/Controller/NotificationController.php"
+    type:     annotation
+
+backend_keyword:
+    resource: "@BackendBundle/Controller/KeywordController.php"
+    type:     annotation
+
+backend_department:
+    resource: "@BackendBundle/Controller/DepartmentController.php"
+    type:     annotation
+
+backend_application:
+    resource: "@BackendBundle/Controller/ApplicationController.php"
+    type:     annotation
+
 backend:
     resource: "@BackendBundle/Resources/config/routing.yml"
     prefix:   /

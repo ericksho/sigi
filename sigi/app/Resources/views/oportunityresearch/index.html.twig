@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>OportunityResearch list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Creationdate</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Public</th>
+                <th>Modality</th>
+                <th>Publish</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for oportunityResearch in oportunityResearches %}
+            <tr>
+                <td><a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}">{{ oportunityResearch.id }}</a></td>
+                <td>{% if oportunityResearch.creationDate %}{{ oportunityResearch.creationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ oportunityResearch.name }}</td>
+                <td>{{ oportunityResearch.description }}</td>
+                <td>{{ oportunityResearch.public }}</td>
+                <td>{{ oportunityResearch.modality }}</td>
+                <td>{% if oportunityResearch.publish %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('oportunityresearch_edit', { 'id': oportunityResearch.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('oportunityresearch_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}
