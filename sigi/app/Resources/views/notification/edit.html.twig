@@ -1,21 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Editar Notificacion</h1>
+    <h1>Editar Notificacion  {{ notification.id }}</h1>
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" class="btn btn-default" value="Editar" />
+        <input type="submit" class="btn btn-primary btn1" value="Editar" />
     {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('notification_index') }}">Ver todas las Notifiaciones</a>
-        </li>
-        <li>
+            <a href="{{ path('notification_index')}}" class="btn btn-info btn2" role="button" >Ver todas las Notifiaciones</a>
+
             {{ form_start(delete_form) }}
-                <input type="submit" class="btn btn-default" value="Eliminar">
+                <input type="submit" class="btn btn-danger btn3" value="Eliminar">
             {{ form_end(delete_form) }}
-        </li>
-    </ul>
+
+
+
 {% endblock %}

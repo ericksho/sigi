@@ -1,36 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Notificacion {{ notification.id }}</h1>
+    <h1>Notificación {{ notification.id }}</h1>
 
     <table>
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ notification.id }}</td>
-            </tr>
-            <tr>
-                <th>Message</th>
+                <th>Mensaje: </th>
                 <td>{{ notification.message }}</td>
             </tr>
             <tr>
-                <th>Timestamp</th>
-                <td>{% if notification.timestamp %}{{ notification.timestamp|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <th>Enviado el:&nbsp;&nbsp; </th>
+
+                <td>  {% if notification.timestamp %}{{ notification.timestamp|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('notification_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('notification_edit', { 'id': notification.id }) }}">Edit</a>
-        </li>
-        <li>
+            <a href="{{ path('notification_index') }}" class="btn btn-info btn1" role="button" >Listar Notificaciones</a>
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+                <input type="submit" value="Eliminar" class="btn btn-danger btn2" role="button">
             {{ form_end(delete_form) }}
-        </li>
-    </ul>
 {% endblock %}

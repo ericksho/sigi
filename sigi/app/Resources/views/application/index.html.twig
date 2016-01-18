@@ -1,16 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Application list</h1>
+    <h1>Lista de Aplicaciones</h1>
 
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>State</th>
-                <th>Applicationdate</th>
-                <th>Lastupdatedate</th>
-                <th>Actions</th>
+                <th>Estado</th>
+                <th>Fecha de aplicación</th>
+                <th>Última Actualización</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -20,24 +21,12 @@
                 <td>{{ application.state }}</td>
                 <td>{% if application.applicationDate %}{{ application.applicationDate|date('Y-m-d') }}{% endif %}</td>
                 <td>{% if application.lastUpdateDate %}{{ application.lastUpdateDate|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('application_show', { 'id': application.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('application_edit', { 'id': application.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
+                <td><a href="{{ path('application_show', { 'id': application.id }) }}" class="btn btn-info btn1" role="button">Ver</a></td>
+                <td><a href="{{ path('application_edit', { 'id': application.id }) }}" class="btn btn-primary btn1" role="button">Editar</a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('application_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+    <a href="{{ path('application_new') }}" class="btn btn-primary btn1" role="button">Nueva Aplicación</a>
 {% endblock %}

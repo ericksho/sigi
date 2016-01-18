@@ -1,16 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Application creation</h1>
+    <h1>Aplicar</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+        <input type="submit" class="btn btn-primary btn1"  value="Aplicar" />
     {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('application_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    <a href="{{ path('application_index') }}" class="btn btn-info btn2" role="button" >Ver listado</a>
 {% endblock %}

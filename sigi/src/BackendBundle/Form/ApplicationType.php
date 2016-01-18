@@ -15,9 +15,9 @@ class ApplicationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('state')
-            ->add('applicationDate', 'date')
-            ->add('lastUpdateDate', 'datetime')
+            ->add('state', null,array('label' => 'Estado'))
+            ->add('applicationDate', 'datetime', array('date_widget' => 'single_text','time_widget' => 'single_text', 'attr' => array('readonly' => true), 'label' => 'Fecha de aplicación', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
+            ->add('lastUpdateDate', 'datetime', array('date_widget' => 'single_text','time_widget' => 'single_text', 'attr' => array('readonly' => true), 'label' => 'Ultima actualización', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
             /* comentados por relaciones, agregar luego
             ->add('student')
             ->add('oportunityResearch')

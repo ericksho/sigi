@@ -1,16 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Nueva Notificacion</h1>
+    <h1>Enviar Nueva Notificación</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+        <input type="submit" class="btn btn-primary btn1" value="Enviar" />
     {{ form_end(form) }}
+    
 
-    <ul>
-        <li>
-            <a href="{{ path('notification_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    <a href="{{ path('notification_index') }}" class="btn btn-info btn2" role="button" >Listar Notificaciones</a>
+
 {% endblock %}

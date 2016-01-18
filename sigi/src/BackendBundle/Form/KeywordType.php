@@ -15,7 +15,7 @@ class KeywordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('keyword')
+            ->add('keyword', null, array('label' => 'keyword '))
             /* comentados por relaciones, agregar luego
             ->add('mentor')
             ->add('oportynityResearch')

@@ -3,13 +3,13 @@
 {% block body %}
     <h1>Notificaciones</h1>
 
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Message</th>
-                <th>Timestamp</th>
-                <th>Actions</th>
+                <th>Mensaje</th>
+                <th>Fecha envío</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -19,23 +19,13 @@
                 <td>{{ notification.message }}</td>
                 <td>{% if notification.timestamp %}{{ notification.timestamp|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('notification_show', { 'id': notification.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('notification_edit', { 'id': notification.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <a href="{{ path('notification_show', { 'id': notification.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('notification_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+    <a href="{{ path('notification_new') }}" class="btn btn-primary btn-sm" role="button">Enviar Nueva Notificacion</a>
+
 {% endblock %}

@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Keyword list</h1>
+    <h1>Lista de keywords</h1>
 
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Keyword</th>
-                <th>Actions</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -16,24 +17,11 @@
             <tr>
                 <td><a href="{{ path('keyword_show', { 'id': keyword.id }) }}">{{ keyword.id }}</a></td>
                 <td>{{ keyword.keyword }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('keyword_show', { 'id': keyword.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('keyword_edit', { 'id': keyword.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
+                <td><a href="{{ path('keyword_show', { 'id': keyword.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a></td>
+                <td><a href="{{ path('keyword_edit', { 'id': keyword.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a></tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('keyword_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+    <a href="{{ path('keyword_new') }}" class="btn btn-primary btn-sm" role="button">Crear Nueva Keyword</a>
 {% endblock %}
