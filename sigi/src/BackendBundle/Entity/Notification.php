@@ -30,6 +30,13 @@ class Notification
     private $message;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="readed", type="boolean")
+     */
+    private $readed;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="sender")
      * @ORM\JoinColumn(name="sender_id", referencedColumnName="id")
      */
@@ -153,6 +160,30 @@ class Notification
     public function getTimestamp()
     {
         return $this->timestamp;
+    }
+
+    /**
+     * Set readed
+     *
+     * @param boolean $readed
+     *
+     * @return OportunityResearch
+     */
+    public function setReaded($readed)
+    {
+        $this->readed = $readed;
+
+        return $this;
+    }
+
+    /**
+     * Get readed
+     *
+     * @return bool
+     */
+    public function getReaded()
+    {
+        return $this->readed;
     }
 }
 

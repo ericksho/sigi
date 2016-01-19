@@ -17,6 +17,7 @@ class NotificationType extends AbstractType
         $builder
             ->add('message', 'textarea', array('label' => 'Mensaje','attr' => array('class'=>'form-control')))
             ->add('timestamp', 'datetime', array('date_widget' => 'single_text','time_widget' => 'single_text', 'attr' => array('readonly' => true), 'label' => 'Fecha y Hora', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
+            ->add('readed', null,array('label' => 'Leida','attr' => array('class'=>'form-control')))//parte en false
             /* comentados por relaciones, agregar luego
             ->add('sender')
             ->add('reciever')

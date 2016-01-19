@@ -26,7 +26,7 @@
                 <td>{{ oportunityResearch.description }}</td>
                 <td>{{ oportunityResearch.public }}</td>
                 <td>{{ oportunityResearch.modality }}</td>
-                <td>{% if oportunityResearch.publish %}Yes{% else %}No{% endif %}</td>
+                <td>{% if oportunityResearch.publish %}Si{% else %}No{% endif %}</td>
                 <td><a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a></td>
                 <td><a href="{{ path('oportunityresearch_edit', { 'id': oportunityResearch.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a></td>
             </tr>

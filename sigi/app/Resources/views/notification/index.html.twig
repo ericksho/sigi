@@ -9,6 +9,7 @@
                 <th>Id</th>
                 <th>Mensaje</th>
                 <th>Fecha envío</th>
+                <th>Leída</th>
                 <th></th>
             </tr>
         </thead>
@@ -18,6 +19,7 @@
                 <td><a href="{{ path('notification_show', { 'id': notification.id }) }}">{{ notification.id }}</a></td>
                 <td>{{ notification.message }}</td>
                 <td>{% if notification.timestamp %}{{ notification.timestamp|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if notification.readed %}Si{% else %}No{% endif %}</td>
                 <td>
                     <a href="{{ path('notification_show', { 'id': notification.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a>
                 </td>
