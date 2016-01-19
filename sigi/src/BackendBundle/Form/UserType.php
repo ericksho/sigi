@@ -15,15 +15,15 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('userType', null,array('label' => 'Tipo de usuario'))
-            ->add('userName', null,array('label' => 'Nombre de usuario'))
-            ->add('rut', null,array('label' => 'Rut'))
-            ->add('name', null,array('label' => 'Nombre'))
-            ->add('middleName', null,array('label' => 'Segundo Nombre'))
-            ->add('lastName', null,array('label' => 'Apellido Paterno'))
-            ->add('secondSurname', null,array('label' => 'Apellido Materno'))
-            ->add('email', null,array('label' => 'Email'))
-            ->add('phone', null,array('label' => 'Telefono'))
+            ->add('userType', null,array('label' => 'Tipo de usuario','attr' => array('class'=>'form-control')))
+            ->add('userName', null,array('label' => 'Nombre de usuario','attr' => array('class'=>'form-control')))
+            ->add('rut', null,array('label' => 'Rut','attr' => array('class'=>'form-control')))
+            ->add('name', null,array('label' => 'Nombre','attr' => array('class'=>'form-control')))
+            ->add('middleName', null,array('label' => 'Segundo Nombre','attr' => array('class'=>'form-control')))
+            ->add('lastName', null,array('label' => 'Apellido Paterno','attr' => array('class'=>'form-control')))
+            ->add('secondSurname', null,array('label' => 'Apellido Materno','attr' => array('class'=>'form-control')))
+            ->add('email', null,array('label' => 'Email','attr' => array('class'=>'form-control')))
+            ->add('phone', null,array('label' => 'Telefono','attr' => array('class'=>'form-control')))
             //->add('picture', null,array('label' => 'Estado'))//este corresponde al path
             /* comentados por relaciones, agregar luego
             ->add('mentor')

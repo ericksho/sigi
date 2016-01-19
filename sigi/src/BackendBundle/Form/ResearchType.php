@@ -15,9 +15,9 @@ class ResearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('code', null,array('label' => 'Sigla'))
-            ->add('section', null,array('label' => 'Sección'))
-            ->add('creationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true), 'label' => 'Fecha de creación', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
+            ->add('code', null,array('label' => 'Sigla','attr' => array('class'=>'form-control')))
+            ->add('section', null,array('label' => 'Sección','attr' => array('class'=>'form-control')))
+            ->add('creationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Fecha de creación', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
             /* comentados por relaciones, agregar luego
             ->add('mainMentor')
             ->add('secondaryMentor')
