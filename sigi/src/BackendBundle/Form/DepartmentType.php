@@ -15,8 +15,8 @@ class DepartmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('faculty')
+            ->add('name', null,array('label' => 'Nombre'))
+            ->add('faculty', null,array('label' => 'Facultad'))
         ;
     }
     

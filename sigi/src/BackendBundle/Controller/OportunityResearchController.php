@@ -50,7 +50,7 @@ class OportunityResearchController extends Controller
             $em->persist($oportunityResearch);
             $em->flush();
 
-            return $this->redirectToRoute('oportunityresearch_show', array('id' => $oportunityresearch->getId()));
+            return $this->redirectToRoute('oportunityresearch_show', array('id' => $oportunityResearch->getId()));
         }
 
         return $this->render('oportunityresearch/new.html.twig', array(

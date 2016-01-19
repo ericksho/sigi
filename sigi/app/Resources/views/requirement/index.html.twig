@@ -1,16 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Requirement list</h1>
+    <h1>Requisitos</h1>
 
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Function</th>
-                <th>Actions</th>
+                <th>Descripción</th>
+                <th>Tipo</th>
+                <th>Funcion</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -20,24 +21,12 @@
                 <td>{{ requirement.description }}</td>
                 <td>{{ requirement.type }}</td>
                 <td>{{ requirement.function }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('requirement_show', { 'id': requirement.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('requirement_edit', { 'id': requirement.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
+                <td><a href="{{ path('requirement_show', { 'id': requirement.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a></td>
+                <td><a href="{{ path('requirement_edit', { 'id': requirement.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a></tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('requirement_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+    <a href="{{ path('requirement_new') }}" class="btn btn-primary btn-sm" role="button">Crear Requisito</a>
+
 {% endblock %}

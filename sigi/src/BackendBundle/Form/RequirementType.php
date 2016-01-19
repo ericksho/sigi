@@ -15,9 +15,9 @@ class RequirementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('description')
-            ->add('type')
-            ->add('function')
+            ->add('description', null,array('label' => 'Descripción'))
+            ->add('type', null,array('label' => 'Tipo'))
+            ->add('function', null,array('label' => 'Funcion'))
             /* comentados por relaciones, agregar luego
             ->add('oportunityResearch')
             */

@@ -1,23 +1,23 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>User list</h1>
+    <h1>Usuarios</h1>
 
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Usertype</th>
-                <th>Username</th>
+                <th>Tipo Usuario</th>
+                <th>Tipo Usuario</th>
                 <th>Rut</th>
-                <th>Name</th>
-                <th>Lastname</th>
-                <th>Middlename</th>
-                <th>Secondsurname</th>
+                <th>Nombre</th>
+                <th>Segundo Nombre</th>
+                <th>Apellido Paterno</th>
+                <th>Apellido Materno</th>
                 <th>Email</th>
-                <th>Phone</th>
-                <th>Picture</th>
-                <th>Actions</th>
+                <th>Telefono</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -33,25 +33,13 @@
                 <td>{{ user.secondSurname }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.phone }}</td>
-                <td>{{ user.picture }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('user_show', { 'id': user.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('user_edit', { 'id': user.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
+                <td><a href="{{ path('user_show', { 'id': user.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a></td>
+                <td><a href="{{ path('user_edit', { 'id': user.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('user_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+    <a href="{{ path('user_new') }}" class="btn btn-primary btn-sm" role="button">Crear Nuevo Usuario</a>
+   
 {% endblock %}

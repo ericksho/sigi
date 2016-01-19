@@ -1,15 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Department list</h1>
+    <h1>Departamentos</h1>
 
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>Faculty</th>
-                <th>Actions</th>
+                <th>Nombre</th>
+                <th>Facultad</th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -18,24 +19,11 @@
                 <td><a href="{{ path('department_show', { 'id': department.id }) }}">{{ department.id }}</a></td>
                 <td>{{ department.name }}</td>
                 <td>{{ department.faculty }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('department_show', { 'id': department.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('department_edit', { 'id': department.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
+                <td><a href="{{ path('department_show', { 'id': department.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a></td>
+                <td><a href="{{ path('department_edit', { 'id': department.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a></tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('department_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+    <a href="{{ path('department_new') }}" class="btn btn-primary btn-sm" role="button">Crear Nuevo Departamento</a>
 {% endblock %}

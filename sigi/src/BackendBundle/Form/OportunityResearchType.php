@@ -15,12 +15,12 @@ class OportunityResearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('creationDate', 'datetime')
-            ->add('name')
-            ->add('description')
-            ->add('public')
-            ->add('modality')
-            ->add('publish')
+            ->add('creationDate', 'datetime', array('date_widget' => 'single_text','time_widget' => 'single_text', 'attr' => array('readonly' => true), 'label' => 'Fecha de creación', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
+            ->add('name', null,array('label' => 'Nombre'))
+            ->add('description', null,array('label' => 'Descripción'))
+            ->add('public', null,array('label' => 'Publico'))
+            ->add('modality', null,array('label' => 'Modalidad'))
+            ->add('publish', null,array('label' => 'Publicada'))
             /* comentados por relaciones, agregar luego
             ->add('research')
             ->add('mainMentor')

@@ -1,16 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Research creation</h1>
+    <h1>Nueva Investigación</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+        <input type="submit" class="btn btn-primary btn1" role="button" value="Crear" />
     {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('research_index') }}">Back to the list</a>
-        </li>
-    </ul>
+ 
+    <a href="{{ path('research_index') }}" class="btn btn-info btn2" role="button">Lista de Investigaciónes</a>
+    
 {% endblock %}

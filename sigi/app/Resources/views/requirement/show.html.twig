@@ -1,40 +1,33 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Requirement</h1>
+    <h1>Requisito </h1>
 
     <table>
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>Id:</th>
                 <td>{{ requirement.id }}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>Descripción: &nbsp;&nbsp;</th>
                 <td>{{ requirement.description }}</td>
             </tr>
             <tr>
-                <th>Type</th>
+                <th>Tipo:</th>
                 <td>{{ requirement.type }}</td>
             </tr>
             <tr>
-                <th>Function</th>
+                <th>Funcion:</th>
                 <td>{{ requirement.function }}</td>
             </tr>
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('requirement_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('requirement_edit', { 'id': requirement.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+
+    <a href="{{ path('requirement_index') }}" class="btn btn-info btn1" role="button" >Requisitos</a>
+    <a href="{{ path('requirement_edit', { 'id': requirement.id }) }}" class="btn btn-primary btn2" role="button">Editar</a>
+    {{ form_start(delete_form) }}
+        <input type="submit" value="Eliminar" class="btn btn-danger btn2" role="button">
+    {{ form_end(delete_form) }}
 {% endblock %}

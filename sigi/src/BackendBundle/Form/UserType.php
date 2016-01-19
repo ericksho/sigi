@@ -15,16 +15,16 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('userType')
-            ->add('userName')
-            ->add('rut')
-            ->add('name')
-            ->add('lastName')
-            ->add('middleName')
-            ->add('secondSurname')
-            ->add('email')
-            ->add('phone')
-            ->add('picture')
+            ->add('userType', null,array('label' => 'Tipo de usuario'))
+            ->add('userName', null,array('label' => 'Nombre de usuario'))
+            ->add('rut', null,array('label' => 'Rut'))
+            ->add('name', null,array('label' => 'Nombre'))
+            ->add('middleName', null,array('label' => 'Segundo Nombre'))
+            ->add('lastName', null,array('label' => 'Apellido Paterno'))
+            ->add('secondSurname', null,array('label' => 'Apellido Materno'))
+            ->add('email', null,array('label' => 'Email'))
+            ->add('phone', null,array('label' => 'Telefono'))
+            //->add('picture', null,array('label' => 'Estado'))//este corresponde al path
             /* comentados por relaciones, agregar luego
             ->add('mentor')
             ->add('other')

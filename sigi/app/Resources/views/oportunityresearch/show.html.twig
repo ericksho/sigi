@@ -1,52 +1,44 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>OportunityResearch</h1>
+    <h1>Oportunidad de Investigación</h1>
 
     <table>
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>Id:</th>
                 <td>{{ oportunityResearch.id }}</td>
             </tr>
             <tr>
-                <th>Creationdate</th>
+                <th>Fecha de Creación:&nbsp;&nbsp;</th>
                 <td>{% if oportunityResearch.creationDate %}{{ oportunityResearch.creationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>
             <tr>
-                <th>Name</th>
+                <th>Nombre:</th>
                 <td>{{ oportunityResearch.name }}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>Descripción:</th>
                 <td>{{ oportunityResearch.description }}</td>
             </tr>
             <tr>
-                <th>Public</th>
+                <th>Público:</th>
                 <td>{{ oportunityResearch.public }}</td>
             </tr>
             <tr>
-                <th>Modality</th>
+                <th>Modalidad:</th>
                 <td>{{ oportunityResearch.modality }}</td>
             </tr>
             <tr>
-                <th>Publish</th>
-                <td>{% if oportunityResearch.publish %}Yes{% else %}No{% endif %}</td>
+                <th>Publicado:</th>
+                <td>{% if oportunityResearch.publish %}Si{% else %}No{% endif %}</td>
             </tr>
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('oportunityresearch_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('oportunityresearch_edit', { 'id': oportunityResearch.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <a href="{{ path('oportunityresearch_index') }}" class="btn btn-info btn1" role="button" >Listar Oportunidades</a>
+    <a href="{{ path('oportunityresearch_edit', { 'id': oportunityResearch.id }) }}" class="btn btn-primary btn2" role="button">Editar</a>
+    {{ form_start(delete_form) }}
+        <input type="submit" value="Eliminar" class="btn btn-danger btn2" role="button">
+    {{ form_end(delete_form) }}
 {% endblock %}
