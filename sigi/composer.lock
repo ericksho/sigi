@@ -4,9 +4,76 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c42b64d9f016ac7f9dbd9df35f06792b",
-    "content-hash": "947fa53711bbc2218220d69ea5717dc7",
+    "hash": "7fa4a1e562c0b0f82d8af0f34b7095fe",
+    "content-hash": "4dca939578b4983da78fa0d5156c6031",
     "packages": [
+        {
+            "name": "besimple/sso-auth-bundle",
+            "version": "dev-master",
+            "target-dir": "BeSimple/SsoAuthBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BeSimple/BeSimpleSsoAuthBundle.git",
+                "reference": "d8be760bf4572373dfd7251356ba5cc397836ceb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BeSimple/BeSimpleSsoAuthBundle/zipball/d8be760bf4572373dfd7251356ba5cc397836ceb",
+                "reference": "d8be760bf4572373dfd7251356ba5cc397836ceb",
+                "shasum": ""
+            },
+            "require": {
+                "kriswallsmith/buzz": ">=0.7,<1.0-dev",
+                "php": ">=5.3.3",
+                "symfony/framework-bundle": "~2.1",
+                "symfony/security-bundle": "~2.1",
+                "symfony/twig-bundle": "~2.1"
+            },
+            "require-dev": {
+                "symfony/browser-kit": "~2.1",
+                "symfony/css-selector": "~2.1",
+                "symfony/expression-language": "~2.4",
+                "symfony/filesystem": "~2.1",
+                "symfony/form": "~2.1",
+                "symfony/validator": "~2.1",
+                "symfony/web-profiler-bundle": "~2.1",
+                "symfony/yaml": "~2.1"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "BeSimple\\SsoAuthBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "BeSimple Community",
+                    "homepage": "https://github.com/BeSimple/BeSimpleSsoAuthBundle/contributors"
+                },
+                {
+                    "name": "Jean-François Simon",
+                    "email": "contact@jfsimon.fr"
+                }
+            ],
+            "description": "SSO authentication your Symfony2 project ",
+            "homepage": "https://github.com/BeSimple/BeSimpleSsoAuthBundle",
+            "keywords": [
+                "Authentication",
+                "SSO",
+                "Symfony2",
+                "cas"
+            ],
+            "time": "2015-04-03 14:12:07"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.2.7",
@@ -914,6 +981,54 @@
                 "sql"
             ],
             "time": "2014-01-12 16:20:24"
+        },
+        {
+            "name": "kriswallsmith/buzz",
+            "version": "v0.15",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kriswallsmith/Buzz.git",
+                "reference": "d4041666c3ffb379af02a92dabe81c904b35fab8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kriswallsmith/Buzz/zipball/d4041666c3ffb379af02a92dabe81c904b35fab8",
+                "reference": "d4041666c3ffb379af02a92dabe81c904b35fab8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "suggest": {
+                "ext-curl": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Buzz": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kris Wallsmith",
+                    "email": "kris.wallsmith@gmail.com",
+                    "homepage": "http://kriswallsmith.net/"
+                }
+            ],
+            "description": "Lightweight HTTP client",
+            "homepage": "https://github.com/kriswallsmith/Buzz",
+            "keywords": [
+                "curl",
+                "http client"
+            ],
+            "time": "2015-06-25 17:26:56"
         },
         {
             "name": "monolog/monolog",
@@ -2210,7 +2325,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "besimple/sso-auth-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

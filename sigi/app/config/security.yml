@@ -1,24 +1,41 @@
-# To get started with security, check out the documentation:
-# http://symfony.com/doc/current/book/security.html
 security:
+    firewalls:
+        secured_area:
+            pattern:    ^/
+            anonymous: ~
+            http_basic:
+                realm: "Secured Demo Area"
+            logout:
+                invalidate_session: true
+                path:   /logout
+                target: /
 
-    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_STUDENT, ROLE_MENTOR]
+
+    access_control:
+        - { path: ^/application, roles: ROLE_STUDENT }
+        - { path: ^/application, roles: ROLE_STUDENT }
+        - { path: ^/keyword, roles: ROLE_MENTOR }
+        - { path: ^/oportunityresearch, roles: [ROLE_STUDENT, ROLE_MENTOR] }
+        - { path: ^/oportunityresearch/new, roles: ROLE_MENTOR }
+        - { path: ^/department, roles: ROLE_ADMIN }
+        - { path: ^/requirement, roles: ROLE_MENTOR }
+        - { path: ^/research, roles: [ROLE_MENTOR,ROLE_ADMIN, ROLE_STUDENT] }
+        - { path: ^/research/new, roles: ROLE_ADMIN }
+        - { path: ^/user, roles: ROLE_ADMIN }
+        # Descomenta la siguiente línea para proteger también
+        # la propia URL /admin
+        # - { path: ^/application$, roles: ROLE_ADMIN }
+
     providers:
         in_memory:
-            memory: ~
+            memory:
+                users:
+                    alumno:  { password: alumnopass, roles: 'ROLE_STUDENT' }
+                    mentor:  { password: mentorpass, roles: 'ROLE_MENTOR' }
+                    otro:  { password: otropass, roles: 'ROLE_OTHER' }
+                    admin: { password: adminpass, roles: 'ROLE_ADMIN' }
 
-    firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-
-        main:
-            anonymous: ~
-            # activate different ways to authenticate
-
-            # http_basic: ~
-            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
