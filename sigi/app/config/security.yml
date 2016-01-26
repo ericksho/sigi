@@ -9,11 +9,15 @@ security:
                 invalidate_session: true
                 path:   /logout
                 target: /
+            form_login:
+                login_path: /login
+                check_path: /login_check
 
     role_hierarchy:
         ROLE_ADMIN: [ROLE_STUDENT, ROLE_MENTOR]
 
     access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/application/$, roles: [ROLE_MENTOR, ROLE_STUDENT] }
         - { path: ^/application/[0-9]+$, roles: [ROLE_MENTOR, ROLE_STUDENT] }
         - { path: ^/application/new, roles: ROLE_STUDENT }

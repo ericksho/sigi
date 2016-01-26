@@ -40,3 +40,7 @@ app:
 
 logout:
     path:   /logout
+
+backend_security:
+    resource: "@BackendBundle/Controller/SecurityController.php"
+    type:     annotation
