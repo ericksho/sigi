@@ -14,20 +14,41 @@ security:
         ROLE_ADMIN: [ROLE_STUDENT, ROLE_MENTOR]
 
     access_control:
-        - { path: ^/application, roles: ROLE_STUDENT }
-        - { path: ^/application, roles: ROLE_STUDENT }
-        - { path: ^/keyword, roles: ROLE_MENTOR }
-        - { path: ^/oportunityresearch, roles: [ROLE_STUDENT, ROLE_MENTOR] }
-        - { path: ^/oportunityresearch/new, roles: ROLE_MENTOR }
-        - { path: ^/department, roles: ROLE_ADMIN }
-        - { path: ^/requirement, roles: ROLE_MENTOR }
-        - { path: ^/research, roles: [ROLE_MENTOR,ROLE_ADMIN, ROLE_STUDENT] }
-        - { path: ^/research/new, roles: ROLE_ADMIN }
-        - { path: ^/user, roles: ROLE_ADMIN }
-        # Descomenta la siguiente línea para proteger también
-        # la propia URL /admin
-        # - { path: ^/application$, roles: ROLE_ADMIN }
+        - { path: ^/application/$, roles: [ROLE_MENTOR, ROLE_STUDENT] }
+        - { path: ^/application/[0-9]+$, roles: [ROLE_MENTOR, ROLE_STUDENT] }
+        - { path: ^/application/new, roles: ROLE_STUDENT }
+        - { path: ^/application/[0-9]+/edit$,, roles: ROLE_ADMIN }
 
+        - { path: ^/notification/$, roles: [ROLE_STUDENT, ROLE_MENTOR, ROLE_OTHER] }
+        - { path: ^/notification/[0-9]+$, roles: [ROLE_MENTOR, ROLE_STUDENT, ROLE_OTHER] }
+        - { path: ^/notification/new$, roles: [ROLE_MENTOR, ROLE_STUDENT, ROLE_OTHER] }
+        - { path: ^/notification/[0-9]+/edit$, roles: ROLE_ADMIN }
+
+        - { path: ^/keyword/$, roles: [ROLE_MENTOR, ROLE_STUDENT, ROLE_OTHER] }
+        - { path: ^/keyword/[0-9]+, roles: [ROLE_MENTOR, ROLE_STUDENT, ROLE_OTHER] }
+        - { path: ^/keyword/new$, roles: ROLE_MENTOR }
+        - { path: ^/keyword/[0-9]+/edit$, roles: ROLE_ADMIN }
+
+        - { path: ^/oportunityresearch/$, roles: [ROLE_STUDENT, ROLE_MENTOR,ROLE_OTHER] }
+        - { path: ^/oportunityresearch/[0-9]+$, roles: [ROLE_STUDENT, ROLE_MENTOR,ROLE_OTHER] }
+        - { path: ^/oportunityresearch/new, roles: ROLE_MENTOR }
+        - { path: ^/oportunityresearch/[0-9]+/edit$, roles: ROLE_MENTOR }
+
+        - { path: ^/department/$, roles: [ROLE_MENTOR, ROLE_STUDENT] }
+        - { path: ^/department/[0-9]+$, roles: [ROLE_MENTOR, ROLE_STUDENT] }
+        - { path: ^/department/new$, roles: ROLE_ADMIN }
+        - { path: ^/department/[0-9]+/edit$, roles: ROLE_ADMIN }
+
+        - { path: ^/requirement, roles: ROLE_MENTOR }
+
+        - { path: ^/research/$, roles: [ROLE_MENTOR, ROLE_STUDENT] }
+        - { path: ^/research/[0-9]+$, roles: ROLE_ADMIN }
+        - { path: ^/research/new$, roles: ROLE_ADMIN }
+        - { path: ^/research/[0-9]+/edit$, roles: ROLE_ADMIN }
+
+        - { path: ^/user/$, roles: ROLE_ADMIN }
+        - { path: ^/research/[0-9]+$, roles: [ROLE_STUDENT, ROLE_MENTOR,ROLE_OTHER] }
+        - { path: ^/research/[0-9]+/edit$, roles: [ROLE_STUDENT, ROLE_MENTOR,ROLE_OTHER] }
     providers:
         in_memory:
             memory:

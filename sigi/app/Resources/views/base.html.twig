@@ -33,72 +33,89 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">  
                   <ul class="nav navbar-nav">
                     
+                    {% if is_granted(['ROLE_MENTOR','ROLE_STUDENT','ROLE_OTHER']) %}
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Notificaciones <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="{{path('notification_new')}}">Enviar Nueva</a></li>
+                          <li><a href="{{path('notification_index')}}">Ver Listado</a></li>
+                        </ul>
+                      </li>
+                    {% endif %}
 
-                  <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Notificaciones <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="{{path('notification_new')}}">Enviar Nueva</a></li>
-                        <li><a href="{{path('notification_index')}}">Ver Listado</a></li>
-                      </ul>
-                    </li>
+                    {% if is_granted(['ROLE_MENTOR','ROLE_STUDENT']) %}
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Aplicar <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          {% if is_granted('ROLE_STUDENT') %}
+                            <li><a href="{{path('application_new')}}">Crear Nueva</a></li>
+                          {% endif %}
+                          <li><a href="{{path('application_index')}}">Ver Listado</a></li>
+                        </ul>
+                      </li>
+                    {% endif %}
 
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Aplicar <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="{{path('application_new')}}">Crear Nueva</a></li>
-                        <li><a href="{{path('application_index')}}">Ver Listado</a></li>
-                      </ul>
-                    </li>
+                    {% if is_granted(['ROLE_MENTOR','ROLE_STUDENT','ROLE_OTHER']) %}
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Oportunidades <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          {% if is_granted('ROLE_MENTOR') %}
+                            <li><a href="{{path('oportunityresearch_new')}}">Crear Nueva</a></li>
+                          {% endif %}
+                          <li><a href="{{path('oportunityresearch_index')}}">Ver Listado</a></li>
+                        </ul>
+                      </li>
+                    {% endif %}
 
-                    <li class="dropdown">
+                    {% if is_granted('ROLE_MENTOR') %}
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Requisitos <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="{{path('requirement_new')}}">Crear Nuevo</a></li>
+                          <li><a href="{{path('requirement_index')}}">Ver Listado</a></li>
+                        </ul>
+                      </li>
+
+                      <li class="dropdown">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Keywords <span class="caret"></span></a>
                       <ul class="dropdown-menu">
                         <li><a href="{{path('keyword_new')}}">Crear Nueva</a></li>
                         <li><a href="{{path('keyword_index')}}">Ver Listado</a></li>
                       </ul>
                     </li>
+                    {% endif %}
 
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Oportunidades <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="{{path('oportunityresearch_new')}}">Crear Nueva</a></li>
-                        <li><a href="{{path('oportunityresearch_index')}}">Ver Listado</a></li>
-                      </ul>
-                    </li>
+                    {% if is_granted(['ROLE_MENTOR','ROLE_STUDENT']) %}
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Departamentos <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          {% if is_granted('ROLE_ADMIN') %}
+                            <li><a href="{{path('department_new')}}">Crear Nuevo</a></li>
+                          {% endif %}
+                          <li><a href="{{path('department_index')}}">Ver Listado</a></li>
+                        </ul>
+                      </li>
 
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Investigación <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          {% if is_granted('ROLE_ADMIN') %}
+                            <li><a href="{{path('research_new')}}">Crear Nueva</a></li>
+                          {% endif %}
+                          <li><a href="{{path('research_index')}}">Ver Listado</a></li>
+                        </ul>
+                      </li>  
+                    {% endif %}
 
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Departamentos <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="{{path('department_new')}}">Crear Nuevo</a></li>
-                        <li><a href="{{path('department_index')}}">Ver Listado</a></li>
-                      </ul>
-                    </li>
-
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Requisitos <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="{{path('requirement_new')}}">Crear Nuevo</a></li>
-                        <li><a href="{{path('requirement_index')}}">Ver Listado</a></li>
-                      </ul>
-                    </li>
-
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Investigación <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="{{path('research_new')}}">Crear Nueva</a></li>
-                        <li><a href="{{path('research_index')}}">Ver Listado</a></li>
-                      </ul>
-                    </li>                  
-
-                  <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuarios <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="{{path('user_new')}}">Crear Nuevo</a></li>
-                        <li><a href="{{path('user_index')}}">Ver Listado</a></li>
-                      </ul>
-                    </li>
-
+                    {% if is_granted('ROLE_ADMIN') %}
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuarios <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="{{path('user_new')}}">Crear Nuevo</a></li>
+                          <li><a href="{{path('user_index')}}">Ver Listado</a></li>
+                        </ul>
+                      </li>
+                    {% endif %}
                   </ul>
 
                   
@@ -110,16 +127,19 @@
                       </div>
                       <button type="submit" class="btn btn-default">Buscar</button>
                     </form>
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuario <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="#">Perfil</a></li>
-                        <li><a href="#">Oportunidades</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="{{path('logout')}}">Cerrar Sesión</a></li>
-                        <li><a href="{{ logout_path('secured_area') }}">Logout</a></li>
-                      </ul>
-                    </li>
+                    {% if is_granted(['IS_AUTHENTICATED_FULLY', 'IS_AUTHENTICATED_REMEMBERED']) %}
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuario <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="#">Perfil</a></li>
+                          <li><a href="#">Oportunidades</a></li>
+                          <li role="separator" class="divider"></li>
+                          <li><a href="{{path('logout')}}">Cerrar Sesión</a></li>
+                        </ul>
+                      </li>
+                    {% else %}
+                      <li><a href="{{path('notification_index')}}">Iniciar Sesión</a></li>
+                    {% endif %}
                   </ul>
                 </div><!-- /.navbar-collapse -->
               </div><!-- /.container-fluid -->

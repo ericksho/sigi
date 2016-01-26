@@ -1,17 +1,21 @@
 <?php
-
 namespace BackendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="BackendBundle\Repository\UserRepository")
+ * @UniqueEntity(fields="email", message="Email ya registrado")
+ * @UniqueEntity(fields="username", message="Nombre de usuario ya usado")
  */
-class User
+class User  implements UserInterface
 {
     /**
      * @var int
@@ -21,107 +25,92 @@ class User
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
     * @ORM\OneToOne(targetEntity="Mentor", mappedBy="user")
     */
     private $mentor;
-
     /**
     * @ORM\OneToOne(targetEntity="Other", mappedBy="user")
     */
     private $other;
-
     /**
     * @ORM\OneToOne(targetEntity="Student", mappedBy="user")
     */
     private $student;
-
     /**
      * @ORM\OneToMany(targetEntity="Notification", mappedBy="sender")
      */
     private $sendedNotifications;
-
     /**
      * @ORM\OneToMany(targetEntity="Notification", mappedBy="reciever")
      */
     private $recievedNotifications;
-
     public function __construct() {
         $this->features = new ArrayCollection();
+        $this->isActive = true;
+        // may not be needed, see section on salt below
+        // $this->salt = md5(uniqid(null, true));
     }
-
     /**
      * @var int
      *
      * @ORM\Column(name="user_type", type="integer")
      */
     private $userType;
-
     /**
      * @var string
      *
-     * @ORM\Column(name="user_name", type="string", length=20, unique=true)
+     * @ORM\Column(name="username", type="string", length=25, unique=true)
      */
-    private $userName;
-
+    private $username;
     /**
      * @var int
      *
      * @ORM\Column(name="rut", type="integer", unique=true)
      */
     private $rut;
-
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=20)
      */
     private $name;
-
     /**
      * @var string
      *
      * @ORM\Column(name="last_name", type="string", length=20)
      */
     private $lastName;
-
     /**
      * @var string
      *
      * @ORM\Column(name="middle_name", type="string", length=20)
      */
     private $middleName;
-
     /**
      * @var string
      *
      * @ORM\Column(name="second_surname", type="string", length=20)
      */
     private $secondSurname;
-
     /**
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=254, unique=true)
      */
     private $email;
-
     /**
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=30, nullable=true, unique=true)
      */
     private $phone;
-
     /**
      * @var string
      *
      * @ORM\Column(name="picture", type="string", length=255, nullable=true)
      */
     private $picture;
-
-
     /**
      * Get id
      *
@@ -131,7 +120,6 @@ class User
     {
         return $this->id;
     }
-
     /**
      * Set userType
      *
@@ -142,10 +130,8 @@ class User
     public function setUserType($userType)
     {
         $this->userType = $userType;
-
         return $this;
     }
-
     /**
      * Get userType
      *
@@ -155,31 +141,27 @@ class User
     {
         return $this->userType;
     }
-
     /**
-     * Set userName
+     * Set username
      *
-     * @param string $userName
+     * @param string $username
      *
      * @return User
      */
-    public function setUserName($userName)
+    public function setUserName($username)
     {
-        $this->userName = $userName;
-
+        $this->username = $username;
         return $this;
     }
-
     /**
-     * Get userName
+     * Get username
      *
      * @return string
      */
-    public function getUserName()
+    public function getUsername()
     {
-        return $this->userName;
+        return $this->username;
     }
-
     /**
      * Set rut
      *
@@ -190,10 +172,8 @@ class User
     public function setRut($rut)
     {
         $this->rut = $rut;
-
         return $this;
     }
-
     /**
      * Get rut
      *
@@ -203,7 +183,6 @@ class User
     {
         return $this->rut;
     }
-
     /**
      * Set name
      *
@@ -214,10 +193,8 @@ class User
     public function setName($name)
     {
         $this->name = $name;
-
         return $this;
     }
-
     /**
      * Get name
      *
@@ -227,7 +204,6 @@ class User
     {
         return $this->name;
     }
-
     /**
      * Set lastName
      *
@@ -238,10 +214,8 @@ class User
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-
         return $this;
     }
-
     /**
      * Get lastName
      *
@@ -251,7 +225,6 @@ class User
     {
         return $this->lastName;
     }
-
     /**
      * Set middleName
      *
@@ -262,10 +235,8 @@ class User
     public function setMiddleName($middleName)
     {
         $this->middleName = $middleName;
-
         return $this;
     }
-
     /**
      * Get middleName
      *
@@ -275,7 +246,6 @@ class User
     {
         return $this->middleName;
     }
-
     /**
      * Set secondSurname
      *
@@ -286,10 +256,8 @@ class User
     public function setSecondSurname($secondSurname)
     {
         $this->secondSurname = $secondSurname;
-
         return $this;
     }
-
     /**
      * Get secondSurname
      *
@@ -299,7 +267,6 @@ class User
     {
         return $this->secondSurname;
     }
-
     /**
      * Set email
      *
@@ -310,10 +277,8 @@ class User
     public function setEmail($email)
     {
         $this->email = $email;
-
         return $this;
     }
-
     /**
      * Get email
      *
@@ -323,7 +288,6 @@ class User
     {
         return $this->email;
     }
-
     /**
      * Set phone
      *
@@ -334,10 +298,8 @@ class User
     public function setPhone($phone)
     {
         $this->phone = $phone;
-
         return $this;
     }
-
     /**
      * Get phone
      *
@@ -347,7 +309,6 @@ class User
     {
         return $this->phone;
     }
-
     /**
      * Set picture
      *
@@ -358,10 +319,8 @@ class User
     public function setPicture($picture)
     {
         $this->picture = $picture;
-
         return $this;
     }
-
     /**
      * Get picture
      *
@@ -371,5 +330,80 @@ class User
     {
         return $this->picture;
     }
-}
 
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max = 4096)
+     */
+    private $plainPassword;
+
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    private $password;
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password)
+    {
+        $this->plainPassword = $password;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
+
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function getRoles()
+    {
+        return array('ROLE_STUDENT');
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized);
+    }
+}
