@@ -1,10 +1,14 @@
 security:
+    encoders:
+        BackendBundle\Entity\User:
+            algorithm: bcrypt
+
     firewalls:
-        secured_area:
+        main:
             pattern:    ^/
+            http_basic: ~
+            provider: our_db_provider
             anonymous: ~
-            http_basic:
-                realm: "Secured Demo Area"
             logout:
                 invalidate_session: true
                 path:   /logout
@@ -18,6 +22,8 @@ security:
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login_check$, roles: [ROLE_STUDENT, ROLE_MENTOR, ROLE_OTHER] }
+
         - { path: ^/application/$, roles: [ROLE_MENTOR, ROLE_STUDENT] }
         - { path: ^/application/[0-9]+$, roles: [ROLE_MENTOR, ROLE_STUDENT] }
         - { path: ^/application/new, roles: ROLE_STUDENT }
@@ -50,17 +56,14 @@ security:
         - { path: ^/research/new$, roles: ROLE_ADMIN }
         - { path: ^/research/[0-9]+/edit$, roles: ROLE_ADMIN }
 
-        - { path: ^/user/$, roles: ROLE_ADMIN }
-        - { path: ^/research/[0-9]+$, roles: [ROLE_STUDENT, ROLE_MENTOR,ROLE_OTHER] }
-        - { path: ^/research/[0-9]+/edit$, roles: [ROLE_STUDENT, ROLE_MENTOR,ROLE_OTHER] }
+        #- { path: ^/user/$, roles: ROLE_ADMIN }
+        - { path: ^/user/[0-9]+$, roles: [ROLE_STUDENT, ROLE_MENTOR,ROLE_OTHER] }
+        - { path: ^/user/new$, roles: ROLE_ADMIN }
+        - { path: ^/user/[0-9]+/edit$, roles: [ROLE_STUDENT, ROLE_MENTOR,ROLE_OTHER] }
     providers:
-        in_memory:
-            memory:
-                users:
-                    alumno:  { password: alumnopass, roles: 'ROLE_STUDENT' }
-                    mentor:  { password: mentorpass, roles: 'ROLE_MENTOR' }
-                    otro:  { password: otropass, roles: 'ROLE_OTHER' }
-                    admin: { password: adminpass, roles: 'ROLE_ADMIN' }
-
-    encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        our_db_provider:
+            entity:
+                class: BackendBundle:User
+                property: email
+                # if you're using multiple entity managers
+                # manager_name: customer

@@ -30,8 +30,8 @@ class UserType extends AbstractType
             ->add('phone', null,array('label' => 'Telefono','attr' => array('class'=>'form-control')))
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
-                'first_options'  => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),
+                'first_options'  => array('label' => 'Contraseña','attr' => array('class'=>'form-control')),
+                'second_options' => array('label' => 'Repita Contraseña','attr' => array('class'=>'form-control')),
             ))
             //->add('picture', null,array('label' => 'Estado'))//este corresponde al path
             /* comentados por relaciones, agregar luego
