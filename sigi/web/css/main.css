@@ -20,8 +20,36 @@ body {
 .btn1, .btn2{
   float: left;
   margin: 5px;
+  margin-top: 30px;
 }
 
 .btn3{
   margin: 5px;
+  margin-top: 30px;
+}
+
+#column-container {
+  float:left;
+  width:100%;
+}
+#col-left {
+  float:left;
+  width:48%;
+}
+#col-right {
+  float:left;
+  width:48%;
+  margin-left: 4%;
+}
+
+.group-form{
+    background-color: #fff;
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 4px;
+    box-shadow: none;
+
+    position: relative;
+    padding: 15px 15px 15px;
+    border-style: solid;
 }
