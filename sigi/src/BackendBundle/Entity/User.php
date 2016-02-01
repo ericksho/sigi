@@ -50,11 +50,11 @@ class User  implements UserInterface, \Serializable
         // $this->salt = md5(uniqid(null, true));
     }
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="user_type", type="integer")
+     * @ORM\Column(name="role", type="string", length=20)
      */
-    private $userType;
+    private $role;
     /**
      * @var string
      *
@@ -119,25 +119,25 @@ class User  implements UserInterface, \Serializable
         return $this->id;
     }
     /**
-     * Set userType
+     * Set role
      *
-     * @param integer $userType
+     * @param string $role
      *
      * @return User
      */
-    public function setUserType($userType)
+    public function setRole($role)
     {
-        $this->userType = $userType;
+        $this->role = $role;
         return $this;
     }
     /**
-     * Get userType
+     * Get role
      *
-     * @return int
+     * @return string
      */
-    public function getUserType()
+    public function getRole()
     {
-        return $this->userType;
+        return $this->role;
     }
     /**
      * Set username
@@ -330,7 +330,6 @@ class User  implements UserInterface, \Serializable
     }
 
     /**
-     * @Assert\NotBlank()
      * @Assert\Length(max = 4096)
      */
     private $plainPassword;

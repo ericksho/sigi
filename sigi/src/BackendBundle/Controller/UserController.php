@@ -89,7 +89,7 @@ class UserController extends Controller
     public function editAction(Request $request, User $user)
     {
         $deleteForm = $this->createDeleteForm($user);
-        $editForm = $this->createForm('BackendBundle\Form\UserType', $user);
+        $editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('role'=>$this->get('security.token_storage')->getToken()->getUser()->getRole()));
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

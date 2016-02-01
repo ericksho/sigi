@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class UserType extends AbstractType
 {
@@ -18,8 +19,13 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $role = $options['role'];
+
         $builder
-            ->add('userType', null,array('label' => 'Tipo de usuario','attr' => array('class'=>'form-control')))
+            ->add('role', ChoiceType::class, array('label' => $role,'attr' => array('class'=>'form-control'),
+                'choices' => array('Administrador' => 'ROLE_ADMIN', 'Estudiante' => 'ROLE_STUDENT', 'Mentor' => 'ROLE_MENTOR', 'Otro' => 'ROLE_OTHER'),
+                // always include this
+                'choices_as_values' => true))
             ->add('username', null,array('label' => 'Nombre de usuario','attr' => array('class'=>'form-control')))
             ->add('rut', null,array('label' => 'Rut','attr' => array('class'=>'form-control')))
             ->add('name', null,array('label' => 'Nombre','attr' => array('class'=>'form-control')))
@@ -28,11 +34,6 @@ class UserType extends AbstractType
             ->add('secondSurname', null,array('label' => 'Apellido Materno','attr' => array('class'=>'form-control')))
             ->add('email', EmailType::class,array('label' => 'Email','attr' => array('class'=>'form-control')))
             ->add('phone', null,array('label' => 'Telefono','attr' => array('class'=>'form-control')))
-            ->add('plainPassword', RepeatedType::class, array(
-                'type' => PasswordType::class,
-                'first_options'  => array('label' => 'Contraseña','attr' => array('class'=>'form-control')),
-                'second_options' => array('label' => 'Repita Contraseña','attr' => array('class'=>'form-control')),
-            ))
             //->add('picture', null,array('label' => 'Estado'))//este corresponde al path
             /* comentados por relaciones, agregar luego
             ->add('mentor')
@@ -40,6 +41,13 @@ class UserType extends AbstractType
             ->add('student')
             */
         ;
+        if ($role == 'ROLE_ADMIN') {
+            $builder->add('plainPassword', RepeatedType::class, array(
+                'type' => PasswordType::class,
+                'first_options'  => array('label' => 'Contraseña','attr' => array('class'=>'form-control')),
+                'second_options' => array('label' => 'Repita Contraseña','attr' => array('class'=>'form-control')),
+            ));
+        }
     }
     
     /**
@@ -48,7 +56,8 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BackendBundle\Entity\User'
+            'data_class' => 'BackendBundle\Entity\User',
+            'role' => null
         ));
     }
 }
