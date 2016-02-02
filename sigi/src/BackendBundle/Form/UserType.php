@@ -41,7 +41,7 @@ class UserType extends AbstractType
             ->add('student')
             */
         ;
-        if ($role == 'ROLE_ADMIN') {
+        if (false) {
             $builder->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => 'Contraseña','attr' => array('class'=>'form-control')),
@@ -57,6 +57,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'BackendBundle\Entity\User',
+            'validation_groups' => array('edit'),
             'role' => null
         ));
     }

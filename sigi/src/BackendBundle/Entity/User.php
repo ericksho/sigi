@@ -330,7 +330,14 @@ class User  implements UserInterface, \Serializable
     }
 
     /**
-     * @Assert\Length(max = 4096)
+     * @Assert\NotBlank(message="Debe ingresar contraseña")
+     * @Assert\Length(
+     *      min = "5",
+     *      max = "12",
+     *      minMessage = "Contraseña debe ser de almenos 5 caracteres",
+     *      maxMessage = "Contraseña debe ser de menos de 12 caracteres",
+     *      groups = {"Default"}
+     * )
      */
     private $plainPassword;
 
@@ -346,12 +353,23 @@ class User  implements UserInterface, \Serializable
 
     public function setPlainPassword($password)
     {
-        $this->plainPassword = $password;
+        if (strlen($password) > 4) {
+            $this->plainPassword = $password;
+        }
+        else
+        {
+            $this->plainPassword = $this->plainPassword;   
+        }
     }
 
     public function setPassword($password)
     {
-        $this->password = $password;
+        if (strlen($password)>4) {
+            $this->password = $password;
+        }
+        else
+            $this->password = $this->password;
+
     }
 
     /**
@@ -373,7 +391,7 @@ class User  implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return array('ROLE_STUDENT');
+        return array($this->role);
     }
 
     public function eraseCredentials()

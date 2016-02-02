@@ -89,15 +89,18 @@ class UserController extends Controller
     public function editAction(Request $request, User $user)
     {
         $deleteForm = $this->createDeleteForm($user);
-        $editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('role'=>$this->get('security.token_storage')->getToken()->getUser()->getRole()));
+        #$editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('role'=>$this->get('security.token_storage')->getToken()->getUser()->getRole()));
+        $editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('role'=>'ROLE_ADMIN')); //add this to remove the password field
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             // Encode the password (you could also do this via Doctrine listener)
-            $password = $this->get('security.password_encoder')
-                ->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($password);
-
+            if(false) //no actualizamos contraseña aqui
+            {
+                $password = $this->get('security.password_encoder')
+                    ->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($password);
+            }
             
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

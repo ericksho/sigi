@@ -57,9 +57,9 @@ security:
         - { path: ^/research/[0-9]+/edit$, roles: ROLE_ADMIN }
 
         #- { path: ^/user/$, roles: ROLE_ADMIN }
-        - { path: ^/user/[0-9]+$, roles: [ROLE_STUDENT, ROLE_MENTOR,ROLE_OTHER] }
-        - { path: ^/user/new$, roles: ROLE_ADMIN }
-        - { path: ^/user/[0-9]+/edit$, roles: [ROLE_STUDENT, ROLE_MENTOR,ROLE_OTHER] }
+        #- { path: ^/user/[0-9]+$, roles: [ROLE_STUDENT, ROLE_MENTOR,ROLE_OTHER] }
+        #- { path: ^/user/new$, roles: ROLE_ADMIN }
+        #- { path: ^/user/[0-9]+/edit$, roles: [ROLE_STUDENT, ROLE_MENTOR,ROLE_OTHER] }
     providers:
         our_db_provider:
             entity:
