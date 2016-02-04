@@ -34,12 +34,12 @@ class UserType extends AbstractType
             ->add('secondSurname', null,array('label' => 'Apellido Materno','attr' => array('class'=>'form-control')))
             ->add('email', EmailType::class,array('label' => 'Email','attr' => array('class'=>'form-control')))
             ->add('phone', null,array('label' => 'Telefono','attr' => array('class'=>'form-control')))
-            //->add('picture', null,array('label' => 'Estado'))//este corresponde al path
-            /* comentados por relaciones, agregar luego
-            ->add('mentor')
-            ->add('other')
-            ->add('student')
-            */
+
+/*
+            ->add('student', new StudentType(), array(
+                'data_class' => 'BackendBundle\Entity\Student')
+               )
+*/
         ;
         if (false) {
             $builder->add('plainPassword', RepeatedType::class, array(
@@ -49,6 +49,8 @@ class UserType extends AbstractType
             ));
         }
     }
+
+
     
     /**
      * @param OptionsResolver $resolver

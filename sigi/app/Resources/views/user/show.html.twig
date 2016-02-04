@@ -10,6 +10,10 @@
                 <td>{{ user.id }}</td>
             </tr>
             <tr>
+                <th>student_id:</th>
+                <td>{{ user.student.id | default("user not set")}}</td>
+            </tr>
+            <tr>
                 <th>Contraseña:</th>
                 <td>{{ user.plainPassword}}</td>
             </tr>

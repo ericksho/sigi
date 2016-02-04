@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use BackendBundle\Entity\User;
 use BackendBundle\Form\UserType;
+use BackendBundle\Entity\Student;
+use BackendBundle\Form\StudentType;
 
 /**
  * User controller.
@@ -88,21 +90,35 @@ class UserController extends Controller
      */
     public function editAction(Request $request, User $user)
     {
+        //si el usuario tiene student
+        if ($user->getStudent())
+        {
+            $student = $user->getStudent();
+        }
+        // si no tiene student
+        else
+        {   
+            $student = new Student();
+            $student->setFaculty("nuevo estudiante");
+        }
+
+        //$student = $user->getStudent();
+
         $deleteForm = $this->createDeleteForm($user);
-        #$editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('role'=>$this->get('security.token_storage')->getToken()->getUser()->getRole()));
-        $editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('role'=>'ROLE_ADMIN')); //add this to remove the password field
+        $editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('role'=>$this->get('security.token_storage')->getToken()->getUser()->getRole()));
         $editForm->handleRequest($request);
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        $studentForm = $this->createForm('BackendBundle\Form\StudentType', $student);
+        $studentForm->handleRequest($request);
+
+
+        if (($editForm->isSubmitted() && $editForm->isValid()) && ($studentForm->isSubmitted() && $studentForm->isValid())) {
             // Encode the password (you could also do this via Doctrine listener)
-            if(false) //no actualizamos contraseña aqui
-            {
-                $password = $this->get('security.password_encoder')
-                    ->encodePassword($user, $user->getPlainPassword());
-                $user->setPassword($password);
-            }
             
+            // si hay un nuevo student
             $em = $this->getDoctrine()->getManager();
+            $em->persist($student);
+            $user->setStudent($student);
             $em->persist($user);
             $em->flush();
 
@@ -111,7 +127,9 @@ class UserController extends Controller
 
         return $this->render('user/edit.html.twig', array(
             'user' => $user,
+            'student' => $student,
             'edit_form' => $editForm->createView(),
+            'student_form' => $studentForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }

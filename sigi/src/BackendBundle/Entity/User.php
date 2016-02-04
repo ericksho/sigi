@@ -23,22 +23,27 @@ class User  implements UserInterface, \Serializable
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
     * @ORM\OneToOne(targetEntity="Mentor", mappedBy="user")
     */
     private $mentor;
+
     /**
     * @ORM\OneToOne(targetEntity="Other", mappedBy="user")
     */
     private $other;
+
     /**
-    * @ORM\OneToOne(targetEntity="Student", mappedBy="user")
+    * @ORM\OneToOne(targetEntity="Student", mappedBy="user", cascade={"persist"})
     */
     private $student;
+
     /**
      * @ORM\OneToMany(targetEntity="Notification", mappedBy="sender")
      */
     private $sendedNotifications;
+
     /**
      * @ORM\OneToMany(targetEntity="Notification", mappedBy="reciever")
      */
@@ -501,9 +506,10 @@ class User  implements UserInterface, \Serializable
      *
      * @return User
      */
-    public function setStudent(\BackendBundle\Entity\Student $student = null)
+    public function setStudent(\BackendBundle\Entity\Student $student)
     {
         $this->student = $student;
+        $student->setUser($this);
 
         return $this;
     }

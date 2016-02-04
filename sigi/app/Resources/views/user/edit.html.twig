@@ -3,30 +3,20 @@
 {% block body %}
     <h1>Editar Usuario</h1>
 
-    <div id="column-container" >
-	  <div id="col-left" class="group-form">
+    {{ form_start(edit_form) }}
+	        
+	    <div id="column-container" >
+		  <div id="col-left" class="group-form">
+		  	{{ form_widget(edit_form) }}
+		  </div>
 
-	     {{ form_start(edit_form) }}
-	        {{ form_widget(edit_form) }}
-	        <input type="submit" class="btn btn-primary btn1" role="button" value="Editar" />
-	    {{ form_end(edit_form) }}
-	  </div>
-
-	  <div id="col-right" class="group-form">
-	     <div class="dropdown">
-		  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-		    Rol
-		    <span class="caret"></span>
-		  </button>
-		  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-		    <li><a href="#">Estudiante</a></li>
-		    <li><a href="#">Mentor</a></li>
-		    <li><a href="#">Otro</a></li>
-		    <li><a href="#">Administrador</a></li>
-		  </ul>
+		  <div id="col-right" class="group-form">
+		     {{ form_widget(student_form) }}
+		  </div>
 		</div>
-	  </div>
-	</div>
+
+	<input type="submit" class="btn btn-primary btn1" role="button" value="Editar" />
+	{{ form_end(edit_form) }}
 
 
     
