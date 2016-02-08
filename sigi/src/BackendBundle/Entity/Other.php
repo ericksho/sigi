@@ -61,6 +61,20 @@ class Other
     }
 
     /**
+     * Set user
+     *
+     * @param \BackendBundle\Entity\User $user
+     *
+     * @return Other
+     */
+    public function setUser(\BackendBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
      * Get description
      *
      * @return string

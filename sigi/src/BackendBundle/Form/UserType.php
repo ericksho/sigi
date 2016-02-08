@@ -22,7 +22,7 @@ class UserType extends AbstractType
         $role = $options['role'];
 
         $builder
-            ->add('role', ChoiceType::class, array('label' => $role,'attr' => array('class'=>'form-control'),
+            ->add('role', ChoiceType::class, array('label' => $role,'attr' => array('class'=>'form-control',"onchange" => "collapseJS();"),
                 'choices' => array('Administrador' => 'ROLE_ADMIN', 'Estudiante' => 'ROLE_STUDENT', 'Mentor' => 'ROLE_MENTOR', 'Otro' => 'ROLE_OTHER'),
                 // always include this
                 'choices_as_values' => true))
@@ -35,11 +35,6 @@ class UserType extends AbstractType
             ->add('email', EmailType::class,array('label' => 'Email','attr' => array('class'=>'form-control')))
             ->add('phone', null,array('label' => 'Telefono','attr' => array('class'=>'form-control')))
 
-/*
-            ->add('student', new StudentType(), array(
-                'data_class' => 'BackendBundle\Entity\Student')
-               )
-*/
         ;
         if (false) {
             $builder->add('plainPassword', RepeatedType::class, array(

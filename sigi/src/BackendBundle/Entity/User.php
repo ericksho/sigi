@@ -25,12 +25,12 @@ class User  implements UserInterface, \Serializable
     private $id;
 
     /**
-    * @ORM\OneToOne(targetEntity="Mentor", mappedBy="user")
+    * @ORM\OneToOne(targetEntity="Mentor", mappedBy="user", cascade={"persist"})
     */
     private $mentor;
 
     /**
-    * @ORM\OneToOne(targetEntity="Other", mappedBy="user")
+    * @ORM\OneToOne(targetEntity="Other", mappedBy="user", cascade={"persist"})
     */
     private $other;
 
@@ -461,6 +461,7 @@ class User  implements UserInterface, \Serializable
     public function setMentor(\BackendBundle\Entity\Mentor $mentor = null)
     {
         $this->mentor = $mentor;
+        $mentor->setUser($this);
 
         return $this;
     }
@@ -485,6 +486,7 @@ class User  implements UserInterface, \Serializable
     public function setOther(\BackendBundle\Entity\Other $other = null)
     {
         $this->other = $other;
+        $other->setUser($this);
 
         return $this;
     }

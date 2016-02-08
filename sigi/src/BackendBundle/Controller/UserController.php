@@ -10,6 +10,10 @@ use BackendBundle\Entity\User;
 use BackendBundle\Form\UserType;
 use BackendBundle\Entity\Student;
 use BackendBundle\Form\StudentType;
+use BackendBundle\Entity\Mentor;
+use BackendBundle\Form\MentorType;
+use BackendBundle\Entity\Other;
+use BackendBundle\Form\OtherType;
 
 /**
  * User controller.
@@ -92,33 +96,66 @@ class UserController extends Controller
     {
         //si el usuario tiene student
         if ($user->getStudent())
-        {
             $student = $user->getStudent();
-        }
-        // si no tiene student
-        else
-        {   
+        else // si no tiene student
             $student = new Student();
-            $student->setFaculty("nuevo estudiante");
-        }
 
-        //$student = $user->getStudent();
+        //vemos si tiene o no mentor
+        if ($user->getMentor())
+            $mentor = $user->getMentor();
+        else
+            $mentor = new Mentor();
+
+        //vemos si tiene o no other
+        if ($user->getOther())
+            $other = $user->getOther();
+        else
+            $other = new Other();
 
         $deleteForm = $this->createDeleteForm($user);
-        $editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('role'=>$this->get('security.token_storage')->getToken()->getUser()->getRole()));
+        if(is_null($this->get('security.token_storage')->getToken()->getUser()))
+        {
+            $editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('role'=>$this->get('security.token_storage')->getToken()->getUser()->getRole()));
+        }
+        else
+        {
+            $editForm = $this->createForm('BackendBundle\Form\UserType', $user);
+        }
         $editForm->handleRequest($request);
 
+        //student form
         $studentForm = $this->createForm('BackendBundle\Form\StudentType', $student);
         $studentForm->handleRequest($request);
 
+        //mentor form
+        $mentorForm = $this->createForm('BackendBundle\Form\MentorType', $mentor);
+        $mentorForm->handleRequest($request);
 
-        if (($editForm->isSubmitted() && $editForm->isValid()) && ($studentForm->isSubmitted() && $studentForm->isValid())) {
+        //mentor form
+        $otherForm = $this->createForm('BackendBundle\Form\OtherType', $other);
+        $otherForm->handleRequest($request);
+
+
+        if (($editForm->isSubmitted() && $editForm->isValid()) 
+            && ($studentForm->isSubmitted() && $studentForm->isValid())
+            && ($mentorForm->isSubmitted() && $mentorForm->isValid())
+            && ($otherForm->isSubmitted() && $otherForm->isValid())) {
             // Encode the password (you could also do this via Doctrine listener)
+
+            $em = $this->getDoctrine()->getManager();  
+
+            // mentor
+            $em->persist($mentor);
+            $user->setMentor($mentor);
             
-            // si hay un nuevo student
-            $em = $this->getDoctrine()->getManager();
+            // student
             $em->persist($student);
             $user->setStudent($student);
+
+            // other
+            $em->persist($other);
+            $user->setOther($other);
+
             $em->persist($user);
             $em->flush();
 
@@ -130,6 +167,8 @@ class UserController extends Controller
             'student' => $student,
             'edit_form' => $editForm->createView(),
             'student_form' => $studentForm->createView(),
+            'mentor_form' => $mentorForm->createView(),
+            'other_form' => $otherForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }

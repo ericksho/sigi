@@ -97,6 +97,20 @@ class Mentor
     }
 
     /**
+     * Set user
+     *
+     * @param \BackendBundle\Entity\User $user
+     *
+     * @return Mentor
+     */
+    public function setUser(\BackendBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
      * Set uc
      *
      * @param boolean $uc

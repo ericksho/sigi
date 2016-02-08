@@ -20,23 +20,9 @@ class MentorType extends AbstractType
         //$role = $options['role'];
 
         $builder
-            ->add('uc')
-            //->add('picture', null,array('label' => 'Estado'))//este corresponde al path
-            /* comentados por relaciones, agregar luego
-            ->add('mentor')
+            ->add('uc',null,array('attr' => array('class'=>'form-control')))
 
-            ->add('other')
-            ->add('student')
-
-            */
         ;
-        if (false) {
-            $builder->add('plainPassword', RepeatedType::class, array(
-                'type' => PasswordType::class,
-                'first_options'  => array('label' => 'Contraseña','attr' => array('class'=>'form-control')),
-                'second_options' => array('label' => 'Repita Contraseña','attr' => array('class'=>'form-control')),
-            ));
-        }
     }
 
 
@@ -47,9 +33,8 @@ class MentorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BackendBundle\Entity\User',
+            'data_class' => 'BackendBundle\Entity\Mentor',
             'validation_groups' => array('edit'),
-            'role' => null
         ));
     }
 }

@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class StudentType extends AbstractType
+class OtherType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,11 +17,11 @@ class StudentType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        //$role = $options['role'];
+
         $builder
-            ->add('uc',null,array('attr' => array('class'=>'form-control')))
-            ->add('studentNumber',null,array('attr' => array('class'=>'form-control')))
-            ->add('specialty',null,array('attr' => array('class'=>'form-control')))
-            ->add('faculty',null,array('attr' => array('class'=>'form-control')))
+            ->add('description',null,array('attr' => array('class'=>'form-control')))
+
         ;
     }
 
@@ -33,7 +33,8 @@ class StudentType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BackendBundle\Entity\Student',
+            'data_class' => 'BackendBundle\Entity\Other',
+            'validation_groups' => array('edit'),
         ));
     }
 }
