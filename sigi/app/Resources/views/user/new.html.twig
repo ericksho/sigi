@@ -4,10 +4,106 @@
     <h1>Nuevo Usuario</h1>
 
     {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" class="btn btn-primary btn1" role="button" value="Crear" />
-    {{ form_end(form) }}
+
+		  	<div id="column-container" >
+		  <div id="col-left" class="group-form">
+		  	{{ form_widget(form) }}
+		  </div>
+
+		  <div id="col-right" class="group-form">
+
+			<div class="collapse" id="collapseAdmin">
+				<h3>Felicitaciones, este es un usuario Administrador</h3>
+			    
+			</div>
+
+			<div class="collapse" id="collapseStudent">
+				<h3>Información del Estudiante</h3>
+			    {{ form_widget(student_form) }}
+			</div>
+
+			<div class="collapse" id="collapseMentor">
+				<h3>Información del Mentor</h3>
+			    {{ form_widget(mentor_form) }}
+			</div>
+
+			<div class="collapse" id="collapseOther">
+				<h3>Información de Otro usuario</h3>	
+			    {{ form_widget(other_form) }}
+			</div>
+		  </div>
+		</div>
+
+        	<input type="submit" class="btn btn-primary btn1" role="button" value="Crear" />
+    	{{ form_end(form) }}
 
     <a href="{{ path('user_index') }}" class="btn btn-info btn2" role="button">Usuarios</a>
     
+
+
+<script type="text/javascript">
+
+window.onload = function() {
+        collapseJS();
+    };
+
+
+function collapseJS()
+{
+	var selectedRol = $("#user_role").val();
+
+	switch(selectedRol){
+		case "ROLE_ADMIN":
+			$("#collapseAdmin").collapse('show');
+    		$("#collapseStudent").collapse('hide');
+    		$("#collapseMentor").collapse('hide');
+    		$("#collapseOther").collapse('hide');
+
+			$("#collapseAdmin :input").attr("disabled", false);
+    		$("#collapseStudent :input").attr("disabled", true);
+    		$("#collapseMentor :input").attr("disabled", true);
+    		$("#collapseOther :input").attr("disabled", true);
+
+    		beak;
+
+		case "ROLE_STUDENT":
+    		$("#collapseAdmin").collapse('hide');
+    		$("#collapseStudent").collapse('show');
+    		$("#collapseMentor").collapse('hide');
+    		$("#collapseOther").collapse('hide');
+
+    		$("#collapseAdmin :input").attr("disabled", true);
+    		$("#collapseStudent :input").attr("disabled", false);
+    		$("#collapseMentor :input").attr("disabled", true);
+    		$("#collapseOther :input").attr("disabled", true);
+
+    		beak;
+
+		case "ROLE_MENTOR":
+    		$("#collapseAdmin").collapse('hide');
+    		$("#collapseStudent").collapse('hide');
+    		$("#collapseMentor").collapse('show');
+    		$("#collapseOther").collapse('hide');
+
+    		$("#collapseAdmin :input").attr("disabled", true);
+    		$("#collapseStudent :input").attr("disabled", true);
+    		$("#collapseMentor :input").attr("disabled", false);
+    		$("#collapseOther :input").attr("disabled", true);
+    		beak;
+
+		case "ROLE_OTHER":
+    		$("#collapseAdmin").collapse('hide');
+    		$("#collapseStudent").collapse('hide');
+    		$("#collapseMentor").collapse('hide');
+    		$("#collapseOther").collapse('show');
+
+    		$("#collapseAdmin :input").attr("disabled", true);
+    		$("#collapseStudent :input").attr("disabled", true);
+    		$("#collapseMentor :input").attr("disabled", true);
+    		$("#collapseOther :input").attr("disabled", false);
+
+    		beak;
+    	}
+}
+</script>
 {% endblock %}

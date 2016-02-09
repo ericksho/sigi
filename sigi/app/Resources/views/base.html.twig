@@ -148,7 +148,10 @@
         <!-- fin navbar menu!! -->
     <body>
 
-        {% block body %}{% endblock %}
+        {% block body %}
+        {% endblock %}
+
+        
         {% block javascripts %}
             <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>   
             <script src="{{ asset('bundles/bootstrap/js/bootstrap.min.js') }}"></script>

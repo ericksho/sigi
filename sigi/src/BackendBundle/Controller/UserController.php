@@ -2,6 +2,19 @@
 
 namespace BackendBundle\Controller;
 
+trait Referer {
+    private function getRefererParams() {
+        $request = $this->getRequest();
+        $referer = $request->headers->get('referer');
+        $baseUrl = $this->get('request')->getSchemeAndHttpHost();
+        $lastPath = substr($referer, strpos($referer, $baseUrl) + strlen($baseUrl));
+        return $this->get('router')->getMatcher()->match($lastPath);
+    }
+}
+
+
+
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -22,6 +35,8 @@ use BackendBundle\Form\OtherType;
  */
 class UserController extends Controller
 {
+    use Referer;
+
     /**
      * Lists all User entities.
      *
@@ -48,8 +63,25 @@ class UserController extends Controller
     public function newAction(Request $request)
     {
         $user = new User();
-        $form = $this->createForm('BackendBundle\Form\UserType', $user);
+
+        $student = new Student();
+        $mentor = new Mentor();
+        $other = new Other();
+
+        $form = $this->createForm('BackendBundle\Form\UserType', $user,array('pass'=>'yes'));
         $form->handleRequest($request);
+
+        //student form
+        $studentForm = $this->createForm('BackendBundle\Form\StudentType', $student);
+        $studentForm->handleRequest($request);
+
+        //mentor form
+        $mentorForm = $this->createForm('BackendBundle\Form\MentorType', $mentor);
+        $mentorForm->handleRequest($request);
+
+        //mentor form
+        $otherForm = $this->createForm('BackendBundle\Form\OtherType', $other);
+        $otherForm->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Encode the password (you could also do this via Doctrine listener)
@@ -58,15 +90,40 @@ class UserController extends Controller
             $user->setPassword($password);
 
             $em = $this->getDoctrine()->getManager();
+
+            // mentor
+            if ($mentorForm->isSubmitted() && $mentorForm->isValid())
+            {
+                $em->persist($mentor);
+                $user->setMentor($mentor);
+            }
+            
+            // student
+            if ($studentForm->isSubmitted() && $studentForm->isValid())
+            {
+                $em->persist($student);
+                $user->setStudent($student);
+            }
+
+            // other
+            if ($otherForm->isSubmitted() && $otherForm->isValid())
+            {
+                $em->persist($other);
+                $user->setOther($other);
+            }
+
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('user_show', array('id' => $user->getId()));
+            return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
         }
 
         return $this->render('user/new.html.twig', array(
             'user' => $user,
             'form' => $form->createView(),
+            'student_form' => $studentForm->createView(),
+            'mentor_form' => $mentorForm->createView(),
+            'other_form' => $otherForm->createView(),
         ));
     }
 
@@ -94,6 +151,24 @@ class UserController extends Controller
      */
     public function editAction(Request $request, User $user)
     {
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        if (!($currentUser->getId() == $user->getId() || strcmp($currentUser->getRole(), "ROLE_ADMIN") == 0))
+        {
+            $params = $this->getRefererParams();
+
+            $request->getSession()
+                ->getFlashBag()
+                ->add('success', 'Welcome to the Death Star, have a magical day!')
+            ;
+ 
+            return $this->redirect($this->generateUrl(
+                $params['_route'],
+                [
+                    
+                ]
+            ));
+        }
+
         //si el usuario tiene student
         if ($user->getStudent())
             $student = $user->getStudent();
@@ -113,14 +188,19 @@ class UserController extends Controller
             $other = new Other();
 
         $deleteForm = $this->createDeleteForm($user);
-        if(is_null($this->get('security.token_storage')->getToken()->getUser()))
+
+        if($this->get('security.token_storage')->getToken()->getUser()->getId() == $user->getid())
         {
-            $editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('role'=>$this->get('security.token_storage')->getToken()->getUser()->getRole()));
+            $editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('pass'=>'yes'));
+            $pass = TRUE;
         }
         else
         {
-            $editForm = $this->createForm('BackendBundle\Form\UserType', $user);
+            $editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('pass'=>'no'));
+            $pass = FALSE;
         }
+            
+
         $editForm->handleRequest($request);
 
         //student form
@@ -136,25 +216,37 @@ class UserController extends Controller
         $otherForm->handleRequest($request);
 
 
-        if (($editForm->isSubmitted() && $editForm->isValid()) 
-            && ($studentForm->isSubmitted() && $studentForm->isValid())
-            && ($mentorForm->isSubmitted() && $mentorForm->isValid())
-            && ($otherForm->isSubmitted() && $otherForm->isValid())) {
+        if (($editForm->isSubmitted() && $editForm->isValid())) {
             // Encode the password (you could also do this via Doctrine listener)
+            if ($pass)
+            {
+                $password = $this->get('security.password_encoder')
+                    ->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($password);
+            }
 
             $em = $this->getDoctrine()->getManager();  
 
             // mentor
-            $em->persist($mentor);
-            $user->setMentor($mentor);
+            if ($mentorForm->isSubmitted() && $mentorForm->isValid())
+            {
+                $em->persist($mentor);
+                $user->setMentor($mentor);
+            }
             
             // student
-            $em->persist($student);
-            $user->setStudent($student);
+            if ($studentForm->isSubmitted() && $studentForm->isValid())
+            {
+                $em->persist($student);
+                $user->setStudent($student);
+            }
 
             // other
-            $em->persist($other);
-            $user->setOther($other);
+            if ($otherForm->isSubmitted() && $otherForm->isValid())
+            {
+                $em->persist($other);
+                $user->setOther($other);
+            }
 
             $em->persist($user);
             $em->flush();

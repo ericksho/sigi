@@ -20,6 +20,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $role = $options['role'];
+        $pass = $options['pass'];
 
         $builder
             ->add('role', ChoiceType::class, array('label' => $role,'attr' => array('class'=>'form-control',"onchange" => "collapseJS();"),
@@ -36,7 +37,7 @@ class UserType extends AbstractType
             ->add('phone', null,array('label' => 'Telefono','attr' => array('class'=>'form-control')))
 
         ;
-        if (false) {
+        if (true){
             $builder->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => 'Contraseña','attr' => array('class'=>'form-control')),
@@ -55,7 +56,8 @@ class UserType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'BackendBundle\Entity\User',
             'validation_groups' => array('edit'),
-            'role' => null
+            'role' => null,
+            'pass' => null,
         ));
     }
 }
