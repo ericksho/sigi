@@ -10,4 +10,21 @@ namespace BackendBundle\Repository;
  */
 class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findOportunitiesByUserId($id)
+	{
+	    $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT o FROM BackendBundle:OportunityResearch o
+                JOIN o.mainMentor mm
+                JOIN o.secondaryMentor sm
+                JOIN o.thertiaryMentor tm
+                WHERE tm.id = :id OR mm.id = :id OR sm.id = :id'
+            )->setParameter('id', $id);
+     
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+	}
 }

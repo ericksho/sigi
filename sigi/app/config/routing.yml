@@ -44,3 +44,7 @@ logout:
 backend_security:
     resource: "@BackendBundle/Controller/SecurityController.php"
     type:     annotation
+
+backend_misc:
+    resource: "@BackendBundle/Controller/MiscController.php"
+    type:   annotation

@@ -26,7 +26,10 @@ class OportunityResearchController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findAll();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $id = $currentUser->getId();
+
+        $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findOportunitiesByUserId($id);
 
         return $this->render('oportunityresearch/index.html.twig', array(
             'oportunityResearches' => $oportunityResearches,
