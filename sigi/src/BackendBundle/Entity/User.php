@@ -48,6 +48,7 @@ class User  implements UserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="Notification", mappedBy="reciever")
      */
     private $recievedNotifications;
+
     public function __construct() {
         $this->features = new ArrayCollection();
         $this->isActive = true;
@@ -163,7 +164,8 @@ class User  implements UserInterface, \Serializable
      */
     public function getUsername()
     {
-        return $this->username;
+        //return $this->username;
+        return $this->name." ".$this->lastName;
     }
     /**
      * Set rut

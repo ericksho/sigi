@@ -10,4 +10,35 @@ namespace BackendBundle\Repository;
  */
 class NotificationRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findSendedsById($id)
+	{
+	    $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT n FROM BackendBundle:Notification n
+                JOIN n.sender s
+                WHERE s.id = :id'
+            )->setParameter('id', $id);
+     
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+	}
+
+	public function findRecievedsById($id)
+	{
+	    $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT n FROM BackendBundle:Notification n
+                JOIN n.reciever r
+                WHERE r.id = :id'
+            )->setParameter('id', $id);
+     
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+	}
 }

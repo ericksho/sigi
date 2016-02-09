@@ -37,13 +37,13 @@ class Notification
     private $readed;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="sender")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="sendedNotifications")
      * @ORM\JoinColumn(name="sender_id", referencedColumnName="id")
      */
     private $sender;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="reciever")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="recievedNotifications")
      * @ORM\JoinColumn(name="reciever_id", referencedColumnName="id")
      */
     private $reciever;
@@ -91,41 +91,13 @@ class Notification
     }
 
     /**
-     * Set sender_id
-     *
-     * @param integer $sender_id
-     *
-     * @return Notification
-     */
-    public function setSenderId($sender_id)
-    {
-        $this->sender_id = $sender_id;
-
-        return $this;
-    }
-
-    /**
      * Get sender_id
      *
      * @return string
      */
     public function getSenderId()
     {
-        return $this->sender_id;
-    }
-
-    /**
-     * Set reciever_id
-     *
-     * @param integer $reciever_id
-     *
-     * @return Notification
-     */
-    public function setRecieverId($reciever_id)
-    {
-        $this->reciever_id = $reciever_id;
-
-        return $this;
+        return $this->sender->getId;
     }
 
     /**
@@ -135,7 +107,7 @@ class Notification
      */
     public function getRecieverId()
     {
-        return $this->reciever_id;
+        return $this->reciever->getId();
     }
 
     /**
@@ -184,6 +156,56 @@ class Notification
     public function getReaded()
     {
         return $this->readed;
+    }
+
+    /**
+     * Set sender
+     *
+     * @param \BackendBundle\Entity\ $sender
+     *
+     * @return Notification
+     */
+    public function setSender(\BackendBundle\Entity\User $sender)
+    {
+        $this->sender = $sender;
+        $sender->addSendedNotification($this);
+
+        return $this;
+    }
+
+    /**
+     * Get sender
+     *
+     * @return \BackendBundle\Entity\User
+     */
+    public function getSender()
+    {
+        return $this->sender;
+    }
+
+    /**
+     * Set reciever
+     *
+     * @param \BackendBundle\Entity\ $reciever
+     *
+     * @return Notification
+     */
+    public function setReciever(\BackendBundle\Entity\User $reciever)
+    {
+        $this->reciever = $reciever;
+        $reciever->addSendedNotification($this);
+
+        return $this;
+    }
+
+    /**
+     * Get reciever
+     *
+     * @return \BackendBundle\Entity\User
+     */
+    public function getReciever()
+    {
+        return $this->reciever;
     }
 }
 

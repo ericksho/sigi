@@ -26,10 +26,19 @@ class NotificationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $id = $currentUser->getId();
+
+        $sended = $this->getDoctrine()->getRepository('BackendBundle:Notification')->findSendedsById($id);
+
+        $recieved = $this->getDoctrine()->getRepository('BackendBundle:Notification')->findRecievedsById($id);
+
         $notifications = $em->getRepository('BackendBundle:Notification')->findAll();
 
         return $this->render('notification/index.html.twig', array(
             'notifications' => $notifications,
+            'sended' => $sended,
+            'recieved' => $recieved,
         ));
     }
 
@@ -44,6 +53,11 @@ class NotificationController extends Controller
         $notification = new Notification();
         $form = $this->createForm('BackendBundle\Form\NotificationType', $notification);
         $form->handleRequest($request);
+
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        $notification->setSender($currentUser);
+        $notification->setReaded(FALSE);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -68,6 +82,16 @@ class NotificationController extends Controller
     public function showAction(Notification $notification)
     {
         $deleteForm = $this->createDeleteForm($notification);
+
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        if (!$notification->getReaded() && $currentUser->getId() == $notification->getRecieverId())
+        {
+            $notification->setReaded(TRUE);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($notification);
+            $em->flush();
+        }
 
         return $this->render('notification/show.html.twig', array(
             'notification' => $notification,

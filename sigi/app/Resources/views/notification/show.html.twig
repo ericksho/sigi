@@ -6,6 +6,14 @@
     <table>
         <tbody>
             <tr>
+                <th>De: </th>
+                <td>{{ notification.sender.username }}</td>
+            </tr>
+            <tr>
+                <th>Para: </th>
+                <td>{{ notification.reciever.username }}</td>
+            </tr>
+            <tr>
                 <th>Mensaje: </th>
                 <td>{{ notification.message }}</td>
             </tr>

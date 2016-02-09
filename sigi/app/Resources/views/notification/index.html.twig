@@ -1,33 +1,87 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Notificaciones</h1>
+    <h1>Notificaciones</h1>    
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Mensaje</th>
-                <th>Fecha envío</th>
-                <th>Leída</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for notification in notifications %}
-            <tr>
-                <td><a href="{{ path('notification_show', { 'id': notification.id }) }}">{{ notification.id }}</a></td>
-                <td>{{ notification.message }}</td>
-                <td>{% if notification.timestamp %}{{ notification.timestamp|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if notification.readed %}Si{% else %}No{% endif %}</td>
-                <td>
-                    <a href="{{ path('notification_show', { 'id': notification.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div>
+
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#Recibidos" aria-controls="Recibidos" role="tab" data-toggle="tab">Recibidos</a></li>
+        <li role="presentation"><a href="#Enviados" aria-controls="Enviados" role="tab" data-toggle="tab">Enviados</a></li>        
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="Recibidos">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Mensaje</th>
+                        <th>Fecha envío</th>
+                        <th>Leída</th>
+                        <th>De</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for notification in recieved %}
+                    <tr>
+                        <td><a href="{{ path('notification_show', { 'id': notification.id }) }}">{{ notification.id }}</a></td>
+                        <td>{{ notification.message|length > 30 ? notification.message|slice(0, 30) ~ '...' : notification.message  }}</td>
+                        <td>{% if notification.timestamp %}{{ notification.timestamp|date('Y-m-d H:i:s') }}{% endif %}</td>
+                        <td>{% if notification.readed %}Si{% else %}No{% endif %}</td>
+                        <td>{{ notification.sender.username }}</td>
+                        <td>
+                            <a href="{{ path('notification_show', { 'id': notification.id }) }}" class="btn {% if notification.readed %}btn-info{% else %}btn-danger{% endif %} btn-sm" role="button">Ver</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="Enviados">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Mensaje</th>
+                        <th>Fecha envío</th>
+                        <th>Leída</th>
+                        <th>Para</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for notification in sended %}
+                    <tr>
+                        <td><a href="{{ path('notification_show', { 'id': notification.id }) }}">{{ notification.id }}</a></td>
+                        <td>{{ notification.message|length > 30 ? notification.message|slice(0, 30) ~ '...' : notification.message  }}</td>
+                        <td>{% if notification.timestamp %}{{ notification.timestamp|date('Y-m-d H:i:s') }}{% endif %}</td>
+                        <td>{% if notification.readed %}Si{% else %}No{% endif %}</td>
+                        <td>{{ notification.reciever.username }}</td>
+                        <td>
+                            <a href="{{ path('notification_show', { 'id': notification.id }) }}" class="btn {% if notification.readed %}btn-info{% else %}btn-danger{% endif %} btn-sm" role="button">Ver</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+      </div>
+
+    </div>
 
     <a href="{{ path('notification_new') }}" class="btn btn-primary btn-sm" role="button">Enviar Nueva Notificacion</a>
+
+    <script type="text/javascript">
+
+        $('#myTabs a').click(function (e) {
+          e.preventDefault()
+          $(this).tab('show')
+        })
+    </script>
+
 
 {% endblock %}
