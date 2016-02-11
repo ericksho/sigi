@@ -44,12 +44,16 @@ class OportunityResearchController extends Controller
      */
     public function newAction(Request $request)
     {
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+
         $oportunityResearch = new OportunityResearch();
+
         $form = $this->createForm('BackendBundle\Form\OportunityResearchType', $oportunityResearch);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $OportunityResearch->setMainMentor($currentUser);
             $em->persist($oportunityResearch);
             $em->flush();
 

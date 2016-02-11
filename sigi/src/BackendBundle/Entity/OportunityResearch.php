@@ -262,5 +262,55 @@ class OportunityResearch
     {
         return $this->publish;
     }
+
+    /**
+     * Set secondaryMentor
+     *
+     * @param \BackendBundle\Entity\ $secondaryMentor
+     *
+     * @return Notification
+     */
+    public function setSecondaryMentor(\BackendBundle\Entity\Mentor $secondaryMentor)
+    {
+        $this->secondaryMentor = $secondaryMentor;
+        $secondaryMentor->addOportunityResearchAsSecondary($this);
+
+        return $this;
+    }
+
+    /**
+     * Get secondaryMentor
+     *
+     * @return \BackendBundle\Entity\Mentor
+     */
+    public function getSecondaryMentor()
+    {
+        return $this->secondaryMentor;
+    }
+
+    /**
+     * Set thertiaryMentor
+     *
+     * @param \BackendBundle\Entity\ $thertiaryMentor
+     *
+     * @return Notification
+     */
+    public function setThertiaryMentor(\BackendBundle\Entity\Mentor $thertiaryMentor)
+    {
+        $this->thertiaryMentor = $thertiaryMentor;
+        $thertiaryMentor->addOportunityResearchAsSecondary($this);
+
+        return $this;
+    }
+
+    /**
+     * Get thertiaryMentor
+     *
+     * @return \BackendBundle\Entity\Mentor
+     */
+    public function getThertiaryMentor()
+    {
+        return $this->thertiaryMentor;
+    }
 }
 

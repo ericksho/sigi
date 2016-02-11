@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Lista de Oportunidades Publicas</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha de creación</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Modalidad</th>
+                <th>Publicada</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for oportunityResearch in oportunityResearches %}
+            <tr>
+                <td><a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}">{{ oportunityResearch.id }}</a></td>
+                <td>{% if oportunityResearch.creationDate %}{{ oportunityResearch.creationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ oportunityResearch.name }}</td>
+                <td>{{ oportunityResearch.description }}</td>
+                <td>{{ oportunityResearch.modality }}</td>
+                <td>{% if oportunityResearch.publish %}Si{% else %}No{% endif %}</td>
+                <td><a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+   
+{% endblock %}

@@ -28,4 +28,21 @@ class MiscController extends Controller
         ));
     }
 
+    /**
+     * Lists all public OportunityResearch entities.
+     *
+     * @Route("/misc/publicOportunities")
+     * @Method("GET")
+     */
+    public function publicOportunities()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findByPublic(1);
+
+        return $this->render('misc/listOportunities.html.twig', array(
+            'oportunityResearches' => $oportunityResearches,
+        ));
+    }
+
 }

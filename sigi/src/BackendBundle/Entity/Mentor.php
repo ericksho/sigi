@@ -111,6 +111,26 @@ class Mentor
     }
 
     /**
+     * Get user
+     *
+     * @return \BackendBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getShowName()
+    {
+        return $this->user->getName()." ".$this->user->getLastName();
+    }
+
+    /**
      * Set uc
      *
      * @param boolean $uc
