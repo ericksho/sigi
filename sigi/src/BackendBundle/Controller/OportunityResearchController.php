@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use BackendBundle\Entity\OportunityResearch;
 use BackendBundle\Form\OportunityResearchType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
  * OportunityResearch controller.
@@ -51,9 +53,16 @@ class OportunityResearchController extends Controller
         $form = $this->createForm('BackendBundle\Form\OportunityResearchType', $oportunityResearch);
         $form->handleRequest($request);
 
+        $secondaryForm = $this->createForm('BackendBundle\Form\SecondaryMentorType', $oportunityResearch);
+        $secondaryForm->handleRequest($request);
+
+        $thertiaryForm = $this->createForm('BackendBundle\Form\ThertiaryMentorType', $oportunityResearch);
+        $thertiaryForm->handleRequest($request);
+        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $OportunityResearch->setMainMentor($currentUser);
+            $oportunityResearch->setMainMentor($currentUser->getMentor());
             $em->persist($oportunityResearch);
             $em->flush();
 
@@ -63,6 +72,8 @@ class OportunityResearchController extends Controller
         return $this->render('oportunityresearch/new.html.twig', array(
             'oportunityResearch' => $oportunityResearch,
             'form' => $form->createView(),
+            'secondaryForm' => $secondaryForm->createView(),
+            'thertiaryForm' => $thertiaryForm-> createView(),
         ));
     }
 
@@ -94,6 +105,12 @@ class OportunityResearchController extends Controller
         $editForm = $this->createForm('BackendBundle\Form\OportunityResearchType', $oportunityResearch);
         $editForm->handleRequest($request);
 
+        $secondaryForm = $this->createForm('BackendBundle\Form\SecondaryMentorType', $oportunityResearch);
+        $secondaryForm->handleRequest($request);
+
+        $thertiaryForm = $this->createForm('BackendBundle\Form\ThertiaryMentorType', $oportunityResearch);
+        $thertiaryForm->handleRequest($request);
+
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($oportunityResearch);
@@ -105,6 +122,8 @@ class OportunityResearchController extends Controller
         return $this->render('oportunityresearch/edit.html.twig', array(
             'oportunityResearch' => $oportunityResearch,
             'edit_form' => $editForm->createView(),
+            'secondaryForm' => $secondaryForm->createView(),
+            'thertiaryForm' => $thertiaryForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }

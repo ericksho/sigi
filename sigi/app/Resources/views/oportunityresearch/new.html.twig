@@ -1,14 +1,78 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/bootstrap-tag-cloud.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+
 {% block body %}
+	
     <h1>Nueva Oportunidad</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
+
+        <ul class="oportunityKeywords" data-prototype="{{ form_widget(form.oportunityKeywords.vars.prototype)|e }}">
+
+		</ul>
+
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		  <div class="panel panel-default">
+		    <div class="panel-heading" role="tab" id="headingOne">
+		      <h4 class="panel-title">
+		        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+		          Agregar un Segundo Mentor
+		        </a>
+		      </h4>
+		    </div>
+		    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+		      <div class="panel-body">
+		        {{ form_widget(secondaryForm) }}
+
+		        *Aunque cierre esta pestaña, si escogio un mentor sera agregado, si no quiere agregar uno, dejelo en blanco
+
+		      </div>
+		    </div>
+		  </div>
+		  <div class="panel panel-default">
+		    <div class="panel-heading" role="tab" id="headingTwo">
+		      <h4 class="panel-title">
+		        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+		          Agregar un Tercer Mentor 
+		        </a>
+		      </h4>
+		    </div>
+		    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+		      <div class="panel-body">
+		      	{{ form_widget(thertiaryForm) }}
+		        *Aunque cierre esta pestaña, si escogio un mentor sera agregado, si no quiere agregar uno, dejelo en blanco
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<div id="tag-success" class="input-append">
+		  <input type="text">
+		  <button class="btn btn-success" id="addKeyword" type="button">Agregar <i class="icon-plus"></i></button>
+		</div>
+		<ul id="tag-cloud"></ul>
+
+
         <input type="submit" class="btn btn-primary btn1" role="button" value="Crear" />
     {{ form_end(form) }}
 
  
     <a href="{{ path('oportunityresearch_index') }}" class="btn btn-info btn2" role="button">Lista de Oportunidades</a>
+
+    <script>
     
+</script>
+   
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('js/bootstrap-tag-cloud.	js') }}"></script>
 {% endblock %}

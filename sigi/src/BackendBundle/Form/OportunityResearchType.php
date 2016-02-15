@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class OportunityResearchType extends AbstractType
 {
@@ -24,24 +25,11 @@ class OportunityResearchType extends AbstractType
             ->add('public', ChoiceType::class,array('choices'  => array(1 => 'Publica', 2 => 'Privada'),'label' => 'Publica','attr' => array('class'=>'form-control')))
             ->add('modality', ChoiceType::class,array('choices'  => array(1 => 'Alfa numerico', 2 => 'Nota 1-7'),'label' => 'Modalidad','attr' => array('class'=>'form-control')))
             ->add('publish', null,array('label' => 'Publicada','attr' => array('class'=>'form-control')))
-            ->add('secondaryMentor', EntityType::class, array(
-                'placeholder' => 'Agregar Mentor Secundario',
-                'class' => 'BackendBundle:Mentor',
-                'query_builder' => function (EntityRepository $er) {return $er
-                    ->createQueryBuilder('m')
-                    ->join('m.user', 'u')
-                    ->where("u.role = 'ROLE_MENTOR'")
-                    ->orderBy('m.id', 'ASC');},
-                'choice_label' => 'getShowName',))
-            ->add('thertiaryMentor', EntityType::class, array(
-                'placeholder' => 'Agregar Mentor Terciario',
-                'class' => 'BackendBundle:Mentor',
-                'query_builder' => function (EntityRepository $er) {return $er
-                    ->createQueryBuilder('m')
-                    ->join('m.user', 'u')
-                    ->where("u.role = 'ROLE_MENTOR'")
-                    ->orderBy('m.id', 'ASC');},
-                'choice_label' => 'getShowName',))
+            ->add('oportunityKeywords', CollectionType::class, array(
+                'entry_type'   => KeywordType::class,
+                'allow_add'    => true,
+            ))
+
 
             /* comentados por relaciones, agregar luego
             ->add('research')

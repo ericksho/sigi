@@ -153,5 +153,89 @@ class Mentor
     {
         return $this->uc;
     }
+
+    /**
+     * Set OportunityResearch as Main
+     *
+     * @param \BackendBundle\Entity\OportunityResearch $oportunityResearch
+     *
+     * @return Mentor
+     */
+    public function addOportunityResearchAsMain(\BackendBundle\Entity\OportunityResearch $oportunityResearch)
+    {
+        $this->oportunitiesAsMain->add($oportunityResearch);
+
+        return $this;
+    }
+
+    /**
+     * Set OportunityResearch as Secondary
+     *
+     * @param \BackendBundle\Entity\OportunityResearch $oportunityResearch
+     *
+     * @return Mentor
+     */
+    public function addOportunityResearchAsSecondary(\BackendBundle\Entity\OportunityResearch $oportunityResearch)
+    {
+        $this->oportunitiesAsSecondary->add($oportunityResearch);
+
+        return $this;
+    }
+
+    /**
+     * Set OportunityResearch as Thertiary
+     *
+     * @param \BackendBundle\Entity\OportunityResearch $oportunityResearch
+     *
+     * @return Mentor
+     */
+    public function addOportunityResearchAsThertiary(\BackendBundle\Entity\OportunityResearch $oportunityResearch)
+    {
+        $this->oportunitiesAsThertiary->add($oportunityResearch);
+
+        return $this;
+    }
+
+    /**
+     * Delete OportunityResearch as Main
+     *
+     * @param \BackendBundle\Entity\OportunityResearch $oportunityResearch
+     *
+     * @return Mentor
+     */
+    public function deleteOportunityResearchAsMain(\BackendBundle\Entity\OportunityResearch $oportunityResearch)
+    {
+        $this->oportunitiesAsMain->removeElement($oportunityResearch);
+
+        return $this;
+    }
+
+    /**
+     * Delete OportunityResearch as Secondary
+     *
+     * @param \BackendBundle\Entity\OportunityResearch $oportunityResearch
+     *
+     * @return Mentor
+     */
+    public function deleteOportunityResearchAsSecondary(\BackendBundle\Entity\OportunityResearch $oportunityResearch)
+    {
+        $this->oportunitiesAsSecondary->removeElement($oportunityResearch);
+
+        return $this;
+    }
+
+    /**
+     * Delete OportunityResearch as Thertiary
+     *
+     * @param \BackendBundle\Entity\OportunityResearch $oportunityResearch
+     *
+     * @return Mentor
+     */
+    public function deleteOportunityResearchAsThertiary(\BackendBundle\Entity\OportunityResearch $oportunityResearch)
+    {
+        $this->oportunitiesAsThertiary->removeElement($oportunityResearch);
+
+        return $this;
+    }
 }
 

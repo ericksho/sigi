@@ -264,16 +264,51 @@ class OportunityResearch
     }
 
     /**
+     * Set mainMentor
+     *
+     * @param \BackendBundle\Entity\ $mainMentor
+     *
+     * @return Notification
+     */
+    public function setMainMentor(\BackendBundle\Entity\Mentor $mainMentor = null)
+    {
+        if (is_int($mainMentor))
+            if(is_null($this->mainMentor))
+                $mainMentor->deleteOportunityResearchAsMain($this);
+        else
+            $mainMentor->addOportunityResearchAsMain($this);
+
+        $this->mainMentor = $mainMentor;
+
+        return $this;
+    }
+
+    /**
+     * Get mainMentor
+     *
+     * @return \BackendBundle\Entity\Mentor
+     */
+    public function getMainMentor()
+    {
+        return $this->mainMentor;
+    }
+
+    /**
      * Set secondaryMentor
      *
      * @param \BackendBundle\Entity\ $secondaryMentor
      *
      * @return Notification
      */
-    public function setSecondaryMentor(\BackendBundle\Entity\Mentor $secondaryMentor)
+    public function setSecondaryMentor(\BackendBundle\Entity\Mentor $secondaryMentor = null)
     {
+        if (is_int($secondaryMentor))
+            if(is_null($this->secondaryMentor))
+                $secondaryMentor->deleteOportunityResearchAsSecondary($this);
+        else
+            $secondaryMentor->addOportunityResearchAsSecondary($this);
+
         $this->secondaryMentor = $secondaryMentor;
-        $secondaryMentor->addOportunityResearchAsSecondary($this);
 
         return $this;
     }
@@ -295,10 +330,15 @@ class OportunityResearch
      *
      * @return Notification
      */
-    public function setThertiaryMentor(\BackendBundle\Entity\Mentor $thertiaryMentor)
+    public function setThertiaryMentor(\BackendBundle\Entity\Mentor $thertiaryMentor = null)
     {
+        if (is_int($thertiaryMentor))
+            if(is_null($this->thertiaryMentor))
+                $thertiaryMentor->deleteOportunityResearchAsThertiary($this);
+        else
+            $thertiaryMentor->addOportunityResearchAsThertiary($this);
+
         $this->thertiaryMentor = $thertiaryMentor;
-        $thertiaryMentor->addOportunityResearchAsSecondary($this);
 
         return $this;
     }
@@ -311,6 +351,16 @@ class OportunityResearch
     public function getThertiaryMentor()
     {
         return $this->thertiaryMentor;
+    }
+
+    /**
+     * Get oportunityKeywords
+     *
+     * @return \BackendBundle\Entity\Keyword
+     */
+    public function getOportunityKeywords()
+    {
+        return $this->oportunityKeywords;
     }
 }
 
