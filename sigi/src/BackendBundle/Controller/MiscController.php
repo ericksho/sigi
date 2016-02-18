@@ -40,7 +40,7 @@ class MiscController extends Controller
 
         $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findByPublic(1);
 
-        return $this->render('misc/listOportunities.html.twig', array(
+        return $this->render('misc/publicOportunities.html.twig', array(
             'oportunityResearches' => $oportunityResearches,
         ));
     }

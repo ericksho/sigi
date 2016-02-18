@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use BackendBundle\Entity\Keyword;
 
 class OportunityResearchType extends AbstractType
 {
@@ -18,6 +19,7 @@ class OportunityResearchType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
             ->add('name', null,array('label' => 'Nombre','attr' => array('class'=>'form-control')))
             ->add('creationDate', 'datetime', array('date_widget' => 'single_text','time_widget' => 'single_text', 'attr' => array('readonly' => true), 'label' => 'Fecha de creación', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
@@ -25,12 +27,7 @@ class OportunityResearchType extends AbstractType
             ->add('public', ChoiceType::class,array('choices'  => array(1 => 'Publica', 2 => 'Privada'),'label' => 'Publica','attr' => array('class'=>'form-control')))
             ->add('modality', ChoiceType::class,array('choices'  => array(1 => 'Alfa numerico', 2 => 'Nota 1-7'),'label' => 'Modalidad','attr' => array('class'=>'form-control')))
             ->add('publish', null,array('label' => 'Publicada','attr' => array('class'=>'form-control')))
-            ->add('oportunityKeywords', CollectionType::class, array(
-                'entry_type'   => KeywordType::class,
-                'allow_add'    => true,
-            ))
-
-
+            
             /* comentados por relaciones, agregar luego
             ->add('research')
             */

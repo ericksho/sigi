@@ -362,5 +362,72 @@ class OportunityResearch
     {
         return $this->oportunityKeywords;
     }
+
+    /**
+     * Get mentorsName
+     *
+     * @return array
+     */
+    public function getMentorsName()
+    {
+        $mentors = array();
+        $count = 0;
+        $main = $this->mainMentor;
+        $secondary = $this->secondaryMentor;
+        $thertiary = $this->thertiaryMentor;
+
+        if (!is_null($main))
+        {
+            $mentors[$count] = $main->getShowName();
+            $count = $count + 1;
+        }
+        if(!is_null($secondary))
+        {
+            $mentors[$count] = $secondary->getShowName();
+            $count = $count + 1;
+        }
+        if(!is_null($thertiary))
+            $mentors[$count] = $thertiary->getShowName();
+
+        return $mentors;
+    }
+
+    /**
+     * Get keywords
+     *
+     * @return array
+     */
+    public function getKeywordsArray()
+    {
+        $keywords = $this->oportunityKeywords->getValues();
+
+        return $keywords;
+    }
+
+    /**
+     * Add keyword
+     *
+     * @param \BackendBundle\Entity\Keyword $keyword
+     *
+     * @return OportunityResearch
+     */
+    public function addOportunityKeyword(\BackendBundle\Entity\Keyword $keyword)
+    {
+        $this->oportunityKeywords->add($keyword);
+        return $this;
+    }
+
+    /**
+     * Delete keyword
+     *
+     * @param \BackendBundle\Entity\Keyword $keyword
+     *
+     * @return OportunityResearch
+     */
+    public function removeOportunityKeyword(\BackendBundle\Entity\Keyword $keyword)
+    {
+        $this->oportunityKeywords->removeElement($keyword);
+        return $this;
+    }
 }
 

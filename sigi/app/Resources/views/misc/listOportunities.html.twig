@@ -1,12 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Lista de Oportunidades</h1>
+    <h1>Lista de Opfdsfasdortunidades</h1>
 
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Mentor</th>
                 <th>Fecha de creación</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
@@ -20,7 +21,8 @@
         {% for oportunityResearch in oportunityResearches %}
             <tr>
                 <td><a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}">{{ oportunityResearch.id }}</a></td>
-                <td>{% if oportunityResearch.creationDate %}{{ oportunityResearch.creationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if oportunityResearch.mainMentor is null %}no tiene mentor {% else %}{{ oportunityResearch.mainMentor.user.name }} {% endif %}</td>
+                <td>{% if oportunityResearch.creationDate %}{{ oportunityResearch.creationDate|date('d-m-Y') }}{% endif %}</td>
                 <td>{{ oportunityResearch.name }}</td>
                 <td>{{ oportunityResearch.description }}</td>
                 <td>{{ oportunityResearch.public }}</td>

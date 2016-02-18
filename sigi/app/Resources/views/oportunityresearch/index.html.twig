@@ -13,6 +13,8 @@
                 <th>Publica</th>
                 <th>Modalidad</th>
                 <th>Publicada</th>
+                <th>keywords</th>
+                <th>Mentores</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -27,6 +29,24 @@
                 <td>{{ oportunityResearch.public }}</td>
                 <td>{{ oportunityResearch.modality }}</td>
                 <td>{% if oportunityResearch.publish %}Si{% else %}No{% endif %}</td>
+                <td>{{ oportunityResearch.oportunityKeywords|length }}
+                    <ul>
+                        {% for keyword in oportunityResearch.oportunityKeywords() %}
+                            <li>
+                                {{ keyword }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        {% for mentorName in oportunityResearch.getMentorsName() %}
+                            <li>
+                                {{ mentorName }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
                 <td><a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a></td>
                 <td><a href="{{ path('oportunityresearch_edit', { 'id': oportunityResearch.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a></td>
             </tr>

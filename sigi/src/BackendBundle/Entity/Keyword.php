@@ -39,7 +39,7 @@ class Keyword
      * @ORM\ManyToOne(targetEntity="OportunityResearch", inversedBy="oportunityKeywords")
      * @ORM\JoinColumn(name="oportunityResearch_id", referencedColumnName="id")
      */
-    private $oportynityResearch;
+    private $oportunityResearch;
 
     /**
      * Get id

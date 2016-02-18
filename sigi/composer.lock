@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7fa4a1e562c0b0f82d8af0f34b7095fe",
-    "content-hash": "4dca939578b4983da78fa0d5156c6031",
+    "hash": "1385f559c2557c7169814561e661b1c7",
+    "content-hash": "17dd34ba5b8be6406fee0535d5b82781",
     "packages": [
         {
             "name": "besimple/sso-auth-bundle",
@@ -18,7 +18,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BeSimple/BeSimpleSsoAuthBundle/zipball/d8be760bf4572373dfd7251356ba5cc397836ceb",
+                "url": "https://api.github.com/repos/BeSimple/BeSimpleSsoAuthBundle/zipball/f6f3317f12d180f9d275e85a9bf210b99efc8831",
                 "reference": "d8be760bf4572373dfd7251356ba5cc397836ceb",
                 "shasum": ""
             },
@@ -1154,6 +1154,50 @@
                 "random"
             ],
             "time": "2015-12-10 14:48:13"
+        },
+        {
+            "name": "pinano/select2-bundle",
+            "version": "dev-master",
+            "target-dir": "Pinano/Select2Bundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pinano/select2-bundle.git",
+                "reference": "08d51e026182d99d357d79de74cee46959bc8ae7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pinano/select2-bundle/zipball/08d51e026182d99d357d79de74cee46959bc8ae7",
+                "reference": "08d51e026182d99d357d79de74cee46959bc8ae7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": "~2.3|~3.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Pinano\\Select2Bundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fernando Arroyo",
+                    "email": "farroyo@gmail.com"
+                }
+            ],
+            "description": "Symfony2 bundle for wrapping the famous select2 jquery plugin by @ivaynberg",
+            "homepage": "http://github.com/pinano/select2-bundle",
+            "keywords": [
+                "bundle",
+                "jquery",
+                "select2"
+            ],
+            "time": "2016-02-03 15:28:44"
         },
         {
             "name": "psr/log",
@@ -2326,7 +2370,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "besimple/sso-auth-bundle": 20
+        "besimple/sso-auth-bundle": 20,
+        "pinano/select2-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

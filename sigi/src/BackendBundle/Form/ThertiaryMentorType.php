@@ -17,15 +17,20 @@ class ThertiaryMentorType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+        $current_id = $options['current_id'];
+
         $builder
              ->add('thertiaryMentor', EntityType::class, array(
                 'required' => false,
                 'placeholder' => 'Seleccione al Mentor Terciario',
                 'class' => 'BackendBundle:Mentor',
-                'query_builder' => function (EntityRepository $er) {return $er
+                'query_builder' => function (EntityRepository $er)  use ( $current_id ) {return $er
                     ->createQueryBuilder('m')
                     ->join('m.user', 'u')
                     ->where("u.role = 'ROLE_MENTOR'")
+                    ->andWhere('u.id <> :id')
+                    ->setParameter('id', $current_id)
                     ->orderBy('m.id', 'ASC');},
                 'choice_label' => 'getShowName',))
         ;
@@ -37,7 +42,8 @@ class ThertiaryMentorType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BackendBundle\Entity\OportunityResearch'
+            'data_class' => 'BackendBundle\Entity\OportunityResearch',
+            'current_id' => 0,
         ));
     }
 }
