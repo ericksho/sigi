@@ -10,6 +10,7 @@ use BackendBundle\Entity\OportunityResearch;
 use BackendBundle\Form\OportunityResearchType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use BackendBundle\Entity\Keyword;
 
 /**
  * OportunityResearch controller.
@@ -50,7 +51,8 @@ class OportunityResearchController extends Controller
 
         $oportunityResearch = new OportunityResearch();
 
-        $form = $this->createForm('BackendBundle\Form\OportunityResearchType', $oportunityResearch);
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(new OportunityResearchType($em), $oportunityResearch);
         $form->handleRequest($request);
 
         $secondaryForm = $this->createForm('BackendBundle\Form\SecondaryMentorType', $oportunityResearch, array('current_id'=>$currentUser->getId()));
@@ -103,7 +105,8 @@ class OportunityResearchController extends Controller
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
         
         $deleteForm = $this->createDeleteForm($oportunityResearch);
-        $editForm = $this->createForm('BackendBundle\Form\OportunityResearchType', $oportunityResearch);
+        $em = $this->getDoctrine()->getManager();
+        $editForm = $this->createForm(new OportunityResearchType($em), $oportunityResearch);
         $editForm->handleRequest($request);
 
         $secondaryForm = $this->createForm('BackendBundle\Form\SecondaryMentorType', $oportunityResearch, array('current_id'=>$currentUser->getId()));
@@ -112,22 +115,13 @@ class OportunityResearchController extends Controller
         $thertiaryForm = $this->createForm('BackendBundle\Form\ThertiaryMentorType', $oportunityResearch, array('current_id'=>$currentUser->getId()));
         $thertiaryForm->handleRequest($request);
 
-/*******aqui estamos trabajando con esto, ahy que guardar aqui y tambien hay que mostrar al cargar ********************/
-        $keywordsForm = $this->createFormBuilder($oportunityResearch)
-            ->add('oportunityKeywords', EntityType::class, array(
-                'label' => 'Keywords',
-                'required' => false,
-                'placeholder' => 'Keywords relacionadas',
-                'class' => 'BackendBundle:Keyword',
-                'multiple' => true,
-                'attr' => array('class'=>'js-example-tokenizer'),
-                'choice_label' => 'keyword',))
-            ->getForm();
-
-        $keywordsForm->handleRequest($request);
-
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
+
+            //agregar keywords a la oportunidad
+            
+
             $em->persist($oportunityResearch);
             $em->flush();
 
@@ -140,7 +134,6 @@ class OportunityResearchController extends Controller
             'secondaryForm' => $secondaryForm->createView(),
             'thertiaryForm' => $thertiaryForm->createView(),
             'delete_form' => $deleteForm->createView(),
-            'keywordsForm' => $keywordsForm->createView(),
         ));
     }
 

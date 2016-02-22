@@ -29,11 +29,11 @@
                 <td>{{ oportunityResearch.public }}</td>
                 <td>{{ oportunityResearch.modality }}</td>
                 <td>{% if oportunityResearch.publish %}Si{% else %}No{% endif %}</td>
-                <td>{{ oportunityResearch.oportunityKeywords|length }}
+                <td>
                     <ul>
                         {% for keyword in oportunityResearch.oportunityKeywords() %}
                             <li>
-                                {{ keyword }}
+                                {{ keyword.keyword }}
                             </li>
                         {% endfor %}
                     </ul>

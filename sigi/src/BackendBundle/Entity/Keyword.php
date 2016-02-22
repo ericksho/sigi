@@ -36,8 +36,7 @@ class Keyword
     private $mentor;
 
     /**
-     * @ORM\ManyToOne(targetEntity="OportunityResearch", inversedBy="oportunityKeywords")
-     * @ORM\JoinColumn(name="oportunityResearch_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="OportunityResearch", mappedBy="oportunityKeywords")
      */
     private $oportunityResearch;
 

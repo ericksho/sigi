@@ -65,8 +65,8 @@ class OportunityResearch
     private $publish;
 
     /**
-     * @ORM\OneToOne(targetEntity="Research", inversedBy="research")
-     * @ORM\JoinColumn(name="research_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Research", inversedBy="oportunityResearch")
+     * @ORM\JoinColumn(name="oportunityResearch_id", referencedColumnName="id")
      */
     private $research;
 
@@ -76,7 +76,8 @@ class OportunityResearch
     private $applications;
 
     /**
-     * @ORM\OneToMany(targetEntity="Keyword", mappedBy="oportunityResearch")
+     * @ORM\ManyToMany(targetEntity="Keyword", inversedBy="oportunityResearch")
+     * @ORM\JoinTable(name="keywords_oportunityResearchs")
      */
     private $oportunityKeywords;
 
@@ -427,6 +428,19 @@ class OportunityResearch
     public function removeOportunityKeyword(\BackendBundle\Entity\Keyword $keyword)
     {
         $this->oportunityKeywords->removeElement($keyword);
+        return $this;
+    }
+
+    /**
+     * Add keyword
+     *
+     * @param \BackendBundle\Entity\Keyword $keyword
+     *
+     * @return OportunityResearch
+     */
+    public function setOportunityKeyword(ArrayCollection $keywords)
+    {
+        $this->oportunityKeywords = $keywords;
         return $this;
     }
 }

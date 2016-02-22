@@ -50,7 +50,7 @@
 		  </div>
 		</div>
 		</br>
-		{{ form_widget(keywordsForm) }}
+		
 		</br>
 		</br>
 		
@@ -70,7 +70,7 @@ window.onload = function() {
 	
  	$(".js-example-tokenizer").select2({
   	tags: true,
-  	tokenSeparators: [',', ' ']
+  	tokenSeparators: [',']
 })
    var x = document.getElementsByClassName("select2-container");
    x[0].style.width = "100%"
@@ -97,11 +97,6 @@ window.onload = function() {
   			alert( repeteadText + "Ya ha sido seleccionado, porfavor seleccione otro mentor" );
   			this.selectedIndex = 0;
 		}
-	})
-
-	$('#oportunity_research_oportunityKeywords').on('change', function() {
-		
-  		alert( $('#oportunity_research_oportunityKeywords').val() );
 	})
 };
 
