@@ -68,10 +68,18 @@
 <script type="text/javascript">
 
 window.onload = function() {
+
+
 	
+	$.fn.select2.defaults.defaults['language'].inputTooLong = function(){
+  		return 'Tag demasiado largo, maximo largo es de 20 caracteres'
+	};
+
+
  	$(".js-example-tokenizer").select2({
   	tags: true,
-  	tokenSeparators: [',']
+  	tokenSeparators: [','],
+  	maximumInputLength: 20,
 })
    var x = document.getElementsByClassName("select2-container");
    x[0].style.width = "100%"
