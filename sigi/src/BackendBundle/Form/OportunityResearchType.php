@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use BackendBundle\Entity\Keyword;
+use BackendBundle\Entity\Prerequisite;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
@@ -48,6 +49,15 @@ class OportunityResearchType extends AbstractType
                 'attr' => array('class'=>'js-example-tokenizer'),
                 'choice_label' => 'keyword',))
 
+            ->add('prerequisites', EntityType::class, array(
+                'label' => 'Prerequisitos (Siglas)',
+                'required' => false,
+                'placeholder' => 'Agregue siglas de prerequisito',
+                'class' => 'BackendBundle:Prerequisite',
+                'multiple' => true,
+                'attr' => array('class'=>'js-tokenizer'),
+                'choice_label' => 'courseNumber',))
+
             /* comentados por relaciones, agregar luego
             ->add('research')
             */
@@ -82,6 +92,33 @@ class OportunityResearchType extends AbstractType
                     }
     
                     $data['oportunityKeywords'] = $keywords;
+                    $event->setData($data);
+                }
+
+                if (isset($data['prerequisites']))
+                {
+                    $prerequisites = $data['prerequisites'];
+    
+                    $s = " ";         
+    
+                    foreach($prerequisites as $prerequisiteId)
+                    {
+                        
+                        if(!is_numeric($prerequisiteId))
+                        {
+                            $prerequisite = new Prerequisite();
+                            $prerequisite->setCourseNumber($prerequisiteId);
+    
+                            $em = $this->em;
+                            $em->persist($prerequisite);
+                            $em->flush();
+    
+                            $keyId = array_search($prerequisiteId, $prerequisites); // returns the first key whose value is 'green'
+                            $prerequisites[$keyId] = $prerequisite->getId(); // replace 'green' with 'apple'
+                        }
+                    }
+    
+                    $data['prerequisites'] = $prerequisites;
                     $event->setData($data);
                 }
             }

@@ -19,7 +19,7 @@
             <tr>
                 <td><a href="{{ path('requirement_show', { 'id': requirement.id }) }}">{{ requirement.id }}</a></td>
                 <td>{{ requirement.description }}</td>
-                <td>{{ requirement.type }}</td>
+                <td>{{ requirement.getTextType() }}</td>
                 <td>{{ requirement.function }}</td>
                 <td><a href="{{ path('requirement_show', { 'id': requirement.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a></td>
                 <td><a href="{{ path('requirement_edit', { 'id': requirement.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a></tr>

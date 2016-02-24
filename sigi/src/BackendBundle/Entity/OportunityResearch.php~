@@ -89,12 +89,11 @@ class OportunityResearch
 
     /**
      * @ORM\ManyToMany(targetEntity="Prerequisite", inversedBy="oportunityResearch")
-     * @ORM\JoinTable(name="prerequisites_oportunityResearchs")
+     * @ORM\JoinTable(name="Prerequisite_oportunityResearchs")
      */
-    private $prerequisites;
+    private $prerequisite;
 
     public function __construct() {
-        $this->prerequisites = new ArrayCollection();
         $this->oportunityKeywords = new ArrayCollection();
         $this->applications = new ArrayCollection();
         $this->requirements = new ArrayCollection();
@@ -451,124 +450,5 @@ class OportunityResearch
         $this->oportunityKeywords = $keywords;
         return $this;
     }
-
-    /**
-     * Set research
-     *
-     * @param \BackendBundle\Entity\Research $research
-     *
-     * @return OportunityResearch
-     */
-    public function setResearch(\BackendBundle\Entity\Research $research = null)
-    {
-        $this->research = $research;
-
-        return $this;
-    }
-
-    /**
-     * Get research
-     *
-     * @return \BackendBundle\Entity\Research
-     */
-    public function getResearch()
-    {
-        return $this->research;
-    }
-
-    /**
-     * Add application
-     *
-     * @param \BackendBundle\Entity\Application $application
-     *
-     * @return OportunityResearch
-     */
-    public function addApplication(\BackendBundle\Entity\Application $application)
-    {
-        $this->applications[] = $application;
-
-        return $this;
-    }
-
-    /**
-     * Remove application
-     *
-     * @param \BackendBundle\Entity\Application $application
-     */
-    public function removeApplication(\BackendBundle\Entity\Application $application)
-    {
-        $this->applications->removeElement($application);
-    }
-
-    /**
-     * Get applications
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getApplications()
-    {
-        return $this->applications;
-    }
-
-
-    /**
-     * Get Prerequisite
-     *
-     * @return array
-     */
-    public function getPrerequisitesArray()
-    {
-        $prerequisites = $this->prerequisites->getValues();
-
-        return $prerequisites;
-    }
-
-    /**
-     * Add prerequisite
-     *
-     * @param \BackendBundle\Entity\Prerequisite $prerequisite
-     *
-     * @return OportunityResearch
-     */
-    public function addPrerequisite(\BackendBundle\Entity\Prerequisite $prerequisite)
-    {
-        $this->prerequisites->add($prerequisite);
-        return $this;
-    }
-
-    /**
-     * Delete prerequisite
-     *
-     * @param \BackendBundle\Entity\Prerequisite $prerequisite
-     *
-     * @return OportunityResearch
-     */
-    public function removePrerequisite(\BackendBundle\Entity\Prerequisite $prerequisite)
-    {
-        $this->prerequisites->removeElement($prerequisite);
-        return $this;
-    }
-
-    /**
-     * Add prerequisite
-     *
-     * @param \BackendBundle\Entity\Prerequisite $prerequisite
-     *
-     * @return OportunityResearch
-     */
-    public function setPrerequisite(ArrayCollection $prerequisite)
-    {
-        $this->prerequisites = $prerequisite;
-        return $this;
-    }
-
-    /**
-     * Get prerequisites
-     *
-     * @return \BackendBundle\Entity\Prerequisite
-     */
-    public function getPrerequisites()
-    {
-        return $this->prerequisites;
-    }
 }
+

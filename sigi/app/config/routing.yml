@@ -1,3 +1,7 @@
+backend_prerequisite:
+    resource: "@BackendBundle/Controller/PrerequisiteController.php"
+    type:     annotation
+
 backend_user:
     resource: "@BackendBundle/Controller/UserController.php"
     type:     annotation

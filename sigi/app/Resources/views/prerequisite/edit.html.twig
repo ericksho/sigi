@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Editar Prerequisito</h1>
+
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" class="btn btn-primary btn1" value="Editar" />
+    {{ form_end(edit_form) }}
+
+            <a href="{{ path('prerequisite_index')}}" class="btn btn-info btn2" role="button" >Prerequisitos</a>
+            {{ form_start(delete_form) }}
+                <input type="submit" class="btn btn-danger btn3" value="Eliminar">
+            {{ form_end(delete_form) }}
+{% endblock %}

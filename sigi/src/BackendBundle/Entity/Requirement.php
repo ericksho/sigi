@@ -30,9 +30,9 @@ class Requirement
     private $description;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="type", type="string", length=10)
+     * @ORM\Column(name="type", type="integer")
      */
     private $type;
 
@@ -44,8 +44,7 @@ class Requirement
     private $function;
 
     /**
-     * @ORM\ManyToOne(targetEntity="OportunityResearch", inversedBy="requirements")
-     * @ORM\JoinColumn(name="oportunityResearch_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="OportunityResearch", mappedBy="requirements")
      */
     private $oportunityResearch;
 
@@ -100,7 +99,7 @@ class Requirement
     /**
      * Get type
      *
-     * @return string
+     * @return integet
      */
     public function getType()
     {
@@ -129,6 +128,57 @@ class Requirement
     public function getFunction()
     {
         return $this->function;
+    }
+
+    /**
+     * Get text of type
+     *
+     * @return string
+     */
+    public function getTextType()
+    {
+        switch ($this->type) {
+            case 1:
+                $text = "Ramo (prerequisito)";
+                break;
+            case 2:
+                $text = "Carrera/area";
+                break;
+            case 3:
+                $text = "Creditos";
+                break;
+            default:
+                $text = "indefinido";
+                break;
+        }
+        return $text;
+    }
+
+    /**
+     * Set type by text
+     *
+     * @param string $function
+     *
+     * @return int
+     */
+    public function setTypeByText($text)
+    {
+        switch ($text) {
+            case "Ramo (prerequisito)":
+                $type = 1;
+                break;
+            case "Carrera/area":
+                $type = 2;
+                break;
+            case "Creditos":
+                $type = 3;
+                break;
+            default:
+                $type = 0;
+                break;
+        }
+        $this->type = $type;
+        return $this;
     }
 }
 

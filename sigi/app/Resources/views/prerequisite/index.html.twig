@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Prerequisitos</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Sigla</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for prerequisite in prerequisites %}
+            <tr>
+                <td><a href="{{ path('prerequisite_show', { 'id': prerequisite.id }) }}">{{ prerequisite.id }}</a></td>
+                <td>{{ prerequisite.courseNumber }}</td>
+                <td>
+                            <a href="{{ path('prerequisite_show', { 'id': prerequisite.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a>
+                            <a href="{{ path('prerequisite_edit', { 'id': prerequisite.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('prerequisite_new') }}" class="btn btn-primary btn-sm" role="button">Ingresar Nuevo Prerequisito</a>
+
+{% endblock %}
