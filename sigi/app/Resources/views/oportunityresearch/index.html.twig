@@ -14,6 +14,7 @@
                 <th>Modalidad</th>
                 <th>Publicada</th>
                 <th>keywords</th>
+                <th>Prerequisitos</th>
                 <th>Mentores</th>
                 <th></th>
                 <th></th>
@@ -34,6 +35,15 @@
                         {% for keyword in oportunityResearch.oportunityKeywords() %}
                             <li>
                                 {{ keyword.keyword }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        {% for prerequisite in oportunityResearch.prerequisites() %}
+                            <li>
+                                {{ prerequisite.courseNumber }}
                             </li>
                         {% endfor %}
                     </ul>
