@@ -23,7 +23,7 @@ class ResearchType extends AbstractType
         $builder
             ->add('code', null,array('label' => 'Sigla','attr' => array('class'=>'form-control')))
             ->add('section', null,array('label' => 'Sección','attr' => array('class'=>'form-control')))
-            ->add('creationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Fecha de creación', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
+            ->add('creationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Fecha de creación'))//fecha debe ser creada automaticamente
 
             ->add('oportunityResearch', EntityType::class, array(
                 'required' => false,
@@ -52,18 +52,26 @@ class ResearchType extends AbstractType
                 'multiple' => true,
                 'attr' => array('class'=>'js-tokenizer'),
                 'choice_label' => 'courseNumber',))
-
-
-
-
-
-            /* comentados por relaciones, agregar luego
+               /* comentados por relaciones, agregar luego
             ->add('mainMentor')
             ->add('secondaryMentor')
             ->add('thertiaryMentor')
             ->add('student')
             */
         ;
+
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $research = $event->getData();
+            $form = $event->getForm();
+
+            // check if the Product object is "new"
+            // If no data is passed to the form, the data is "null".
+            // This should be considered a new "Product"
+            if (!$research || null === $research->getCreationDate()) {
+                $form->add('creationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Fecha de creación', 'data' => (new \DateTime())));
+            }
+        });
+
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,

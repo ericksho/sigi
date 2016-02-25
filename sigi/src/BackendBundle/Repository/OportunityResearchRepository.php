@@ -20,8 +20,7 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
                 'SELECT o FROM BackendBundle:OportunityResearch o
                 JOIN o.mainMentor mm
                 JOIN mm.user mmu
-                WHERE mmu.id = :id
-                AND o.research IS NULL'
+                WHERE mmu.id = :id'
             )->setParameter('id', $id);
      
         try {
@@ -39,8 +38,7 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
                 'SELECT o FROM BackendBundle:OportunityResearch o
                 JOIN o.secondaryMentor mm
                 JOIN mm.user mmu
-                WHERE mmu.id = :id
-                AND o.research IS NULL'
+                WHERE mmu.id = :id'
             )->setParameter('id', $id);
      
         try {
@@ -61,8 +59,7 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
                 'SELECT o FROM BackendBundle:OportunityResearch o
                 JOIN o.thertiaryMentor mm
                 JOIN mm.user mmu
-                WHERE mmu.id = :id
-                AND o.research IS NULL'
+                WHERE mmu.id = :id'
             )->setParameter('id', $id);
      
         try {
@@ -87,8 +84,7 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
             ->createQuery(
                 'SELECT o FROM BackendBundle:OportunityResearch o
                 WHERE o.publish = true
-                AND o.public = true
-                AND o.research IS NULL'
+                AND o.public = true'
             );
      
         try {
@@ -103,8 +99,7 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->getEntityManager()
             ->createQuery(
                 'SELECT o FROM BackendBundle:OportunityResearch o
-                WHERE o.publish = true
-                AND o.research IS NULL'
+                WHERE o.publish = true'
             );
      
         try {

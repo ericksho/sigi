@@ -452,27 +452,27 @@ class OportunityResearch
     }
 
     /**
-     * Set research
+     * Set researches
      *
-     * @param \BackendBundle\Entity\Research $research
+     * @param \BackendBundle\Entity\Research $researches
      *
      * @return OportunityResearch
      */
-    public function setResearch(\BackendBundle\Entity\Research $research = null)
+    public function setResearches(\BackendBundle\Entity\Research $researches = null)
     {
-        $this->research = $research;
+        $this->researches = $researches;
 
         return $this;
     }
 
     /**
-     * Get research
+     * Get researches
      *
      * @return \BackendBundle\Entity\Research
      */
-    public function getResearch()
+    public function getResearches()
     {
-        return $this->research;
+        return $this->researches;
     }
 
     /**

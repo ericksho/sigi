@@ -35,7 +35,7 @@ class OportunityResearchType extends AbstractType
 
         $builder
             ->add('name', null,array('label' => 'Nombre','attr' => array('class'=>'form-control')))
-            ->add('creationDate', 'datetime', array('date_widget' => 'single_text','time_widget' => 'single_text', 'attr' => array('readonly' => true), 'label' => 'Fecha de creación', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
+            ->add('creationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Fecha de creación'))
             ->add('description', null,array('label' => 'Descripción','attr' => array('class'=>'form-control')))
             ->add('public', ChoiceType::class,array('choices'  => array(1 => 'Publica', 2 => 'Privada'),'label' => 'Publica','attr' => array('class'=>'form-control')))
             ->add('modality', ChoiceType::class,array('choices'  => array(1 => 'Alfa numerico', 2 => 'Nota 1-7'),'label' => 'Modalidad','attr' => array('class'=>'form-control')))
@@ -62,6 +62,18 @@ class OportunityResearchType extends AbstractType
             ->add('research')
             */
         ;
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $oportunityResearch = $event->getData();
+            $form = $event->getForm();
+
+            // check if the Product object is "new"
+            // If no data is passed to the form, the data is "null".
+            // This should be considered a new "Product"
+            if (!$oportunityResearch || null === $oportunityResearch->getCreationDate()) {
+                $form->add('creationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Fecha de creación', 'data' => (new \DateTime())));
+            }
+        });
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
