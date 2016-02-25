@@ -65,10 +65,9 @@ class OportunityResearch
     private $publish;
 
     /**
-     * @ORM\OneToOne(targetEntity="Research", inversedBy="oportunityResearch")
-     * @ORM\JoinColumn(name="oportunityResearch_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Research", mappedBy="oportunityResearch")
      */
-    private $research;
+    private $researches;
 
     /**
      * @ORM\OneToMany(targetEntity="Application", mappedBy="oportunityResearch")

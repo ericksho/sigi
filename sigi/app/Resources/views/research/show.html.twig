@@ -21,8 +21,60 @@
                 <th>Fecha de Creación:&nbsp;&nbsp;</th>
                 <td>{% if research.creationDate %}{{ research.creationDate|date('Y-m-d') }}{% endif %}</td>
             </tr>
+            <tr>
+                <th>Fecha de Creación de la Oportunidad:&nbsp;&nbsp;</th>
+                <td>{% if research.creationDateOP %}{{ research.creationDateOP|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Nombre:</th>
+                <td>{{ research.nameOP }}</td>
+            </tr>
+            <tr>
+                <th>Descripción:</th>
+                <td>{{ research.descriptionOP }}</td>
+            </tr>
+            <tr>
+                <th>Modalidad:</th>
+                <td>{{ research.modalityOP }}</td>
+            </tr>
+                <ul>
+                    {% for mentorName in research.getMentorsName() %}
+                        <li>
+                            {{ mentorName }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            <tr>
+                <th>Estudiante:</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Keywords:</th>
+                <td>
+                    <ul>
+                        {% for keyword in research.oportunityKeywordsOP() %}
+                            <li>
+                                {{ keyword.keyword }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Prerequisitos:</th>
+                <td>
+                    <ul>
+                        {% for prerequisite in research.prerequisitesOP() %}
+                            <li>
+                                {{ prerequisite.courseNumber }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
         </tbody>
     </table>
+
 
     <a href="{{ path('research_index') }}" class="btn btn-info btn1" role="button" >Investigaciones</a>
     <a href="{{ path('research_edit', { 'id': research.id }) }}" class="btn btn-primary btn2" role="button">Editar</a>

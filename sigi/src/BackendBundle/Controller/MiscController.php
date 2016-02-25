@@ -21,7 +21,7 @@ class MiscController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findAll();
+        $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findPublished();
 
         return $this->render('misc/listOportunities.html.twig', array(
             'oportunityResearches' => $oportunityResearches,
@@ -38,7 +38,7 @@ class MiscController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findByPublic(1);
+        $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findPublic();
 
         return $this->render('misc/publicOportunities.html.twig', array(
             'oportunityResearches' => $oportunityResearches,

@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet" />
+
+
+{% endblock %}
 {% block body %}
     <h1>Editar Investigación</h1>
 
@@ -12,5 +19,72 @@
     {{ form_start(delete_form) }}
         <input type="submit" value="Eliminar" class="btn btn-danger btn3" role="button">
     {{ form_end(delete_form) }}
+<script type="text/javascript">
 
+window.onload = function() {
+
+
+	
+	$.fn.select2.defaults.defaults['language'].inputTooLong = function(){
+  		return 'Input demasiado largo.';
+	};
+
+
+ 	$(".js-example-tokenizer").select2({
+  	tags: true,
+  	tokenSeparators: [','],
+  	maximumInputLength: 20,
+  	casesensitive: false,
+})
+
+ 	$(".js-tokenizer").select2({
+  	tags: true,
+  	tokenSeparators: [','],
+  	maximumInputLength: 10,
+  	casesensitive: false,
+  	createTag: function(params) {
+        var term = $.trim(params.term);
+
+        return {id: term.toUpperCase(), text: term.toUpperCase()};
+      }
+})
+   var x = document.getElementsByClassName("select2-container");
+   x[0].style.width = "100%";
+   x[1].style.width = "100%";
+
+	$('#secondary_mentor_secondaryMentor').on('change', function() {
+		var ter = document.getElementById("thertiary_mentor_thertiaryMentor");
+
+		if (ter.value == this.value)
+		{
+			var repeteadText = this.options[this.selectedIndex].text;
+
+  			alert( repeteadText + "Ya ha sido seleccionado, porfavor seleccione otro mentor" );
+  			this.selectedIndex = 0;
+		}
+	})
+
+	$('#thertiary_mentor_thertiaryMentor').on('change', function() {
+		var ter = document.getElementById("secondary_mentor_secondaryMentor");
+
+		if (ter.value == this.value)
+		{
+			var repeteadText = this.options[this.selectedIndex].text;
+
+  			alert( repeteadText + "Ya ha sido seleccionado, porfavor seleccione otro mentor" );
+  			this.selectedIndex = 0;
+		}
+	})
+};
+
+</script>
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
+        
 {% endblock %}

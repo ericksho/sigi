@@ -20,7 +20,8 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
                 'SELECT o FROM BackendBundle:OportunityResearch o
                 JOIN o.mainMentor mm
                 JOIN mm.user mmu
-                WHERE mmu.id = :id'
+                WHERE mmu.id = :id
+                AND o.research IS NULL'
             )->setParameter('id', $id);
      
         try {
@@ -38,7 +39,8 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
                 'SELECT o FROM BackendBundle:OportunityResearch o
                 JOIN o.secondaryMentor mm
                 JOIN mm.user mmu
-                WHERE mmu.id = :id'
+                WHERE mmu.id = :id
+                AND o.research IS NULL'
             )->setParameter('id', $id);
      
         try {
@@ -59,7 +61,8 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
                 'SELECT o FROM BackendBundle:OportunityResearch o
                 JOIN o.thertiaryMentor mm
                 JOIN mm.user mmu
-                WHERE mmu.id = :id'
+                WHERE mmu.id = :id
+                AND o.research IS NULL'
             )->setParameter('id', $id);
      
         try {
@@ -78,16 +81,15 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
         return $returnResults;
 	}
 
-	public function findPublicOportunitiesByUserId($id)
+	public function findPublic()
 	{
 	    $query = $this->getEntityManager()
             ->createQuery(
                 'SELECT o FROM BackendBundle:OportunityResearch o
-                JOIN o.mainMentor mm
-                JOIN o.secondaryMentor sm
-                JOIN o.thertiaryMentor tm
-                WHERE tm.id = :id OR mm.id = :id OR sm.id = :id AND o.public = true'
-            )->setParameter('id', $id);
+                WHERE o.publish = true
+                AND o.public = true
+                AND o.research IS NULL'
+            );
      
         try {
             return $query->getResult();
@@ -95,4 +97,20 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
             return null;
         }
 	}
+
+    public function findPublished()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT o FROM BackendBundle:OportunityResearch o
+                WHERE o.publish = true
+                AND o.research IS NULL'
+            );
+     
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
 }
