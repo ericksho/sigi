@@ -8,6 +8,10 @@
 	        
 	    <div id="column-container" >
 		  <div id="col-left" class="group-form">
+
+            {% if not edit_role %}
+                <label>Rol: </label> {{ user.getRoleText()}}
+            {% endif %}
 		  	{{ form_widget(edit_form) }}
 		  </div>
 
@@ -33,7 +37,23 @@
 			    {{ form_widget(other_form) }}
 			</div>
 		  </div>
-		</div>
+
+            {% if not edit_role %}
+
+                <div id="col-right" class="group-form" style:"margin-top: 5px;">
+                    <h3>Contraseña</h3>    
+                    
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="changePass"> Cambiar Contraseña
+                        </label>
+                    </div>
+                    {{ form_widget(password_form) }}
+                </div>
+            {% endif %}
+    		</div>
+
+        
 
 	<input type="submit" class="btn btn-primary btn1" role="button" value="Editar" />
 	{{ form_end(edit_form) }}
@@ -53,6 +73,14 @@
 window.onload = function() {
         collapseJS();
     };
+
+var checker = document.getElementById('changePass');
+var pass1 = document.getElementById('change_password_plainPassword_first');
+var pass2 = document.getElementById('change_password_plainPassword_second');
+checker.onchange = function() {
+  pass1.disabled = !this.checked;
+  pass2.disabled = !this.checked;
+};
 
 
 function collapseJS()

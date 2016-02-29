@@ -137,9 +137,16 @@ class UserController extends Controller
     {
         $deleteForm = $this->createDeleteForm($user);
 
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        $editButton = FALSE;
+
+        if (($currentUser->getId() == $user->getId() || strcmp($currentUser->getRole(), "ROLE_ADMIN") == 0))
+            $editButton = TRUE;
+
         return $this->render('user/show.html.twig', array(
             'user' => $user,
             'delete_form' => $deleteForm->createView(),
+            'editButton' => $editButton,
         ));
     }
 
@@ -160,13 +167,17 @@ class UserController extends Controller
                 ->getFlashBag()
                 ->add('success', 'Welcome to the Death Star, have a magical day!')
             ;
- 
+
+            return $this->redirectToRoute('user_edit', array('id' => $currentUser->getId()));
+            
+            /*
             return $this->redirect($this->generateUrl(
                 $params['_route'],
                 [
                     
                 ]
             ));
+            */
         }
 
         //si el usuario tiene student
@@ -189,19 +200,24 @@ class UserController extends Controller
 
         $deleteForm = $this->createDeleteForm($user);
 
-        if($this->get('security.token_storage')->getToken()->getUser()->getId() == $user->getid())
+        if($this->get('security.token_storage')->getToken()->getUser()->getId() == $user->getid()) //si es el mismo usuario
         {
-            $editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('pass'=>'yes'));
-            $pass = TRUE;
+            $editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('pass'=>'yes', 'edit_role'=>'no'));
+            $pass = TRUE; //puede cambiar contraseña
+            $edit_role = FALSE; // no puede cambiar el rol
         }
         else
         {
-            $editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('pass'=>'no'));
+            $editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('pass'=>'no','edit_role'=>'yes'));
             $pass = FALSE;
+            $edit_role = TRUE;
         }
             
 
         $editForm->handleRequest($request);
+
+        $passForm = $this->createForm('BackendBundle\Form\ChangePasswordType', $user);
+        $passForm->handleRequest($request);
 
         //student form
         $studentForm = $this->createForm('BackendBundle\Form\StudentType', $student);
@@ -262,6 +278,8 @@ class UserController extends Controller
             'mentor_form' => $mentorForm->createView(),
             'other_form' => $otherForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'edit_role' => $edit_role,
+            'password_form' => $passForm->createView(),
         ));
     }
 

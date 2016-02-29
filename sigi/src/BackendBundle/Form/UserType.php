@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 class UserType extends AbstractType
 {
     /**
@@ -21,6 +21,7 @@ class UserType extends AbstractType
     {
         $role = $options['role'];
         $pass = $options['pass'];
+        $edit_role = $options['edit_role'];
 
         $builder
             ->add('role', ChoiceType::class, array('label' => $role,'attr' => array('class'=>'form-control',"onchange" => "collapseJS();"),
@@ -37,12 +38,18 @@ class UserType extends AbstractType
             ->add('phone', null,array('label' => 'Telefono','attr' => array('class'=>'form-control')))
 
         ;
-        if (true){
+        if (false){
             $builder->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
-                'first_options'  => array('label' => 'Contraseña','attr' => array('class'=>'form-control')),
-                'second_options' => array('label' => 'Repita Contraseña','attr' => array('class'=>'form-control')),
+                'first_options'  => array('label' => 'Contraseña','attr' => array('disabled' => true, 'class'=>'form-control')),
+                'second_options' => array('label' => 'Repita Contraseña','attr' => array('disabled' => true, 'class'=>'form-control')),
             ));
+        }
+
+        if($edit_role == 'no')
+        {
+            $builder->add('role', HiddenType::class)
+            ;
         }
     }
 
@@ -58,6 +65,7 @@ class UserType extends AbstractType
             'validation_groups' => array('edit'),
             'role' => null,
             'pass' => null,
+            'edit_role' => false,
         ));
     }
 }

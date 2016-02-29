@@ -146,6 +146,30 @@ class User  implements UserInterface, \Serializable
         return $this->role;
     }
     /**
+     * Get roleText
+     *
+     * @return string
+     */
+    public function getRoleText()
+    {
+        $text = '';
+        switch ($this->role) {
+            case 'ROLE_ADMIN':
+                $text = 'Administrador';
+                break;
+            case 'ROLE_STUDENT':
+                $text = 'Estudiante';
+                break;
+            case 'ROLE_MENTOR':
+                $text = 'Mentor';
+                break;
+            case 'ROLE_OTHER':
+                $text = 'Otro';
+                break;
+        }
+        return $text;
+    }
+    /**
      * Set username
      *
      * @param string $username

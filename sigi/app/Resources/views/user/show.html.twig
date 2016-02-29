@@ -3,24 +3,40 @@
 {% block body %}
     <h1>Usuario</h1>
 
-    <table>
+    <table >
         <tbody>
             <tr>
                 <th>Id:</th>
                 <td>{{ user.id }}</td>
             </tr>
             <tr>
-                <th>student_id:</th>
-                <td>{{ user.student.id | default("user not set")}}</td>
+                <th>Rol de Usuario:</th>
+                <td>{{ user.getRoleText()}}</td>
             </tr>
-            <tr>
-                <th>Contraseña:</th>
-                <td>{{ user.plainPassword}}</td>
-            </tr>
-            <tr>
-                <th>Tipo de Usuario:</th>
-                <td>{{ user.role}}</td>
-            </tr>
+
+            {% if user.role == "ROLE_STUDENT" %}
+                <tr>
+                    <th>Especialidad:</th>
+                    <td>{{ user.student.specialty }}</td>
+                </tr>
+                <tr>
+                    <th>Facultad:</th>
+                    <td>{{ user.student.faculty }}</td>
+                </tr>
+            {% endif %}
+            {% if user.role == "ROLE_MENTOR" %}
+                <tr>
+                    <th>Procedencia:</th>
+                    <td>{% if user.mentor.uc %} Es mentor UC {% else %} no es mentor uc {% endif %} </td>
+                </tr>
+            {% endif %}
+            {% if user.role == "ROLE_OTHER" %}
+                <tr>
+                    <th>Descripción:</th>
+                    <td>{{ user.other.description }}</td>
+                </tr>
+            {% endif %}
+
             <tr>
                 <th>Nombre de Usuario: &nbsp;&nbsp;</th>
                 <td>{{ user.username }}</td>
@@ -53,17 +69,18 @@
                 <th>Telefono:</th>
                 <td>{{ user.phone }}</td>
             </tr>
-            <tr>
-                <th>Path a la foto:</th>
-                <td>{{ user.picture }}</td>
-            </tr>
         </tbody>
     </table>
+
 
     {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('user_index') }}" class="btn btn-info btn1" role="button" >Usuarios</a>
     {% endif %}
-    <a href="{{ path('user_edit', { 'id': user.id }) }}" class="btn btn-primary btn2" role="button">Editar</a>
+
+    {% if editButton %}
+        <a href="{{ path('user_edit', { 'id': user.id }) }}" class="btn btn-primary btn2" role="button">Editar</a>
+    {% endif %}
+
     {% if is_granted('ROLE_ADMIN') %}
         {{ form_start(delete_form) }}
             <input type="submit" value="Eliminar" class="btn btn-danger btn2" role="button">
