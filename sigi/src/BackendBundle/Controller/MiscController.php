@@ -14,7 +14,7 @@ class MiscController extends Controller
     /**
      * Lists all OportunityResearch entities.
      *
-     * @Route("/misc/listOportunities")
+     * @Route("/misc/listOportunities", name="listOportunities")
      * @Method("GET")
      */
     public function listOportunitiesAction()
@@ -31,7 +31,7 @@ class MiscController extends Controller
     /**
      * Lists all public OportunityResearch entities.
      *
-     * @Route("/misc/publicOportunities")
+     * @Route("/misc/publicOportunities", name="publicOportunities")
      * @Method("GET")
      */
     public function publicOportunities()
