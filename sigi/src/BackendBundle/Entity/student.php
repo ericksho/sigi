@@ -168,6 +168,20 @@ class Student
     }
 
     /**
+     * Set application
+     *
+     * @param \BackendBundle\Entity\Application $Application
+     *
+     * @return Student
+     */
+    public function setApplication(\BackendBundle\Entity\Application $application)
+    {
+        $this->application = $application;
+
+        return $this;
+    }
+
+    /**
      * Set faculty
      *
      * @param string $faculty
@@ -189,6 +203,32 @@ class Student
     public function getFaculty()
     {
         return $this->faculty;
+    }
+
+    /**
+     * Get student name
+     *
+     * @return string
+     */
+    public function getStudentName()
+    {
+        return $this->getNameText();
+    }
+
+    /**
+     * Get student name
+     *
+     * @return string
+     */
+    public function getNameText()
+    {
+        if (is_null($this->user))
+        {
+            return "Ocurrio un error al cargar el nombre";
+        }
+        else {
+            return $this->user->getShowName();
+        }
     }
 }
 

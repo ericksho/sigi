@@ -272,6 +272,41 @@ class OportunityResearch
     }
 
     /**
+     * Is owner
+     *
+     * @param \BackendBundle\Entity\ $user
+     *
+     * @return bool
+     */
+    public function isOwner(\BackendBundle\Entity\User $user)
+    {
+        $owner = false;
+        if(!is_null($this->mainMentor))
+        {
+            $userMentor =$this->mainMentor->getUser();
+
+            if($userMentor->getId() == $user->getId())
+                $owner = true;
+        }
+        if(!is_null($this->secondaryMentor))
+        {
+            $userMentor =$this->mainMentor->getUser();
+
+            if($userMentor->getId() == $user->getId())
+                $owner = true;
+        }
+        if(!is_null($this->thertiaryMentor))
+        {
+            $userMentor =$this->mainMentor->getUser();
+
+            if($userMentor->getId() == $user->getId())
+                $owner = true;
+        }
+
+        return $owner;
+    }
+
+    /**
      * Set mainMentor
      *
      * @param \BackendBundle\Entity\ $mainMentor
@@ -569,5 +604,39 @@ class OportunityResearch
     public function getPrerequisites()
     {
         return $this->prerequisites;
+    }
+
+    /**
+     * Get Modality text
+     *
+     * @return string
+     */
+    public function getModalityText()
+    {
+        switch ($this->modality) {
+            case 1:
+                $text = 'Alfa numerico';
+                break;
+            
+            case 2:
+                $text = 'Nota 1-7';
+                break;
+        }
+
+        return $text;
+    }
+
+    /**
+     * Set application
+     *
+     * @param \BackendBundle\Entity\Application $Application
+     *
+     * @return OportunityResearch
+     */
+    public function setApplication(\BackendBundle\Entity\Application $application)
+    {
+        $this->application = $application;
+
+        return $this;
     }
 }

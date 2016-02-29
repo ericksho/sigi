@@ -88,9 +88,14 @@ class OportunityResearchController extends Controller
     {
         $deleteForm = $this->createDeleteForm($oportunityResearch);
 
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        $owner = $oportunityResearch->isOwner($currentUser);
+
         return $this->render('oportunityresearch/show.html.twig', array(
             'oportunityResearch' => $oportunityResearch,
             'delete_form' => $deleteForm->createView(),
+            'owner' => $owner,
         ));
     }
 

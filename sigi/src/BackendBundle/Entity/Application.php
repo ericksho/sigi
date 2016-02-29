@@ -23,9 +23,9 @@ class Application
     private $id;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="state", type="string", length=20)
+     * @ORM\Column(name="state", type="integer")
      */
     private $state;
 
@@ -69,7 +69,7 @@ class Application
     /**
      * Set state
      *
-     * @param string $state
+     * @param int $state
      *
      * @return Application
      */
@@ -83,11 +83,91 @@ class Application
     /**
      * Get state
      *
-     * @return string
+     * @return int
      */
     public function getState()
     {
         return $this->state;
+    }
+
+    /**
+     * Get state
+     *
+     * @return string
+     */
+    public function getStateText()
+    {
+        return getTextByState($this->state);
+    }
+
+    /**
+     * Get state by text
+     *
+     * @param string $text
+     *
+     * @return int
+     */
+    public function getStateByText($text)
+    {
+        switch ($text) {
+            case 'Aplicado':
+                return 1;
+                break;
+            case 'Aceptado por Mentor':
+                return 2;
+                break;
+            case 'Aceptado por Ambos':
+                return 3;
+                break;
+            case 'Investigación Oficial en Dara':
+                return 4;
+                break;
+            case 'No seleccionado por Mentor':
+                return 5;
+                break;
+            case 'No aceptado por Alumno':
+                return 6;
+                break;
+            
+            default:
+                return 0;
+                break;
+        }
+    }
+
+    /**
+     * Get text by text
+     *
+     * @param int $state
+     *
+     * @return string
+     */
+    public function getTextByState($state)
+    {
+        switch ($state) {
+            case 1:
+                return 'Aplicado';
+                break;
+            case 2:
+                return 'Aceptado por Mentor';
+                break;
+            case 3:
+                return 'Aceptado por Ambos';
+                break;
+            case 4:
+                return 'Investigación Oficial en Dara';
+                break;
+            case 5:
+                return 'No seleccionado por Mentor';
+                break;
+            case 6:
+                return 'No aceptado por Alumno';
+                break;
+            
+            default:
+                return 0;
+                break;
+        }
     }
 
     /**
@@ -136,6 +216,56 @@ class Application
     public function getLastUpdateDate()
     {
         return $this->lastUpdateDate;
+    }
+
+    /**
+     * Set student
+     *
+     * @param \BackendBundle\Entity\Student $student
+     *
+     * @return User
+     */
+    public function setStudent(\BackendBundle\Entity\Student $student)
+    {
+        $this->student = $student;
+        $student->setApplication($this);
+
+        return $this;
+    }
+
+    /**
+     * Get student
+     *
+     * @return \BackendBundle\Entity\Student
+     */
+    public function getStudent()
+    {
+        return $this->student;
+    }
+
+    /**
+     * Set oportunityResearch
+     *
+     * @param \BackendBundle\Entity\OportunityResearch $oportunityResearch
+     *
+     * @return OportunityResearch
+     */
+    public function setOportunityResearch(\BackendBundle\Entity\OportunityResearch $oportunityResearch)
+    {
+        $this->oportunityResearch = $oportunityResearch;
+        $oportunityResearch->setApplication($this);
+
+        return $this;
+    }
+
+    /**
+     * Get oportunityResearch
+     *
+     * @return \BackendBundle\Entity\OportunityResearch
+     */
+    public function getOportunityResearch()
+    {
+        return $this->oportunityResearch;
     }
 }
 

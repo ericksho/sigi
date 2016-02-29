@@ -3,7 +3,7 @@
 {% block body %}
     <h1>Oportunidad de Investigación</h1>
 
-    <table>
+    <table class="table">
         <tbody>
             <tr>
                 <th>Id:</th>
@@ -11,7 +11,7 @@
             </tr>
             <tr>
                 <th>Fecha de Creación:&nbsp;&nbsp;</th>
-                <td>{% if oportunityResearch.creationDate %}{{ oportunityResearch.creationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if oportunityResearch.creationDate %}{{ oportunityResearch.creationDate|date('Y-m-d') }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Nombre:</th>
@@ -23,22 +23,65 @@
             </tr>
             <tr>
                 <th>Público:</th>
-                <td>{{ oportunityResearch.public }}</td>
+                <td>{% if oportunityResearch.public %}Si{% else %}No{% endif %}</td>
             </tr>
             <tr>
                 <th>Modalidad:</th>
-                <td>{{ oportunityResearch.modality }}</td>
+                <td>{{ oportunityResearch.getModalityText() }}</td>
             </tr>
             <tr>
-                <th>Publicado:</th>
-                <td>{% if oportunityResearch.publish %}Si{% else %}No{% endif %}</td>
+                <th>Keywords:</th>
+                <td>
+                    <ul>
+                        {% for keyword in oportunityResearch.oportunityKeywords() %}
+                            <li>
+                                {{ keyword.keyword }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Siglas prerequisitos:</th>
+                <td>
+                    <ul>
+                        {% for prerequisite in oportunityResearch.prerequisites() %}
+                            <li>
+                                {{ prerequisite.courseNumber }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Mentor{% if (oportunityResearch.getMentorsName())|length > 1 %}(es){% endif %}:</th>
+                <td>
+                    <ul>
+                        {% for mentorName in oportunityResearch.getMentorsName() %}
+                            <li>
+                                {{ mentorName }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('oportunityresearch_index') }}" class="btn btn-info btn1" role="button" >Listar Oportunidades</a>
-    <a href="{{ path('oportunityresearch_edit', { 'id': oportunityResearch.id }) }}" class="btn btn-primary btn2" role="button">Editar</a>
-    {{ form_start(delete_form) }}
-        <input type="submit" value="Eliminar" class="btn btn-danger btn2" role="button">
-    {{ form_end(delete_form) }}
+
+    <a href="{{ path('listOportunities') }}" class="btn btn-info btn1" role="button" >Listar Oportunidades</a>
+
+    {% if owner %}
+        <a href="{{ path('oportunityresearch_index') }}" class="btn btn-info btn1" role="button" >Mis Oportunidades</a>
+        <a href="{{ path('oportunityresearch_edit', { 'id': oportunityResearch.id }) }}" class="btn btn-primary btn2" role="button">Editar</a>
+        {{ form_start(delete_form) }}
+            <input type="submit" value="Eliminar" class="btn btn-danger btn2" role="button">
+        {{ form_end(delete_form) }}
+    {% endif %}
+
+    <form action="{{ path('application_new') }}" method="post">
+        <input type="hidden" name="oportunityId" value="{{ oportunityResearch.Id }}">
+        <input type="submit" value="Aplicar" class="btn btn-primary btn1" role="button">
+    </form>
+
 {% endblock %}

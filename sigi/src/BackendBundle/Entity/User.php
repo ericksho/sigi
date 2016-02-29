@@ -619,4 +619,14 @@ class User  implements UserInterface, \Serializable
     {
         return $this->recievedNotifications;
     }
+
+    /**
+     * Get name to show
+     *
+     * @return string
+     */
+    public function getShowName()
+    {
+        return $this->name." ".$this->lastName;
+    }
 }

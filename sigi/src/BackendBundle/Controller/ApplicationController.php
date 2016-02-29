@@ -41,8 +41,19 @@ class ApplicationController extends Controller
      */
     public function newAction(Request $request)
     {
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        $oportunityId = $this->get('request')->request->get('oportunityId');
+
         $application = new Application();
-        $form = $this->createForm('BackendBundle\Form\ApplicationType', $application);
+        $application->setStudent($currentUser->getStudent());
+
+        $studentsName = $currentUser->getStudent()->getNameText();
+
+        $em = $this->getDoctrine()->getManager();
+        $oportunity = $em->getRepository('BackendBundle:OportunityResearch')->find($oportunityId);
+
+        $form = $this->createForm('BackendBundle\Form\ApplicationType', $application, array('choices_array' => array('Aplicado' => 1),'oportunityId' => $oportunityId,'studentId'=>$currentUser->getStudent()->getId()));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -56,6 +67,8 @@ class ApplicationController extends Controller
         return $this->render('application/new.html.twig', array(
             'application' => $application,
             'form' => $form->createView(),
+            'students_name' => $studentsName,
+            'oportunity_name' => $oportunity->getName(),
         ));
     }
 
