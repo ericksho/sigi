@@ -2,6 +2,7 @@
 
 namespace BackendBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,11 +34,11 @@ class ApplicationType extends AbstractType
             ->add('applicationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Fecha de aplicación', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
             ->add('lastUpdateDate', 'datetime', array('widget' => 'single_text', 'format' => 'dd/MM/yyyy HH:mm:ss','attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Ultima actualización', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
             
-            ->add('student', HiddenType::class, array('data' => $studentId))
-            
             ->add('oportunityResearch', HiddenType::class, array('data' => $oportunityId))
 
             ->add('student', EntityType::class, array(
+                'label' => 'Alumno',
+                'attr' => array('class'=>'form-control'),
                 'class' => 'BackendBundle:Student',
                 'choice_label' => 'getNameText',
                 'query_builder' => function (EntityRepository $er)  use ( $studentId ) {return $er
