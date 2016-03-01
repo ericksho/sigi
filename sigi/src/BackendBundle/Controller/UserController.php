@@ -169,15 +169,6 @@ class UserController extends Controller
             ;
 
             return $this->redirectToRoute('user_edit', array('id' => $currentUser->getId()));
-            
-            /*
-            return $this->redirect($this->generateUrl(
-                $params['_route'],
-                [
-                    
-                ]
-            ));
-            */
         }
 
         //si el usuario tiene student
@@ -234,7 +225,7 @@ class UserController extends Controller
 
         if (($editForm->isSubmitted() && $editForm->isValid())) {
             // Encode the password (you could also do this via Doctrine listener)
-            if ($pass)
+            if (true)
             {
                 $password = $this->get('security.password_encoder')
                     ->encodePassword($user, $user->getPlainPassword());

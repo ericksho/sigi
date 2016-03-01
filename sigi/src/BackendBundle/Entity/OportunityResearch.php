@@ -435,6 +435,31 @@ class OportunityResearch
         return $mentors;
     }
 
+/**
+     * Is mentor
+     *
+     * @param \BackendBundle\Entity\Mentor $mentor
+     *
+     * @return bool
+     */
+    public function isMentor(\BackendBundle\Entity\Mentor $mentor)
+    {
+        $isMentor = false;
+        $mentorId = $mentor->getId();
+
+        if(!is_null($this->mainMentor))
+            if($mentorId == $this->mainMentor->getId())
+                $isMentor = true;
+        if(!is_null($this->secondaryMentor))
+            if($mentorId == $this->secondaryMentor->getId())
+                $isMentor = true;
+        if(!is_null($this->thertiaryMentor))
+            if($mentorId == $this->thertiaryMentor->getId())
+                $isMentor = true;
+
+        return $isMentor;
+    }
+
     /**
      * Get keywords
      *

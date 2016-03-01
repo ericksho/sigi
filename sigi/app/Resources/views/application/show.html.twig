@@ -1,28 +1,86 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Applicación {{ application.id }}</h1>
+    <h1>Aplicación {{ application.id }}</h1>
 
-    <table>
+    <table class="table">
         <tbody>
             <tr>
-                <th>Estado: </th>
-                <td>{{ application.state }}</td>
+                <th>Nombre Postulante: </th>
+                <td>{{ application.getStudent().getNameText() }}</td>
+            </tr>
+            <tr>
+                <th>Titulo Oportunidad: </th>
+                <td>{{ application.getOportunityResearch().getName() }}</td>
             </tr>
             <tr>
                 <th>Fecha de aplicación: </th>
-                <td>{% if application.applicationDate %}{{ application.applicationDate|date('Y-m-d') }}{% endif %}</td>
+                <td>{% if application.applicationDate %}{{ application.applicationDate|date('d/M/y') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Estado: </th>
+                <td>{{ application.getStateText() }}</td>
             </tr>
             <tr>
                 <th>Ultima Actualización: &nbsp;&nbsp;</th>
-                <td>{% if application.lastUpdateDate %}{{ application.lastUpdateDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if application.lastUpdateDate %}{{ application.lastUpdateDate|date('d/M/y H:i:s') }}{% endif %}</td>
             </tr>
         </tbody>
     </table>
 
-            <a href="{{ path('application_index') }}" class="btn btn-info btn1" role="button" >Listar Aplicaciones</a>
-            <a href="{{ path('application_edit', { 'id': application.id }) }}" class="btn btn-primary btn2" role="button" >Editar</a>
+            <a href="{{ path('application_index') }}" class="btn btn-info btn1" role="button" >Mis Aplicaciones</a>
+            {% if (application.state == 1 and is_mentor_owner) %}
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary btn2" data-toggle="modal" data-target="#MentorAgreeModal">Aceptar Postulante</button>
+            {% endif %}
+
+            {% if (application.state == 2 and is_student_owner) %}
+                <a href="{{ path('application_edit', { 'id': application.id }) }}" class="btn btn-primary btn2" role="button" >Aceptar Postulación</a>
+            {% endif %}
+
             {{ form_start(delete_form) }}
                 <input type="submit" value="Eliminar" class="btn btn-danger btn3" role="button">
             {{ form_end(delete_form) }}
+
+
+<!-- Modal -->
+<div class="modal fade" id="MentorAgreeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Aceptar Postulante</h4>
+      </div>
+      <div class="modal-body">
+        Esta acción no tiene vuelta atrás, una vez aceptado el postulante, este deberá aceptar la postulación también, tras lo cual los datos serán enviados al DARA quedando un regristro permanente
+        ¿Esta seguro que quiere continuar?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No, quiero mas tiempo</button>
+        <a href="{{ path('application_accept_by_mentor', { 'id': application.id}) }}" class="btn btn-primary" role="button" >Sí, acepto a este postulante</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="MentorAgreeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Aceptar Postulante</h4>
+      </div>
+      <div class="modal-body">
+        Esta acción no tiene vuelta atrás, una vez aceptada la postulación, los datos serán enviados al DARA quedando un regristro permanente
+        ¿Esta seguro que quiere continuar?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No, quiero más tiempo</button>
+        <a href="{{ path('application_accept_by_mentor', { 'id': application.id}) }}" class="btn btn-primary" role="button" >Sí, entiendo y acepto</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

@@ -10,4 +10,94 @@ namespace BackendBundle\Repository;
  */
 class ApplicationRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findByStudentId($id)
+	{
+        $returnResults = null;
+
+	    $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT a FROM BackendBundle:Application a
+                JOIN a.student s
+                WHERE s.id = :id'
+            )->setParameter('id', $id);
+     
+        try {
+            $mainResults = $query->getResult();
+
+            if (count($mainResults) > 0 )
+                $returnResults = $mainResults;
+            
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            
+        }
+
+        return $returnResults;
+	}
+
+	public function findByMentorId($id)
+	{
+        $returnResults = null;
+
+	    $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT a FROM BackendBundle:Application a
+                JOIN a.oportunityResearch o
+                JOIN o.mainMentor mm
+                WHERE mm.id = :id'
+            )->setParameter('id', $id);
+     
+        try {
+            $mainResults = $query->getResult();
+
+            if (count($mainResults) > 0 )
+                $returnResults = $mainResults;
+            
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            
+        }
+
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT a FROM BackendBundle:Application a
+                JOIN a.oportunityResearch o
+                JOIN o.secondaryMentor sm
+                WHERE sm.id = :id'
+            )->setParameter('id', $id);
+     
+        try {
+            $secondaryResults = $query->getResult();
+
+            if (count($secondaryResults) > 0 )
+                if(is_null($returnResults))
+                    $returnResults = $secondaryResults;
+                else
+                    $returnResults = array_merge($returnResults,$secondaryResults);
+            
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            
+        }
+
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT a FROM BackendBundle:Application a
+                JOIN a.oportunityResearch o
+                JOIN o.thertiaryMentor tm
+                WHERE tm.id = :id'
+            )->setParameter('id', $id);
+     
+        try {
+            $thertiaryResults = $query->getResult();
+
+            if (count($thertiaryResults) > 0 )
+                if(is_null($returnResults))
+                    $returnResults = $thertiaryResults;
+                else
+                    $returnResults = array_merge($returnResults,$thertiaryResults);
+            
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            
+        }
+
+        return $returnResults;
+	}
 }

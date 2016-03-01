@@ -91,16 +91,6 @@ class Application
     }
 
     /**
-     * Get state
-     *
-     * @return string
-     */
-    public function getStateText()
-    {
-        return getTextByState($this->state);
-    }
-
-    /**
      * Get state by text
      *
      * @param string $text
@@ -119,14 +109,17 @@ class Application
             case 'Aceptado por Ambos':
                 return 3;
                 break;
-            case 'Investigación Oficial en Dara':
+            case 'Enviado a Dara':
                 return 4;
                 break;
-            case 'No seleccionado por Mentor':
+            case 'Investigación Oficial en Dara':
                 return 5;
                 break;
-            case 'No aceptado por Alumno':
+            case 'No seleccionado por Mentor':
                 return 6;
+                break;
+            case 'No aceptado por Alumno':
+                return 7;
                 break;
             
             default:
@@ -155,12 +148,15 @@ class Application
                 return 'Aceptado por Ambos';
                 break;
             case 4:
-                return 'Investigación Oficial en Dara';
+                return 'Enviado a Dara';
                 break;
             case 5:
-                return 'No seleccionado por Mentor';
+                return 'Investigación Oficial en Dara';
                 break;
             case 6:
+                return 'No seleccionado por Mentor';
+                break;
+            case 7:
                 return 'No aceptado por Alumno';
                 break;
             
@@ -168,6 +164,17 @@ class Application
                 return 0;
                 break;
         }
+    }
+
+
+    /**
+     * Get state
+     *
+     * @return string
+     */
+    public function getStateText()
+    {
+        return $this->getTextByState($this->state);
     }
 
     /**

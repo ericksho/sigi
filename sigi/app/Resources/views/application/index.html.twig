@@ -11,22 +11,18 @@
                 <th>Fecha de aplicación</th>
                 <th>Última Actualización</th>
                 <th></th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for application in applications %}
             <tr>
                 <td><a href="{{ path('application_show', { 'id': application.id }) }}">{{ application.id }}</a></td>
-                <td>{{ application.state }}</td>
-                <td>{% if application.applicationDate %}{{ application.applicationDate|date('Y-m-d') }}{% endif %}</td>
-                <td>{% if application.lastUpdateDate %}{{ application.lastUpdateDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ application.getStateText() }}</td>
+                <td>{% if application.applicationDate %}{{ application.applicationDate|date('d/M/y') }}{% endif %}</td>
+                <td>{% if application.lastUpdateDate %}{{ application.lastUpdateDate|date('d/M/y H:i:s') }}{% endif %}</td>
                 <td><a href="{{ path('application_show', { 'id': application.id }) }}" class="btn btn-info btn1" role="button">Ver</a></td>
-                <td><a href="{{ path('application_edit', { 'id': application.id }) }}" class="btn btn-primary btn1" role="button">Editar</a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('application_new') }}" class="btn btn-primary btn1" role="button">Nueva Aplicación</a>
 {% endblock %}

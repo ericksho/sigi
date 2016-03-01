@@ -26,7 +26,21 @@ class ApplicationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $applications = $em->getRepository('BackendBundle:Application')->findAll();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        switch ($currentUser->getRole()) {
+            case 'ROLE_ADMIN':
+                $applications = $em->getRepository('BackendBundle:Application')->findAll();
+                break;
+            case 'ROLE_MENTOR':
+                $applications = $em->getRepository('BackendBundle:Application')->findByMentorId($currentUser->getMentor()->getId());
+                break;
+            case 'ROLE_STUDENT':
+                $applications = $em->getRepository('BackendBundle:Application')->findByStudentId($currentUser->getStudent()->getId());
+                break;
+        }
+
+        
 
         return $this->render('application/index.html.twig', array(
             'applications' => $applications,
@@ -51,7 +65,15 @@ class ApplicationController extends Controller
         $studentsName = $currentUser->getStudent()->getNameText();
 
         $em = $this->getDoctrine()->getManager();
-        $oportunity = $em->getRepository('BackendBundle:OportunityResearch')->find($oportunityId);
+        if (is_null($oportunityId))
+        {
+            $oportunityId = $this->get('request')->request->get('oportunityResearch ');
+        }
+        else
+        {
+            $oportunity = $em->getRepository('BackendBundle:OportunityResearch')->find($oportunityId);
+            $application->setOportunityResearch($oportunity);
+        }
 
         $form = $this->createForm('BackendBundle\Form\ApplicationType', $application, array('choices_array' => array('Aplicado' => 1),'oportunityId' => $oportunityId,'studentId'=>$currentUser->getStudent()->getId()));
         $form->handleRequest($request);
@@ -82,10 +104,71 @@ class ApplicationController extends Controller
     {
         $deleteForm = $this->createDeleteForm($application);
 
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        $isMentorOwner = false;
+        $isStudentOwner = false;
+
+        if($currentUser->getRole() == "ROLE_MENTOR" && $application->getOportunityResearch()->isMentor($currentUser->getMentor()))
+            $isMentorOwner = true;
+
+        if($currentUser->getRole() == "ROLE_STUDENT" && $application->getStudent()->getId() == $currentUser->getStudent()->getId())
+            $isStudentOwner = true;
+
         return $this->render('application/show.html.twig', array(
             'application' => $application,
             'delete_form' => $deleteForm->createView(),
+            'is_mentor_owner' => $isMentorOwner,
+            'is_student_owner' => $isStudentOwner,
         ));
+    }
+
+    /**
+     * Changes status to accepted by mentor and displays the application
+     *
+     * @Route("/{id}/acceptByMentor", name="application_accept_by_mentor")
+     * @Method({"GET", "POST"})
+     */
+    public function acceptByMentorAction(Request $request, Application $application)
+    {
+        //double check mentor is doing this
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        if($application->getOportunityResearch()->isMentor($currentUser->getMentor()))
+        {
+            $application->setState(2); //aceptado por el mentor
+            $application->setLastUpdateDate(new \DateTime());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($application);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('application_show', array('id' => $application->getId()));
+    }
+
+    /**
+     * Changes status to accepted by student and displays the application
+     *
+     * @Route("/{id}/acceptByStudent", name="application_accept_by_student")
+     * @Method({"GET", "POST"})
+     */
+    public function acceptByStudentAction(Request $request, Application $application)
+    {
+        //double check mentor is doing this
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        if($application->getStudent()->getId() == $currentUser->getStudent())
+        {
+            $application->setState(3); //aceptado por el estudiante
+            $application->setLastUpdateDate(new \DateTime());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($application);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('application_show', array('id' => $application->getId()));
     }
 
     /**
