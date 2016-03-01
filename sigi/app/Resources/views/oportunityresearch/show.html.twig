@@ -22,6 +22,10 @@
                 <td>{{ oportunityResearch.description }}</td>
             </tr>
             <tr>
+                <th>Vacantes:</th>
+                <td>{{ vacants }}/{{ oportunityResearch.vacants }}</td>
+            </tr>
+            <tr>
                 <th>Público:</th>
                 <td>{% if oportunityResearch.public %}Si{% else %}No{% endif %}</td>
             </tr>
@@ -79,9 +83,13 @@
         {{ form_end(delete_form) }}
     {% endif %}
 
-    <form action="{{ path('application_new') }}" method="post">
-        <input type="hidden" name="oportunityId" value="{{ oportunityResearch.Id }}">
-        <input type="submit" value="Aplicar" class="btn btn-primary btn1" role="button">
-    </form>
+    {% if is_granted(['ROLE_STUDENT']) %}
+        {% if vacants > 0 %}
+            <form action="{{ path('application_new') }}" method="post">
+                <input type="hidden" name="oportunityId" value="{{ oportunityResearch.Id }}">
+                <input type="submit" value="Aplicar" class="btn btn-primary btn1" role="button">
+            </form>
+        {% endif %}
+    {% endif %}
 
 {% endblock %}

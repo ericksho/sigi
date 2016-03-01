@@ -106,7 +106,7 @@ class Application
             case 'Aceptado por Mentor':
                 return 2;
                 break;
-            case 'Aceptado por Ambos':
+            case 'Aceptado por Ambos, en proceso':
                 return 3;
                 break;
             case 'Enviado a Dara':
@@ -145,7 +145,7 @@ class Application
                 return 'Aceptado por Mentor';
                 break;
             case 3:
-                return 'Aceptado por Ambos';
+                return 'Aceptado por Ambos, en proceso';
                 break;
             case 4:
                 return 'Enviado a Dara';

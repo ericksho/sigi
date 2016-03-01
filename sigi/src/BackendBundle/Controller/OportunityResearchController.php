@@ -87,8 +87,11 @@ class OportunityResearchController extends Controller
     public function showAction(OportunityResearch $oportunityResearch)
     {
         $deleteForm = $this->createDeleteForm($oportunityResearch);
+        $em = $this->getDoctrine()->getManager();
 
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        $vacants = $oportunityResearch->getVacants()-$em->getRepository('BackendBundle:OportunityResearch')->countConcreteApplicationes();
 
         $owner = $oportunityResearch->isOwner($currentUser);
 
@@ -96,6 +99,7 @@ class OportunityResearchController extends Controller
             'oportunityResearch' => $oportunityResearch,
             'delete_form' => $deleteForm->createView(),
             'owner' => $owner,
+            'vacants' => $vacants,
         ));
     }
 

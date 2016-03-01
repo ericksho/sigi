@@ -36,6 +36,15 @@ class ApplicationType extends AbstractType
             ->add('student', HiddenType::class, array('data' => $studentId))
             
             ->add('oportunityResearch', HiddenType::class, array('data' => $oportunityId))
+
+            ->add('student', EntityType::class, array(
+                'class' => 'BackendBundle:Student',
+                'choice_label' => 'getNameText',
+                'query_builder' => function (EntityRepository $er)  use ( $studentId ) {return $er
+                    ->createQueryBuilder('s')
+                    ->where("s.id = :id")
+                    ->setParameter('id', $studentId);},
+            ))
         ;
     }
     

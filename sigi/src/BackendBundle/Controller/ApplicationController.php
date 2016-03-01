@@ -56,15 +56,21 @@ class ApplicationController extends Controller
     public function newAction(Request $request)
     {
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
-
         $oportunityId = $this->get('request')->request->get('oportunityId');
+
+        $em = $this->getDoctrine()->getManager();
+
+        if($em->getRepository('BackendBundle:Application')->itExists($currentUser->getStudent()->getId(),$oportunityId))
+        {
+            $application = $em->getRepository('BackendBundle:Application')->findOneByStudentIdAndOportunityId($currentUser->getStudent()->getId(),$oportunityId);
+            return $this->redirectToRoute('application_show', array('id' => $application->getId()));
+        }
 
         $application = new Application();
         $application->setStudent($currentUser->getStudent());
 
         $studentsName = $currentUser->getStudent()->getNameText();
 
-        $em = $this->getDoctrine()->getManager();
         if (is_null($oportunityId))
         {
             $oportunityId = $this->get('request')->request->get('oportunityResearch ');
@@ -158,7 +164,7 @@ class ApplicationController extends Controller
         //double check mentor is doing this
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
-        if($application->getStudent()->getId() == $currentUser->getStudent())
+        if($application->getStudent()->getId() == $currentUser->getStudent()->getId())
         {
             $application->setState(3); //aceptado por el estudiante
             $application->setLastUpdateDate(new \DateTime());

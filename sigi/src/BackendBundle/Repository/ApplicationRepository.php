@@ -34,6 +34,44 @@ class ApplicationRepository extends \Doctrine\ORM\EntityRepository
         return $returnResults;
 	}
 
+    public function findOneByStudentIdAndOportunityId($studentId, $oportunityId)
+    {
+        $returnResults = null;
+
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT a FROM BackendBundle:Application a
+                JOIN a.student s
+                JOIN a.oportunityResearch o
+                WHERE s.id = :ids
+                AND o.id = :ido'
+            )->setParameters(array('ids' => $studentId,'ido' => $oportunityId));
+     
+        try {
+            $mainResults = $query->getResult();
+
+            if (count($mainResults) > 0 )
+                $returnResults = $mainResults;
+            
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            
+        }
+
+        return $returnResults[0];
+    }
+
+    public function itExists($studentId, $oportunityId)
+    {
+        $exists = false;
+
+        $results = $this->findOneByStudentIdAndOportunityId($studentId, $oportunityId);
+
+        if (count($results) > 0 )
+                $exists = true;
+
+        return $exists;
+    }
+
 	public function findByMentorId($id)
 	{
         $returnResults = null;

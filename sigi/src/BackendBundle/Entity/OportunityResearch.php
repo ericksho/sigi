@@ -58,6 +58,13 @@ class OportunityResearch
     private $modality;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="vacants", type="integer")
+     */
+    private $vacants;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="publish", type="boolean")
@@ -663,5 +670,29 @@ class OportunityResearch
         $this->application = $application;
 
         return $this;
+    }
+
+    /**
+     * Set vacants
+     *
+     * @param integer $vacants
+     *
+     * @return OportunityResearch
+     */
+    public function setVacants($vacants)
+    {
+        $this->vacants = $vacants;
+
+        return $this;
+    }
+
+    /**
+     * Get vacants
+     *
+     * @return int
+     */
+    public function getVacants()
+    {
+        return $this->vacants;
     }
 }

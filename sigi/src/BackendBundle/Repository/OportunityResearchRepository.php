@@ -78,6 +78,29 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
         return $returnResults;
 	}
 
+    public function findConcreteApplications()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT o FROM BackendBundle:OportunityResearch o
+                JOIN o.applications a
+                WHERE a.state = 3
+                OR a.state = 4
+                OR a.state = 5'
+            );
+     
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }   
+    }
+
+    public function countConcreteApplicationes()
+    {
+        return count($this->findConcreteApplications());
+    }
+
 	public function findPublic()
 	{
 	    $query = $this->getEntityManager()
