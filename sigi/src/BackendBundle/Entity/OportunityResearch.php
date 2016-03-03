@@ -695,4 +695,23 @@ class OportunityResearch
     {
         return $this->vacants;
     }
+
+    /**
+     * Get open vacants
+     *
+     * @return int
+     */
+    public function getOpenVacants()
+    {
+        $usedVacants = 0;
+        foreach ($this->applications as $application) {
+            if ($application->getState() == 3 || $application->getState() == 4 || $application->getState() == 5 )
+            {
+                $usedVacants = $usedVacants + 1;
+            }
+            
+        }
+        $openVacants = $this->getVacants() - $usedVacants;
+        return $openVacants;
+    }
 }

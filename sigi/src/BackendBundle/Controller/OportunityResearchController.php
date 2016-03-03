@@ -40,6 +40,23 @@ class OportunityResearchController extends Controller
     }
 
     /**
+     * Lists all OportunityResearch Applications.
+     *
+     * @Route("/applications/{id}", name="oportunityresearch_applications")
+     * @Method("GET")
+     */
+    public function applicationsAction(OportunityResearch $oportunityResearch)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $applications = $oportunityResearch->getApplications();
+
+        return $this->render('oportunityresearch/applications.html.twig', array(
+            'applications' => $applications,
+        ));
+    }
+
+    /**
      * Creates a new OportunityResearch entity.
      *
      * @Route("/new", name="oportunityresearch_new")
@@ -91,7 +108,7 @@ class OportunityResearchController extends Controller
 
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
-        $vacants = $oportunityResearch->getVacants()-$em->getRepository('BackendBundle:OportunityResearch')->countConcreteApplicationes();
+        $vacants = $oportunityResearch->getOpenVacants();
 
         $owner = $oportunityResearch->isOwner($currentUser);
 

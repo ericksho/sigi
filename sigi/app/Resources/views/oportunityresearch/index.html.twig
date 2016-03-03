@@ -13,6 +13,8 @@
                 <th>Publica</th>
                 <th>Modalidad</th>
                 <th>Publicada</th>
+                <th>Vacantes</th>
+                <th>Postulaciones</th>
                 <th>keywords</th>
                 <th>Prerequisitos</th>
                 <th>Mentores</th>
@@ -30,6 +32,8 @@
                 <td>{{ oportunityResearch.public }}</td>
                 <td>{{ oportunityResearch.modality }}</td>
                 <td>{% if oportunityResearch.publish %}Si{% else %}No{% endif %}</td>
+                <td>{{ oportunityResearch.getOpenVacants() }}/{{ oportunityResearch.vacants }}</td>
+                <td><a href="{{ path('oportunityresearch_applications', { 'id': oportunityResearch.id }) }}">{{ oportunityResearch.applications|length }}</a></td>
                 <td>
                     <ul>
                         {% for keyword in oportunityResearch.oportunityKeywords() %}

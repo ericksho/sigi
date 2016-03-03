@@ -69,11 +69,10 @@ class ApplicationController extends Controller
         $application = new Application();
         $application->setStudent($currentUser->getStudent());
 
-        $studentsName = $currentUser->getStudent()->getNameText();
-
         if (is_null($oportunityId))
         {
-            $oportunityId = $this->get('request')->request->get('oportunityResearch ');
+            $app = $this->get('request')->request->get('application');
+            $oportunityId = $app['oportunityResearch'];
         }
         else
         {
@@ -95,8 +94,6 @@ class ApplicationController extends Controller
         return $this->render('application/new.html.twig', array(
             'application' => $application,
             'form' => $form->createView(),
-            'students_name' => $studentsName,
-            'oportunity_name' => $oportunity->getName(),
         ));
     }
 

@@ -23,20 +23,7 @@ class ApplicationType extends AbstractType
         $choices_array = $options['choices_array'];
 
         $builder
-            ->add('state', null,array('label' => 'Estado','attr' => array('class'=>'form-control')))
-            ->add('state', ChoiceType::class, array(
-                'label' => 'Estado',
-                'attr' => array('class'=>'form-control'),
-                'choices'  => $choices_array,
-                // *this line is important*
-                'choices_as_values' => true,
-            ))
-            ->add('applicationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Fecha de aplicación', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
-            ->add('lastUpdateDate', 'datetime', array('widget' => 'single_text', 'format' => 'dd/MM/yyyy HH:mm:ss','attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Ultima actualización', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
-            
-            ->add('oportunityResearch', HiddenType::class, array('data' => $oportunityId))
-
-            ->add('student', EntityType::class, array(
+        ->add('student', EntityType::class, array(
                 'label' => 'Alumno',
                 'attr' => array('class'=>'form-control'),
                 'class' => 'BackendBundle:Student',
@@ -46,6 +33,26 @@ class ApplicationType extends AbstractType
                     ->where("s.id = :id")
                     ->setParameter('id', $studentId);},
             ))
+        ->add('oportunityResearch', EntityType::class, array(
+                'label' => 'Oportunidad de Investigación',
+                'attr' => array('class'=>'form-control'),
+                'class' => 'BackendBundle:OportunityResearch',
+                'choice_label' => 'name',
+                'query_builder' => function (EntityRepository $er)  use ( $oportunityId ) {return $er
+                    ->createQueryBuilder('o')
+                    ->where("o.id = :id")
+                    ->setParameter('id', $oportunityId);},
+            ))
+
+            ->add('state', ChoiceType::class, array(
+                'label' => 'Estado',
+                'attr' => array('class'=>'form-control'),
+                'choices'  => $choices_array,
+                // *this line is important*
+                'choices_as_values' => true,
+            ))
+            ->add('applicationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Fecha de aplicación', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
+            ->add('lastUpdateDate', 'datetime', array('widget' => 'single_text', 'format' => 'dd/MM/yyyy HH:mm:ss','attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Ultima actualización', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
         ;
     }
     

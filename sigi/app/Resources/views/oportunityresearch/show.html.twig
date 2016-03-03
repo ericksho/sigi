@@ -22,8 +22,12 @@
                 <td>{{ oportunityResearch.description }}</td>
             </tr>
             <tr>
-                <th>Vacantes:</th>
+                <th>Vacantes Disponibles:</th>
                 <td>{{ vacants }}/{{ oportunityResearch.vacants }}</td>
+            </tr>
+            <tr>
+                <th>Postulaciones:</th>
+                <td><a href="{{ path('oportunityresearch_applications', { 'id': oportunityResearch.id }) }}">{{ oportunityResearch.applications|length }}</a></td>
             </tr>
             <tr>
                 <th>Público:</th>
