@@ -15,20 +15,31 @@ class NotificationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $recieverId = $options['recieverId'];
+
         $builder
             ->add('message', 'textarea', array('label' => 'Mensaje','attr' => array('class'=>'form-control')))
             ->add('timestamp', 'datetime', array('date_widget' => 'single_text','time_widget' => 'single_text', 'attr' => array('readonly' => true), 'label' => 'Fecha y Hora', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
-            //->add('readed', null,array('label' => 'Leida','attr' => array('class'=>'form-control')))//parte en false
-            /*
-            esto es cargado en el controlador
-            ->add('sender', EntityType::class, array(
-                'class' => 'BackendBundle:User',
-                'choice_label' => 'username'))
-                */
+            
             ->add('reciever', EntityType::class, array(
+                'label' => 'Para:',
+                'attr' => array('class'=>'form-control'),
                 'class' => 'BackendBundle:User',
                 'choice_label' => 'username'))
         ;
+
+        if (!is_null($recieverId)) 
+        {
+            $builder->add('reciever', EntityType::class, array(
+                'label' => 'Para:',
+                'attr' => array('class'=>'form-control'),
+                'class' => 'BackendBundle:User',
+                'choice_label' => 'username',
+                'query_builder' => function (EntityRepository $er)  use ( $recieverId ) {return $er
+                    ->createQueryBuilder('r')
+                    ->where("r.id = :id")
+                    ->setParameter('id', $recieverId);}));
+        }
     }
     
     /**
@@ -37,7 +48,8 @@ class NotificationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BackendBundle\Entity\Notification'
+            'data_class' => 'BackendBundle\Entity\Notification',
+            'recieverId' => null,
         ));
     }
 }

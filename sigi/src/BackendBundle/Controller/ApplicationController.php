@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use BackendBundle\Entity\Application;
 use BackendBundle\Form\ApplicationType;
+use BackendBundle\Entity\Notification;
 
 /**
  * Application controller.
@@ -140,6 +141,62 @@ class ApplicationController extends Controller
         if($application->getOportunityResearch()->isMentor($currentUser->getMentor()))
         {
             $application->setState(2); //aceptado por el mentor
+            $application->setLastUpdateDate(new \DateTime());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($application);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('application_show', array('id' => $application->getId()));
+    }
+
+    /**
+     * Changes status to not accepted by mentor and displays the application
+     *
+     * @Route("/{id}/notSelectedByMentor", name="application_not_selected_by_mentor")
+     * @Method({"GET", "POST"})
+     */
+    public function notSelectedByMentorAction(Request $request, Application $application)
+    {
+        //double check mentor is doing this
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        if($application->getOportunityResearch()->isMentor($currentUser->getMentor()))
+        {
+            $application->setState(6); //no seleccionado por el mentor
+            $application->setLastUpdateDate(new \DateTime());
+
+            $notification = new Notification();
+            $sender = $currentUser;
+            $reciever = $application->getStudent()->getUser();
+            $message = "Lamentamos comunicarle que su aplicacion a la oportunidad ".$application->getOportunityResearch()->getName()." no ah sido aceptada";
+            $timestamp = new \DateTime();
+            $notification->sendNotification($sender, $reciever, $message, $timestamp);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($application);
+            $em->persist($notification);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('application_show', array('id' => $application->getId()));
+    }
+
+    /**
+     * Changes status to not accepted by student and displays the application
+     *
+     * @Route("/{id}/notAcceptByStudent", name="application_not_accept_by_student")
+     * @Method({"GET", "POST"})
+     */
+    public function notAcceptByStudentAction(Request $request, Application $application)
+    {
+        //double check mentor is doing this
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        if($application->getStudent()->getId() == $currentUser->getStudent()->getId())
+        {
+            $application->setState(7); //aceptado por el estudiante
             $application->setLastUpdateDate(new \DateTime());
 
             $em = $this->getDoctrine()->getManager();

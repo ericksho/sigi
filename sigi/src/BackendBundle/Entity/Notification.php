@@ -207,5 +207,26 @@ class Notification
     {
         return $this->reciever;
     }
+
+    /**
+     * Send Notification, to be used after creating a blank one
+     *
+     * @param \BackendBundle\Entity\User $sender
+     * @param \BackendBundle\Entity\ $reciever
+     * @param string $message
+     * @param \DateTime $timestamp
+     *
+     * @return Notification
+     */
+    public function sendNotification(\BackendBundle\Entity\User $sender, \BackendBundle\Entity\User $reciever, $message, $timestamp)
+    {
+        $this->setSender($sender);
+        $this->setReciever($reciever);
+        $this->setMessage($message);
+        $this->setTimestamp($timestamp);
+        $this->setReaded(false);
+
+        return $this;
+    }
 }
 

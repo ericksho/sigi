@@ -168,6 +168,16 @@ class Student
     }
 
     /**
+     * Get user
+     *
+     * @return \BackendBundle\Entity\User $user
+     */
+    public function getuser()
+    {
+        return $this->user;
+    }
+
+    /**
      * Set application
      *
      * @param \BackendBundle\Entity\Application $Application
