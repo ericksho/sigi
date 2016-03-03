@@ -32,16 +32,37 @@
     {% if (application.state == 1 and is_mentor_owner) %}
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary btn2" data-toggle="modal" data-target="#MentorAgreeModal">Aceptar Postulante</button>
+        <button type="button" class="btn btn-danger btn3" data-toggle="modal" data-target="#MentorDeleteModal">Cancelar Postulación</button>
     {% endif %}
 
     {% if (application.state == 2 and is_student_owner) %}
         <button type="button" class="btn btn-primary btn2" data-toggle="modal" data-target="#StudentAgreeModal">Aceptar Postulación</button>
-        <button type="button" class="btn btn-danger btn3" data-toggle="modal" data-target="#DeleteModal">Cancelar Postulación</button>
+        <button type="button" class="btn btn-danger btn3" data-toggle="modal" data-target="#StudentDeleteModal">Cancelar Postulación</button>
     {% endif %}
     
+    <!-- Modal -->
+    <div class="modal fade" id="MentorDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Rechazar Postulante</h4>
+          </div>
+          <div class="modal-body">
+            Esta acción no tiene vuelta atrás, si elimina la aplicación el alumno no podrá verla y el proceso será interrumpido
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default btn2" data-dismiss="modal">No, quiero mas tiempo</button>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Si, deseo cancelarla" class="btn btn-danger btn3" role="button">
+            {{ form_end(delete_form) }}
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="StudentDeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -52,9 +73,9 @@
             Esta acción no tiene vuelta atrás, si elimina la aplicación el profesor no podrá verla y el proceso será interrumpido
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">No, quiero mas tiempo</button>
+            <button type="button" class="btn btn-default btn2" data-dismiss="modal">No, quiero mas tiempo</button>
             {{ form_start(delete_form) }}
-                <input type="submit" value="Si, deseo cancelarla" class="btn btn-danger" role="button">
+                <input type="submit" value="Si, deseo cancelarla" class="btn btn-danger btn3" role="button">
             {{ form_end(delete_form) }}
           </div>
         </div>
