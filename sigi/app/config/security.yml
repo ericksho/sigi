@@ -52,7 +52,7 @@ security:
         - { path: ^/requirement, roles: ROLE_MENTOR }
 
         - { path: ^/research/$, roles: [ROLE_MENTOR, ROLE_STUDENT] }
-        - { path: ^/research/[0-9]+$, roles: ROLE_ADMIN }
+        - { path: ^/research/[0-9]+$, roles: [ROLE_MENTOR, ROLE_STUDENT] }
         - { path: ^/research/new$, roles: ROLE_ADMIN }
         - { path: ^/research/[0-9]+/edit$, roles: ROLE_ADMIN }
 

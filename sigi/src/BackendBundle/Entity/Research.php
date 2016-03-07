@@ -230,7 +230,7 @@ class Research
      *
      * @param \DateTime $creationDateOP
      *
-     * @return OportunityResearch
+     * @return Research
      */
     public function setCreationDateOP($creationDateOP)
     {
@@ -254,7 +254,7 @@ class Research
      *
      * @param string $nameOP
      *
-     * @return OportunityResearch
+     * @return Research
      */
     public function setName($nameOP)
     {
@@ -278,7 +278,7 @@ class Research
      *
      * @param string $descriptionOP
      *
-     * @return OportunityResearch
+     * @return Research
      */
     public function setDescriptionOP($descriptionOP)
     {
@@ -302,7 +302,7 @@ class Research
      *
      * @param integer $modalityOP
      *
-     * @return OportunityResearch
+     * @return Research
      */
     public function setModalityOP($modalityOP)
     {
@@ -337,6 +337,20 @@ class Research
             $mainMentor->addOportunityResearchAsMain($this);
 
         $this->mainMentor = $mainMentor;
+
+        return $this;
+    }
+
+    /**
+     * Set student
+     *
+     * @param \BackendBundle\Entity\Student $student
+     *
+     * @return Notification
+     */
+    public function setStudent(\BackendBundle\Entity\Student $student)
+    {
+        $this->student = $student;
 
         return $this;
     }
@@ -467,7 +481,7 @@ class Research
      *
      * @param \BackendBundle\Entity\Keyword $keywordOP
      *
-     * @return OportunityResearch
+     * @return Research
      */
     public function addOportunityKeywordOP(\BackendBundle\Entity\Keyword $keywordOP)
     {
@@ -480,7 +494,7 @@ class Research
      *
      * @param \BackendBundle\Entity\Keyword $keywordOP
      *
-     * @return OportunityResearch
+     * @return Research
      */
     public function removeOportunityKeywordOP(\BackendBundle\Entity\Keyword $keywordOP)
     {
@@ -491,11 +505,11 @@ class Research
     /**
      * Add keywordOP
      *
-     * @param \BackendBundle\Entity\Keyword $keywordOP
+     * @param \Doctrine\ORM\PersistentCollection $keywordOP
      *
-     * @return OportunityResearch
+     * @return Research
      */
-    public function setOportunityKeywordOP(ArrayCollection $keywordsOP)
+    public function setOportunityKeywordOP(\Doctrine\ORM\PersistentCollection $keywordsOP)
     {
         $this->oportunityKeywordsOP = $keywordsOP;
         return $this;
@@ -519,7 +533,7 @@ class Research
      *
      * @param \BackendBundle\Entity\Prerequisite $prerequisiteOP
      *
-     * @return OportunityResearch
+     * @return Research
      */
     public function addPrerequisiteOP(\BackendBundle\Entity\Prerequisite $prerequisiteOP)
     {
@@ -532,7 +546,7 @@ class Research
      *
      * @param \BackendBundle\Entity\Prerequisite $prerequisiteOP
      *
-     * @return OportunityResearch
+     * @return Research
      */
     public function removePrerequisiteOP(\BackendBundle\Entity\Prerequisite $prerequisiteOP)
     {
@@ -543,11 +557,11 @@ class Research
     /**
      * Add prerequisiteOP
      *
-     * @param \BackendBundle\Entity\Prerequisite $prerequisiteOP
+     * @param \Doctrine\ORM\PersistentCollection $prerequisiteOP
      *
-     * @return OportunityResearch
+     * @return Research
      */
-    public function setPrerequisiteOP(ArrayCollection $prerequisiteOP)
+    public function setPrerequisitesOP(\Doctrine\ORM\PersistentCollection $prerequisiteOP)
     {
         $this->prerequisitesOP = $prerequisiteOP;
         return $this;
@@ -562,5 +576,28 @@ class Research
     {
         return $this->prerequisitesOP;
     }
+
+    /**
+     * Populate from Oportunity
+     *
+     * @param \BackendBundle\Entity\OportunityResearch
+     *
+     * @return Research
+     */
+    public function populateFromOportunity(\BackendBundle\Entity\OportunityResearch $oportunityResearch)
+    {
+        $this->setOportunityResearch($oportunityResearch);
+        $this->setPrerequisitesOP($oportunityResearch->getPrerequisites());
+        $this->setOportunityKeywordOP($oportunityResearch->getKeywords());
+        $this->setCreationDate(new \DateTime());
+        $this->setCreationDateOP($oportunityResearch->getCreationDate());
+        $this->setName($oportunityResearch->getName());
+        $this->setDescriptionOP($oportunityResearch->getDescription());
+        $this->setModalityOP($oportunityResearch->getModality());
+        $this->setMainMentor($oportunityResearch->getMainMentor());
+        $this->setSecondaryMentor($oportunityResearch->getSecondaryMentor());
+        $this->setThertiaryMentor($oportunityResearch->getThertiaryMentor());
+        return $this;
+    }    
 }
 

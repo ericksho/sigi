@@ -480,6 +480,18 @@ class OportunityResearch
     }
 
     /**
+     * Get keywords
+     *
+     * @return array
+     */
+    public function getKeywords()
+    {
+        $keywords = $this->oportunityKeywords;
+
+        return $keywords;
+    }
+
+    /**
      * Add keyword
      *
      * @param \BackendBundle\Entity\Keyword $keyword

@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use BackendBundle\Entity\Application;
 use BackendBundle\Form\ApplicationType;
 use BackendBundle\Entity\Notification;
+use BackendBundle\Entity\Research;
 
 /**
  * Application controller.
@@ -169,6 +170,7 @@ class ApplicationController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($application);
+            $em->persist($notification);
             $em->flush();
         }
 
@@ -230,6 +232,7 @@ class ApplicationController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($application);
+            $em->persist($notification);
             $em->flush();
         }
 
@@ -258,8 +261,17 @@ class ApplicationController extends Controller
             $message = "Felicitaciones, su aplicacion a la oportunidad ".$application->getOportunityResearch()->getName()." ah sido aceptada por el alumno, feliz investigación";
             $notification->sendNotification($sender, $reciever, $message);
 
+            //como fue aceptado por ambos, creamos la investigación oficial en el sistema
+            $research = new Research();
+            $research->populateFromOportunity($application->getOportunityResearch());
+            $research->setStudent($application->getStudent());
+            $research->setCode("IPRE101");
+            $research->setSection(3);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($application);
+            $em->persist($notification);
+            $em->persist($research);
             $em->flush();
         }
 
