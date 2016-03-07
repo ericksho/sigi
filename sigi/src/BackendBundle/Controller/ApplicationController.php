@@ -85,8 +85,26 @@ class ApplicationController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            //notificacion de systema a mentor
+            $notification1 = new Notification();
+            $mentor = $application->getOportunityResearch()->getMainMentor();
+            $reciever = $mentor->getUser();
+            $message = "Un nuevo alumno ha postulado a su oportunidad de investigación: ".$application->getOportunityResearch()->getName().
+            " porfavor pongase en contacto con el para coordinar su reunión.".
+            '@<'.$currentUser->getId().'>@';
+            $notification1->sendSystemMessage($reciever, $message);  
+
+            //notificacion de systema a estudiante
+            $notification2 = new Notification();
+            $reciever = $application->getStudent()->getUser();
+            $message = "Felicitaciones, su postulación a la oportunidad de investigación: ".$application->getOportunityResearch()->getName()." ah sido ingresada y notifiacada al mentor, este se pondrá en contacto con usted para coordinar su reunión";
+            $notification2->sendSystemMessage($reciever, $message);  
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($application);
+            $em->persist($notification1);
+            $em->persist($notification2);
             $em->flush();
 
             return $this->redirectToRoute('application_show', array('id' => $application->getId()));
@@ -143,6 +161,12 @@ class ApplicationController extends Controller
             $application->setState(2); //aceptado por el mentor
             $application->setLastUpdateDate(new \DateTime());
 
+            $notification = new Notification();
+            $sender = $currentUser;
+            $reciever = $application->getStudent()->getUser();
+            $message = "Felicitaciones, su aplicacion a la oportunidad ".$application->getOportunityResearch()->getName()." ah sido aceptada";
+            $notification->sendNotification($sender, $reciever, $message);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($application);
             $em->flush();
@@ -171,8 +195,7 @@ class ApplicationController extends Controller
             $sender = $currentUser;
             $reciever = $application->getStudent()->getUser();
             $message = "Lamentamos comunicarle que su aplicacion a la oportunidad ".$application->getOportunityResearch()->getName()." no ah sido aceptada";
-            $timestamp = new \DateTime();
-            $notification->sendNotification($sender, $reciever, $message, $timestamp);
+            $notification->sendNotification($sender, $reciever, $message);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($application);
@@ -199,6 +222,12 @@ class ApplicationController extends Controller
             $application->setState(7); //aceptado por el estudiante
             $application->setLastUpdateDate(new \DateTime());
 
+            $notification = new Notification();
+            $reciever = $currentUser;
+            $sender = $application->getStudent()->getUser();
+            $message = "Lamentamos comunicarle que la aplicacion a la oportunidad ".$application->getOportunityResearch()->getName()." no ah sido aceptada por el alumno";
+            $notification->sendNotification($sender, $reciever, $message);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($application);
             $em->flush();
@@ -222,6 +251,12 @@ class ApplicationController extends Controller
         {
             $application->setState(3); //aceptado por el estudiante
             $application->setLastUpdateDate(new \DateTime());
+
+            $notification = new Notification();
+            $reciever = $currentUser;
+            $sender = $application->getStudent()->getUser();
+            $message = "Felicitaciones, su aplicacion a la oportunidad ".$application->getOportunityResearch()->getName()." ah sido aceptada por el alumno, feliz investigación";
+            $notification->sendNotification($sender, $reciever, $message);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($application);

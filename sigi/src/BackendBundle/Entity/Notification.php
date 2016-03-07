@@ -55,6 +55,13 @@ class Notification
      */
     private $timestamp;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="system_message", type="boolean")
+     */
+    private $systemMessage;
+
 
     /**
      * Get id
@@ -184,6 +191,30 @@ class Notification
     }
 
     /**
+     * Set systemMessage
+     *
+     * @param bool
+     *
+     * @return Notification
+     */
+    public function setSystemMessage($systemMessage)
+    {
+        $this->systemMessage = $systemMessage;
+
+        return $this;
+    }
+
+    /**
+     * Get systemMessage
+     *
+     * @return bool
+     */
+    public function getSystemMessage()
+    {
+        return $this->systemMessage;
+    }
+
+    /**
      * Set reciever
      *
      * @param \BackendBundle\Entity\ $reciever
@@ -212,19 +243,41 @@ class Notification
      * Send Notification, to be used after creating a blank one
      *
      * @param \BackendBundle\Entity\User $sender
-     * @param \BackendBundle\Entity\ $reciever
+     *
+     * @param \BackendBundle\Entity\User $reciever
+     *
      * @param string $message
-     * @param \DateTime $timestamp
      *
      * @return Notification
      */
-    public function sendNotification(\BackendBundle\Entity\User $sender, \BackendBundle\Entity\User $reciever, $message, $timestamp)
+    public function sendNotification(\BackendBundle\Entity\User $sender, \BackendBundle\Entity\User $reciever, $message)
     {
         $this->setSender($sender);
         $this->setReciever($reciever);
         $this->setMessage($message);
-        $this->setTimestamp($timestamp);
+        $this->setTimestamp(new \DateTime());
         $this->setReaded(false);
+        $this->setSystemMessage(false);
+
+        return $this;
+    }
+
+    /**
+     * Send System message, to be used after creating a blank one
+     *
+     * @param $reciever
+     *
+     * @param string $message
+     *
+     * @return Notification
+     */
+    public function sendSystemMessage(\BackendBundle\Entity\User $reciever, $message)
+    {
+        $this->setReciever($reciever);
+        $this->setMessage($message);
+        $this->setTimestamp(new \DateTime());
+        $this->setReaded(false);
+        $this->setSystemMessage(true);
 
         return $this;
     }

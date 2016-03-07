@@ -35,10 +35,15 @@ class NotificationController extends Controller
 
         $notifications = $em->getRepository('BackendBundle:Notification')->findAll();
 
+        $replyIni = '<form action="'.$this->generateUrl('notification_new').'" method="post" target="_blank"><input type="hidden" name="recieverId" value="';
+        $replyEnd = '"><input type="submit" value="Contactar al alumno" class="btn btn-primary btn-xs"></form>';
+
         return $this->render('notification/index.html.twig', array(
             'notifications' => $notifications,
             'sended' => $sended,
             'recieved' => $recieved,
+            'reply_ini' => $replyIni,
+            'reply_end' => $replyEnd,
         ));
     }
 
@@ -51,13 +56,25 @@ class NotificationController extends Controller
     public function newAction(Request $request)
     {
         $notification = new Notification();
-        $form = $this->createForm('BackendBundle\Form\NotificationType', $notification);
+
+        $recieverId = $this->get('request')->request->get('recieverId');
+
+        if (!is_null($recieverId)) 
+        {
+            $form = $this->createForm('BackendBundle\Form\NotificationType', $notification, array('recieverId' => $recieverId));    
+        }
+        else
+        {   
+            $form = $this->createForm('BackendBundle\Form\NotificationType', $notification);
+        }
+
         $form->handleRequest($request);
 
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
         $notification->setSender($currentUser);
         $notification->setReaded(FALSE);
+        $notification->setSystemMessage(false);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -85,6 +102,9 @@ class NotificationController extends Controller
 
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
+        $replyIni = '<form action="'.$this->generateUrl('notification_new').'" method="post" target="_blank"><input type="hidden" name="recieverId" value="';
+        $replyEnd = '"><input type="submit" value="Contactar al alumno" class="btn btn-primary btn-xs"></form>';
+
         if (!$notification->getReaded() && $currentUser->getId() == $notification->getRecieverId())
         {
             $notification->setReaded(TRUE);
@@ -96,6 +116,9 @@ class NotificationController extends Controller
         return $this->render('notification/show.html.twig', array(
             'notification' => $notification,
             'delete_form' => $deleteForm->createView(),
+            'reply_ini' => $replyIni,
+            'reply_end' => $replyEnd,
+            'current_id' => $currentUser->getId(),
         ));
     }
 

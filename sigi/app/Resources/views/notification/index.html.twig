@@ -32,7 +32,11 @@
                         <td>{{ notification.message|length > 30 ? notification.message|slice(0, 30) ~ '...' : notification.message  }}</td>
                         <td>{% if notification.timestamp %}{{ notification.timestamp|date('Y-m-d H:i:s') }}{% endif %}</td>
                         <td>{% if notification.readed %}Si{% else %}No{% endif %}</td>
-                        <td>{{ notification.sender.username }}</td>
+                        {% if notification.systemMessage %}
+                            <td>Mensaje de SIGI</td>
+                        {% else %}
+                            <td>{{ notification.sender.username }}</td>
+                        {% endif %}
                         <td>
                             <a href="{{ path('notification_show', { 'id': notification.id }) }}" class="btn {% if notification.readed %}btn-info{% else %}btn-danger{% endif %} btn-sm" role="button">Ver</a>
                         </td>
