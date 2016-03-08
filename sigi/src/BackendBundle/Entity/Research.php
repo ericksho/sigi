@@ -105,17 +105,17 @@ class Research
      * @ORM\ManyToMany(targetEntity="Keyword", inversedBy="oportunityResearch")
      * @ORM\JoinTable(name="keywords_researches")
      */
-    private $oportunityKeywordsOP;
+    private $oportunityKeywords;
 
     /**
      * @ORM\ManyToMany(targetEntity="Prerequisite", inversedBy="oportunityResearch")
      * @ORM\JoinTable(name="prerequisites_researches")
      */
-    private $prerequisitesOP;
+    private $prerequisites;
 
     public function __construct() {
-        $this->prerequisitesOP = new ArrayCollection();
-        $this->oportunityKeywordsOP = new ArrayCollection();
+        $this->prerequisites = new ArrayCollection();
+        $this->oportunityKeywords = new ArrayCollection();
     }
 
 
@@ -426,13 +426,13 @@ class Research
     }
 
     /**
-     * Get oportunityKeywordsOP
+     * Get oportunityKeywords
      *
      * @return \BackendBundle\Entity\Keyword
      */
-    public function getOportunityKeywordsOP()
+    public function getOportunityKeywords()
     {
-        return $this->oportunityKeywordsOP;
+        return $this->oportunityKeywords;
     }
 
     /**
@@ -469,9 +469,9 @@ class Research
      *
      * @return array
      */
-    public function getKeywordsArrayOP()
+    public function getKeywordsArray()
     {
-        $keywords = $this->oportunityKeywordsOP->getValues();
+        $keywords = $this->oportunityKeywords->getValues();
 
         return $keywords;
     }
@@ -483,9 +483,9 @@ class Research
      *
      * @return Research
      */
-    public function addOportunityKeywordOP(\BackendBundle\Entity\Keyword $keywordOP)
+    public function addOportunityKeyword(\BackendBundle\Entity\Keyword $keywordOP)
     {
-        $this->oportunityKeywordsOP->add($keywordOP);
+        $this->oportunityKeywords->add($keywordOP);
         return $this;
     }
 
@@ -496,9 +496,9 @@ class Research
      *
      * @return Research
      */
-    public function removeOportunityKeywordOP(\BackendBundle\Entity\Keyword $keywordOP)
+    public function removeOportunityKeyword(\BackendBundle\Entity\Keyword $keywordOP)
     {
-        $this->oportunityKeywordsOP->removeElement($keywordOP);
+        $this->oportunityKeywords->removeElement($keywordOP);
         return $this;
     }
 
@@ -509,9 +509,9 @@ class Research
      *
      * @return Research
      */
-    public function setOportunityKeywordOP(\Doctrine\ORM\PersistentCollection $keywordsOP)
+    public function setOportunityKeyword(\Doctrine\ORM\PersistentCollection $keywordsOP)
     {
-        $this->oportunityKeywordsOP = $keywordsOP;
+        $this->oportunityKeywords = $keywordsOP;
         return $this;
     }
 
@@ -521,9 +521,9 @@ class Research
      *
      * @return array
      */
-    public function getPrerequisitesOPArray()
+    public function getPrerequisitesArray()
     {
-        $prerequisites = $this->prerequisitesOP->getValues();
+        $prerequisites = $this->prerequisites->getValues();
 
         return $prerequisites;
     }
@@ -537,7 +537,7 @@ class Research
      */
     public function addPrerequisiteOP(\BackendBundle\Entity\Prerequisite $prerequisiteOP)
     {
-        $this->prerequisitesOP->add($prerequisiteOP);
+        $this->prerequisites->add($prerequisiteOP);
         return $this;
     }
 
@@ -550,7 +550,7 @@ class Research
      */
     public function removePrerequisiteOP(\BackendBundle\Entity\Prerequisite $prerequisiteOP)
     {
-        $this->prerequisitesOP->removeElement($prerequisiteOP);
+        $this->prerequisites->removeElement($prerequisiteOP);
         return $this;
     }
 
@@ -561,20 +561,20 @@ class Research
      *
      * @return Research
      */
-    public function setPrerequisitesOP(\Doctrine\ORM\PersistentCollection $prerequisiteOP)
+    public function setPrerequisites(\Doctrine\ORM\PersistentCollection $prerequisiteOP)
     {
-        $this->prerequisitesOP = $prerequisiteOP;
+        $this->prerequisites = $prerequisiteOP;
         return $this;
     }
 
     /**
-     * Get prerequisitesOP
+     * Get prerequisites
      *
      * @return \BackendBundle\Entity\Prerequisite
      */
-    public function getPrerequisitesOP()
+    public function getPrerequisites()
     {
-        return $this->prerequisitesOP;
+        return $this->prerequisites;
     }
 
     /**
@@ -587,7 +587,7 @@ class Research
     public function populateFromOportunity(\BackendBundle\Entity\OportunityResearch $oportunityResearch)
     {
         $this->setOportunityResearch($oportunityResearch);
-        $this->setPrerequisitesOP($oportunityResearch->getPrerequisites());
+        $this->setPrerequisites($oportunityResearch->getPrerequisites());
         $this->setOportunityKeywordOP($oportunityResearch->getKeywords());
         $this->setCreationDate(new \DateTime());
         $this->setCreationDateOP($oportunityResearch->getCreationDate());

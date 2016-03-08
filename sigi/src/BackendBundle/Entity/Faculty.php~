@@ -3,15 +3,14 @@
 namespace BackendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Department
+ * Faculty
  *
- * @ORM\Table(name="department")
- * @ORM\Entity(repositoryClass="BackendBundle\Repository\DepartmentRepository")
+ * @ORM\Table(name="faculty")
+ * @ORM\Entity(repositoryClass="BackendBundle\Repository\FacultyRepository")
  */
-class Department
+class Faculty
 {
     /**
      * @var int
@@ -25,23 +24,9 @@ class Department
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=30)
+     * @ORM\Column(name="name", type="string", length=100, unique=true)
      */
     private $name;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Faculty", mappedBy="departments")
-     */
-    private $faculty;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Mentor", mappedBy="department")
-     */
-    private $mentors;
-
-    public function __construct() {
-        $this->mentors = new ArrayCollection();
-    }
 
 
     /**
@@ -59,7 +44,7 @@ class Department
      *
      * @param string $name
      *
-     * @return Department
+     * @return Faculty
      */
     public function setName($name)
     {
@@ -76,16 +61,6 @@ class Department
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Get faculty
-     *
-     * @return string
-     */
-    public function getFaculty()
-    {
-        return $this->faculty;
     }
 }
 

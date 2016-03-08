@@ -36,7 +36,7 @@ class Mentor
     private $uc;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Department")
+     * @ORM\ManyToOne(targetEntity="Department", inversedBy="mentors")
      * @ORM\JoinColumn(name="department_id", referencedColumnName="id")
      */
     private $department;

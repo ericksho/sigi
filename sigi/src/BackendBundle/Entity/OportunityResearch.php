@@ -98,6 +98,12 @@ class OportunityResearch
      * @ORM\JoinTable(name="prerequisites_oportunityResearchs")
      */
     private $prerequisites;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Faculty", inversedBy="oportunities")
+     * @ORM\JoinColumn(name="faculty_id", referencedColumnName="id")
+     */
+    private $faculty;
 
     public function __construct() {
         $this->prerequisites = new ArrayCollection();

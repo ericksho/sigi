@@ -587,6 +587,44 @@ class User  implements UserInterface, \Serializable
     }
 
     /**
+     * hasUnreadNotifications
+     *
+     * @return bool
+     */
+    public function hasUnreadNotifications()
+    {
+        $hasUnread = false;
+
+        $notifications = $this->getRecievedNotifications();
+
+        foreach ($notifications as $notification) {
+            if(!$notification->getReaded())
+                $hasUnread = true;
+        }
+
+        return $hasUnread;
+    }
+
+    /**
+     * howManyUnreadNotifications
+     *
+     * @return bool
+     */
+    public function howManyUnreadNotifications()
+    {
+        $unreaded = 0;
+
+        $notifications = $this->getRecievedNotifications();
+
+        foreach ($notifications as $notification) {
+            if(!$notification->getReaded())
+                $unreaded++;
+        }
+
+        return $unreaded;
+    }
+
+    /**
      * Add recievedNotification
      *
      * @param \BackendBundle\Entity\Notification $recievedNotification
