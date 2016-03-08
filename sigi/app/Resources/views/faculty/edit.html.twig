@@ -1,21 +1,53 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+
 {% block body %}
-    <h1>Faculty edit</h1>
+    <h1>Editar Facultad</h1>
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+        <input type="submit" class="btn btn-primary btn1" value="Editar" />
     {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('faculty_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <a href="{{ path('faculty_index')}}" class="btn btn-info btn2" role="button" >Ver Facultades</a>
+    
+    {{ form_start(delete_form) }}
+        <input type="submit" class="btn btn-danger btn3" value="Eliminar">
+    {{ form_end(delete_form) }}
+
+<script type="text/javascript">
+
+window.onload = function() {
+	
+	$.fn.select2.defaults.defaults['language'].inputTooLong = function(){
+  		return 'Input demasiado largo.';
+	};
+
+
+ 	$(".js-tokenizer").select2({
+	  	tags: true,
+	  	tokenSeparators: [','],
+	  	maximumInputLength: 30,
+	  	casesensitive: false,
+	})
+
+   var x = document.getElementsByClassName("select2-container");
+   x[0].style.width = "100%";
+};
+
+</script>
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
+        
 {% endblock %}

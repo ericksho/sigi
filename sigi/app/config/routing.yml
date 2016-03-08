@@ -52,3 +52,7 @@ backend_security:
 backend_misc:
     resource: "@BackendBundle/Controller/MiscController.php"
     type:   annotation
+
+backend_faculty:
+    resource: "@BackendBundle/Controller/FacultyController.php"
+    type:   annotation

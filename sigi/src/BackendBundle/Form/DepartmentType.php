@@ -5,6 +5,7 @@ namespace BackendBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class DepartmentType extends AbstractType
 {
@@ -16,7 +17,14 @@ class DepartmentType extends AbstractType
     {
         $builder
             ->add('name', null,array('label' => 'Nombre','attr' => array('class'=>'form-control')))
-            ->add('faculty', null,array('label' => 'Facultad','attr' => array('class'=>'form-control')))
+            ->add('faculty', EntityType::class, array(
+                'label' => 'Facultad',
+                'required' => false,
+                'placeholder' => 'Escoga la facultad',
+                'class' => 'BackendBundle:Faculty',
+                'multiple' => false,
+                'attr' => array('class'=>'js-basic-single'),
+                'choice_label' => 'name',))
         ;
     }
     

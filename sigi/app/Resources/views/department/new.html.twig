@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+
 {% block body %}
     <h1>Nuevo Departamento</h1>
 
@@ -10,4 +15,23 @@
 
        <a href="{{ path('department_index') }}" class="btn btn-info btn2" role="button">Departamentos</a>
 
+<script type="text/javascript">
+
+window.onload = function() {
+	
+ 	$(".js-basic-single").select2({
+ 		placeholder: "Seleccione la facultad",
+  		allowClear: false
+ 	});
+
+   var x = document.getElementsByClassName("select2-container");
+   x[0].style.width = "100%";
+};
+
+</script>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>        
 {% endblock %}

@@ -30,7 +30,8 @@ class Department
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Faculty", mappedBy="departments")
+     * @ORM\ManyToOne(targetEntity="Faculty", inversedBy="departments")
+     * @ORM\JoinColumn(name="faculty_id", referencedColumnName="id")
      */
     private $faculty;
 
@@ -86,6 +87,20 @@ class Department
     public function getFaculty()
     {
         return $this->faculty;
+    }
+
+    /**
+     * Set faculty
+     *
+     * @param \BackendBundle\Entity\Faculty $faculty
+     *
+     * @return Department
+     */
+    public function setFaculty(\BackendBundle\Entity\Faculty $faculty)
+    {
+        $this->faculty = $faculty;
+
+        return $this;
     }
 }
 

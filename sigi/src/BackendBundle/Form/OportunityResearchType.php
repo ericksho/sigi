@@ -39,7 +39,7 @@ class OportunityResearchType extends AbstractType
             ->add('description', null,array('label' => 'Descripción','attr' => array('class'=>'form-control')))
             ->add('public', ChoiceType::class,array('choices'  => array(1 => 'Publica', 2 => 'Privada'),'label' => 'Publica','attr' => array('class'=>'form-control')))
             ->add('modality', ChoiceType::class,array('choices'  => array(1 => 'Alfa numerico', 2 => 'Nota 1-7'),'label' => 'Modalidad','attr' => array('class'=>'form-control')))
-            ->add('publish', null,array('label' => 'Publicada','attr' => array('class'=>'form-control')))
+            ->add('publish', null,array('label' => 'Publicada','attr' => array('class'=>'form-control','checked'=>true)))
             ->add('vacants','integer',array('label' => 'Vacantes','attr' => array('class'=>'form-control','min'=>1,'max' => 10),'scale'=>0))
             ->add('oportunityKeywords', EntityType::class, array(
                 'label' => 'Palabras claves',

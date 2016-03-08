@@ -21,7 +21,7 @@ class MentorType extends AbstractType
 
         $builder
             ->add('uc',null,array('attr' => array('class'=>'form-control')))
-            ->add('department',null,array('attr' => array('class'=>'form-control')))
+            ->add('department','choice',array('attr' => array('class'=>'form-control')))
         ;
     }
 

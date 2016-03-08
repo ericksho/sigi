@@ -237,5 +237,266 @@ class Mentor
 
         return $this;
     }
-}
 
+    /**
+     * Set department
+     *
+     * @param \BackendBundle\Entity\Department $department
+     *
+     * @return Mentor
+     */
+    public function setDepartment(\BackendBundle\Entity\Department $department = null)
+    {
+        $this->department = $department;
+
+        return $this;
+    }
+
+    /**
+     * Get department
+     *
+     * @return \BackendBundle\Entity\Department
+     */
+    public function getDepartment()
+    {
+        return $this->department;
+    }
+
+    /**
+     * Add mentorKeyword
+     *
+     * @param \BackendBundle\Entity\Keyword $mentorKeyword
+     *
+     * @return Mentor
+     */
+    public function addMentorKeyword(\BackendBundle\Entity\Keyword $mentorKeyword)
+    {
+        $this->mentorKeywords[] = $mentorKeyword;
+
+        return $this;
+    }
+
+    /**
+     * Remove mentorKeyword
+     *
+     * @param \BackendBundle\Entity\Keyword $mentorKeyword
+     */
+    public function removeMentorKeyword(\BackendBundle\Entity\Keyword $mentorKeyword)
+    {
+        $this->mentorKeywords->removeElement($mentorKeyword);
+    }
+
+    /**
+     * Get mentorKeywords
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMentorKeywords()
+    {
+        return $this->mentorKeywords;
+    }
+
+    /**
+     * Add oportunitiesAsMain
+     *
+     * @param \BackendBundle\Entity\OportunityResearch $oportunitiesAsMain
+     *
+     * @return Mentor
+     */
+    public function addOportunitiesAsMain(\BackendBundle\Entity\OportunityResearch $oportunitiesAsMain)
+    {
+        $this->oportunitiesAsMain[] = $oportunitiesAsMain;
+
+        return $this;
+    }
+
+    /**
+     * Remove oportunitiesAsMain
+     *
+     * @param \BackendBundle\Entity\OportunityResearch $oportunitiesAsMain
+     */
+    public function removeOportunitiesAsMain(\BackendBundle\Entity\OportunityResearch $oportunitiesAsMain)
+    {
+        $this->oportunitiesAsMain->removeElement($oportunitiesAsMain);
+    }
+
+    /**
+     * Get oportunitiesAsMain
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOportunitiesAsMain()
+    {
+        return $this->oportunitiesAsMain;
+    }
+
+    /**
+     * Add oportunitiesAsSecondary
+     *
+     * @param \BackendBundle\Entity\OportunityResearch $oportunitiesAsSecondary
+     *
+     * @return Mentor
+     */
+    public function addOportunitiesAsSecondary(\BackendBundle\Entity\OportunityResearch $oportunitiesAsSecondary)
+    {
+        $this->oportunitiesAsSecondary[] = $oportunitiesAsSecondary;
+
+        return $this;
+    }
+
+    /**
+     * Remove oportunitiesAsSecondary
+     *
+     * @param \BackendBundle\Entity\OportunityResearch $oportunitiesAsSecondary
+     */
+    public function removeOportunitiesAsSecondary(\BackendBundle\Entity\OportunityResearch $oportunitiesAsSecondary)
+    {
+        $this->oportunitiesAsSecondary->removeElement($oportunitiesAsSecondary);
+    }
+
+    /**
+     * Get oportunitiesAsSecondary
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOportunitiesAsSecondary()
+    {
+        return $this->oportunitiesAsSecondary;
+    }
+
+    /**
+     * Add oportunitiesAsThertiary
+     *
+     * @param \BackendBundle\Entity\OportunityResearch $oportunitiesAsThertiary
+     *
+     * @return Mentor
+     */
+    public function addOportunitiesAsThertiary(\BackendBundle\Entity\OportunityResearch $oportunitiesAsThertiary)
+    {
+        $this->oportunitiesAsThertiary[] = $oportunitiesAsThertiary;
+
+        return $this;
+    }
+
+    /**
+     * Remove oportunitiesAsThertiary
+     *
+     * @param \BackendBundle\Entity\OportunityResearch $oportunitiesAsThertiary
+     */
+    public function removeOportunitiesAsThertiary(\BackendBundle\Entity\OportunityResearch $oportunitiesAsThertiary)
+    {
+        $this->oportunitiesAsThertiary->removeElement($oportunitiesAsThertiary);
+    }
+
+    /**
+     * Get oportunitiesAsThertiary
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOportunitiesAsThertiary()
+    {
+        return $this->oportunitiesAsThertiary;
+    }
+
+    /**
+     * Add researchAsMain
+     *
+     * @param \BackendBundle\Entity\Research $researchAsMain
+     *
+     * @return Mentor
+     */
+    public function addResearchAsMain(\BackendBundle\Entity\Research $researchAsMain)
+    {
+        $this->researchAsMain[] = $researchAsMain;
+
+        return $this;
+    }
+
+    /**
+     * Remove researchAsMain
+     *
+     * @param \BackendBundle\Entity\Research $researchAsMain
+     */
+    public function removeResearchAsMain(\BackendBundle\Entity\Research $researchAsMain)
+    {
+        $this->researchAsMain->removeElement($researchAsMain);
+    }
+
+    /**
+     * Get researchAsMain
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResearchAsMain()
+    {
+        return $this->researchAsMain;
+    }
+
+    /**
+     * Add researchAsSecondary
+     *
+     * @param \BackendBundle\Entity\Research $researchAsSecondary
+     *
+     * @return Mentor
+     */
+    public function addResearchAsSecondary(\BackendBundle\Entity\Research $researchAsSecondary)
+    {
+        $this->researchAsSecondary[] = $researchAsSecondary;
+
+        return $this;
+    }
+
+    /**
+     * Remove researchAsSecondary
+     *
+     * @param \BackendBundle\Entity\Research $researchAsSecondary
+     */
+    public function removeResearchAsSecondary(\BackendBundle\Entity\Research $researchAsSecondary)
+    {
+        $this->researchAsSecondary->removeElement($researchAsSecondary);
+    }
+
+    /**
+     * Get researchAsSecondary
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResearchAsSecondary()
+    {
+        return $this->researchAsSecondary;
+    }
+
+    /**
+     * Add researchAsThertiary
+     *
+     * @param \BackendBundle\Entity\Research $researchAsThertiary
+     *
+     * @return Mentor
+     */
+    public function addResearchAsThertiary(\BackendBundle\Entity\Research $researchAsThertiary)
+    {
+        $this->researchAsThertiary[] = $researchAsThertiary;
+
+        return $this;
+    }
+
+    /**
+     * Remove researchAsThertiary
+     *
+     * @param \BackendBundle\Entity\Research $researchAsThertiary
+     */
+    public function removeResearchAsThertiary(\BackendBundle\Entity\Research $researchAsThertiary)
+    {
+        $this->researchAsThertiary->removeElement($researchAsThertiary);
+    }
+
+    /**
+     * Get researchAsThertiary
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getResearchAsThertiary()
+    {
+        return $this->researchAsThertiary;
+    }
+}

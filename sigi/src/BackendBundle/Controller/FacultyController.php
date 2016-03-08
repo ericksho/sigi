@@ -4,19 +4,23 @@ namespace BackendBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use BackendBundle\Entity\Faculty;
 use BackendBundle\Form\FacultyType;
 
 /**
  * Faculty controller.
  *
+ * @Route("/faculty")
  */
 class FacultyController extends Controller
 {
     /**
      * Lists all Faculty entities.
      *
+     * @Route("/", name="faculty_index")
+     * @Method("GET")
      */
     public function indexAction()
     {
@@ -32,6 +36,8 @@ class FacultyController extends Controller
     /**
      * Creates a new Faculty entity.
      *
+     * @Route("/new", name="faculty_new")
+     * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
     {
@@ -56,6 +62,8 @@ class FacultyController extends Controller
     /**
      * Finds and displays a Faculty entity.
      *
+     * @Route("/{id}", name="faculty_show")
+     * @Method("GET")
      */
     public function showAction(Faculty $faculty)
     {
@@ -70,6 +78,8 @@ class FacultyController extends Controller
     /**
      * Displays a form to edit an existing Faculty entity.
      *
+     * @Route("/{id}/edit", name="faculty_edit")
+     * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Faculty $faculty)
     {
@@ -95,6 +105,8 @@ class FacultyController extends Controller
     /**
      * Deletes a Faculty entity.
      *
+     * @Route("/{id}", name="faculty_delete")
+     * @Method("DELETE")
      */
     public function deleteAction(Request $request, Faculty $faculty)
     {

@@ -3,6 +3,7 @@
 namespace BackendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Faculty
@@ -29,8 +30,7 @@ class Faculty
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Department", inversedBy="faculty")
-     * @ORM\JoinTable(name="departments_faculties")
+     * @ORM\OneToMany(targetEntity="Department", mappedBy="faculty")
      */
     private $departments;
 

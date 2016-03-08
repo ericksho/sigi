@@ -18,7 +18,7 @@
             <tr>
                 <td><a href="{{ path('department_show', { 'id': department.id }) }}">{{ department.id }}</a></td>
                 <td>{{ department.name }}</td>
-                <td>{{ department.faculty }}</td>
+                <td>{% if department.faculty is not null %}{{ department.faculty.name }}{% endif %}</td>
                 <td><a href="{{ path('department_show', { 'id': department.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a></td>
                 <td><a href="{{ path('department_edit', { 'id': department.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a></tr>
         {% endfor %}

@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Faculty list</h1>
+    <h1>Facultades</h1>
 
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>Actions</th>
+                <th>Nombre</th>
+                <th>Departamentos</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -18,22 +19,22 @@
                 <td>{{ faculty.name }}</td>
                 <td>
                     <ul>
-                        <li>
-                            <a href="{{ path('faculty_show', { 'id': faculty.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('faculty_edit', { 'id': faculty.id }) }}">edit</a>
-                        </li>
+                        {% for department in faculty.getDepartments() %}
+                            <li>
+                                {{ department.name }}
+                            </li>
+                        {% endfor %}
                     </ul>
+                </td>
+                <td>
+                    <a href="{{ path('faculty_show', { 'id': faculty.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a>
+                    <a href="{{ path('faculty_edit', { 'id': faculty.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('faculty_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+    <a href="{{ path('faculty_new') }}" class="btn btn-primary btn-sm" role="button">Ingresar Facultad</a>
+    
 {% endblock %}
