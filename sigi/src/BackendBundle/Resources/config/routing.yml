@@ -1,3 +1,7 @@
+backend_classcode:
+    resource: "@BackendBundle/Resources/config/routing/classcode.php"
+    prefix:   /classcode
+
 backend_homepage:
     path:     /
     defaults: { _controller: BackendBundle:Default:index }

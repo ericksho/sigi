@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Sigla:</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Iniciales de la Sigla</th>
+                <td>{{ classCode.initialsCode }}</td>
+            </tr>
+            <tr>
+                <th>Parte Numerica de la Sigla</th>
+                {{ "%04d"|format(classCode.numbersCode) }}
+            </tr>
+            <tr>
+                <th>Créditos</th>
+                <td>{{ classCode.credits }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ classCode.name }}</td>
+            </tr>
+            <tr>
+                <th>El mentor es de Ingeniería</th>
+                <td>{% if classCode.mentorIng %}Si{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>El estudiante es de Ingeniería</th>
+                <td>{% if classCode.studentIng %}Si{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Tipo</th>
+                <td>{{ classCode.type }}</td>
+            </tr>
+            <tr>
+                <th>Vez que lo toma</th>
+                <td>{{ classCode.time }} vez</td>
+            </tr>
+            <tr>
+                <th>Evaluado con</th>
+                <td>{% if classCode.graded %}Nota de 1 a 7{% else %}Alfanumerico{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('classcode_index') }}" class="btn btn-info btn1" role="button" >Listar Siglas</a>
+    <a href="{{ path('classcode_edit', { 'id': classCode.id }) }}" class="btn btn-primary btn2" role="button">Editar</a>
+    
+    {{ form_start(delete_form) }}
+        <input type="submit" value="Eliminar" class="btn btn-danger btn2" role="button">
+    {{ form_end(delete_form) }}
+
+{% endblock %}

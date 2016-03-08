@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Siglas</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Sigla</th>
+                <th>Creditos</th>
+                <th>Nombre</th>
+                <th>Mentor Ing</th>
+                <th>Alumno Ing</th>
+                <th>Tipo</th>
+                <th>Vez</th>
+                <th>Evaluado con</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for classCode in classCodes %}
+            <tr>
+                <td>{{ classCode.initialsCode }}{{ "%04d"|format(classCode.numbersCode) }}</td>
+                <td>{{ classCode.credits }}</td>
+                <td>{{ classCode.name }}</td>
+                <td>{% if classCode.mentorIng %}Si{% else %}No{% endif %}</td>
+                <td>{% if classCode.studentIng %}Si{% else %}No{% endif %}</td>
+                <td>{{ classCode.type }}</td>
+                <td>{{ classCode.time }} vez</td>
+                <td>{% if classCode.graded %}Nota de 1 a 7{% else %}Alfanumerico{% endif %}</td>
+                <td>
+                        <a href="{{ path('classcode_show', { 'id': classCode.id }) }}" class="btn btn-info " role="button" >Ver</a>
+                        <a href="{{ path('classcode_edit', { 'id': classCode.id }) }}" class="btn btn-primary " role="button">Editar</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('classcode_new') }}"class="btn btn-primary " role="button">Ingesar Nueva Sigla</a>
+{% endblock %}

@@ -60,6 +60,11 @@ security:
         - { path: ^/user/[0-9]+$, roles: [ROLE_STUDENT, ROLE_MENTOR,ROLE_OTHER] }
         - { path: ^/user/new$, roles: ROLE_ADMIN }
         - { path: ^/user/[0-9]+/edit$, roles: [ROLE_STUDENT, ROLE_MENTOR,ROLE_OTHER] }
+
+        #- { path: ^/classcode/$, roles: ROLE_ADMIN }
+        #- { path: ^/classcode/[0-9]+$, roles: ROLE_ADMIN }
+        #- { path: ^/classcode/new$, roles: ROLE_ADMIN }
+        #- { path: ^/classcode/[0-9]+/edit$, roles: ROLE_ADMIN }
     providers:
         our_db_provider:
             entity:
