@@ -26,6 +26,10 @@
                 <td>{{ vacants }}/{{ oportunityResearch.vacants }}</td>
             </tr>
             <tr>
+                <th>Departamento:</th>
+                <td>{{ oportunityResearch.department.name }}</td>
+            </tr>
+            <tr>
                 <th>Postulaciones:</th>
                 <td><a href="{{ path('oportunityresearch_applications', { 'id': oportunityResearch.id }) }}">{{ oportunityResearch.applications|length }}</a></td>
             </tr>

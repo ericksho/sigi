@@ -59,6 +59,16 @@ class OportunityResearchType extends AbstractType
                 'attr' => array('class'=>'js-tokenizer'),
                 'choice_label' => 'courseNumber',))
 
+            ->add('department', EntityType::class, array(
+                'label' => 'Departamento',
+                'required' => false,
+                'placeholder' => 'Agregue siglas de prerequisito',
+                'class' => 'BackendBundle:Department',
+                'multiple' => false,
+                'group_by' => 'faculty.name',
+                'attr' => array('class'=>'js-basic-single'),
+                'choice_label' => 'name',))
+
             /* comentados por relaciones, agregar luego
             ->add('research')
             */

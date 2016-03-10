@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class MentorType extends AbstractType
 {
@@ -21,7 +22,14 @@ class MentorType extends AbstractType
 
         $builder
             ->add('uc',null,array('attr' => array('class'=>'form-control')))
-            ->add('department','choice',array('attr' => array('class'=>'form-control')))
+            ->add('department', EntityType::class, array(
+                'label' => 'Departamento',
+                'required' => false,
+                'class' => 'BackendBundle:Department',
+                'multiple' => false,
+                'group_by' => 'faculty.name',
+                'attr' => array('class'=>'js-basic-single'),
+                'choice_label' => 'name',))
         ;
     }
 

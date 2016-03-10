@@ -68,6 +68,11 @@
 
 window.onload = function() {
 
+	$(".js-basic-single").select2({
+ 		placeholder: "Seleccione el departamento",
+  		allowClear: false
+ 	})
+
 	$.fn.select2.defaults.defaults['language'].inputTooLong = function(){
   		return 'Input demasiado largo.';
 	};
@@ -95,6 +100,8 @@ window.onload = function() {
    var x = document.getElementsByClassName("select2-container");
    x[0].style.width = "100%";
    x[1].style.width = "100%";
+   x[2].style.width = "100%";
+   x[2].style.marginBottom= "20px";
 
 	$('#secondary_mentor_secondaryMentor').on('change', function() {
 		var ter = document.getElementById("thertiary_mentor_thertiaryMentor");

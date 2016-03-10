@@ -100,17 +100,10 @@ class OportunityResearch
     private $prerequisites;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Faculty", inversedBy="oportunities")
-     * @ORM\JoinColumn(name="faculty_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Department", inversedBy="oportunities")
+     * @ORM\JoinColumn(name="department_id", referencedColumnName="id")
      */
-    private $faculty;
-
-    public function __construct() {
-        $this->prerequisites = new ArrayCollection();
-        $this->oportunityKeywords = new ArrayCollection();
-        $this->applications = new ArrayCollection();
-        $this->requirements = new ArrayCollection();
-    }
+    private $department;
 
     /**
      * @ORM\ManyToOne(targetEntity="Mentor", inversedBy="oportunitiesAsMain")
@@ -129,6 +122,37 @@ class OportunityResearch
      * @ORM\JoinColumn(name="thertiaryMentor_id", referencedColumnName="id")
      */
     private $thertiaryMentor;
+
+    public function __construct() {
+        $this->prerequisites = new ArrayCollection();
+        $this->oportunityKeywords = new ArrayCollection();
+        $this->applications = new ArrayCollection();
+        $this->requirements = new ArrayCollection();
+    }
+
+    /**
+     * Set department
+     *
+     * @param \BackendBundle\Entity\Department $department
+     *
+     * @return OportunityResearch
+     */
+    public function setDepartment(\BackendBundle\Entity\Department $department = null)
+    {
+        $this->department = $department;
+
+        return $this;
+    }
+
+    /**
+     * Get department
+     *
+     * @return \BackendBundle\Entity\Department
+     */
+    public function getDepartment()
+    {
+        return $this->department;
+    }
 
     /**
      * Get id

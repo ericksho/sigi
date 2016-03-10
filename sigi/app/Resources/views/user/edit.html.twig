@@ -1,5 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet" />
+
+
+{% endblock %}
+
 {% block body %}
 
     <h1>Editar Usuario</h1>
@@ -71,6 +80,18 @@
 <script type="text/javascript">
 
 window.onload = function() {
+
+
+    $(".js-basic-single").select2({
+        placeholder: "Seleccione el departamento",
+        allowClear: false
+    })
+
+    var x = document.getElementsByClassName("select2-container");
+    x[0].style.width = "100%";
+    x[0].style.marginBottom= "20px";
+
+
         collapseJS();
     };
 
@@ -142,6 +163,13 @@ function collapseJS()
 }
 </script>
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
+        
 {% endblock %}
 
 
