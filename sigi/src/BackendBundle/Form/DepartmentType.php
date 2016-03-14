@@ -24,7 +24,8 @@ class DepartmentType extends AbstractType
                 'class' => 'BackendBundle:Faculty',
                 'multiple' => false,
                 'attr' => array('class'=>'js-basic-single'),
-                'choice_label' => 'name',))
+                'choice_label' => 'name',
+                'required' => true))
         ;
     }
     

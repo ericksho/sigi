@@ -64,11 +64,11 @@ class ClassCode
     private $studentIng;
 
     /**
-     * @var string
+     * @var bool
      *
-     * @ORM\Column(name="type", type="string", length=20)
+     * @ORM\Column(name="cmd", type="boolean")
      */
-    private $type;
+    private $cmd;
 
     /**
      * @var int
@@ -240,27 +240,27 @@ class ClassCode
     }
 
     /**
-     * Set type
+     * Set cmd
      *
-     * @param string $type
+     * @param boolean $cmd
      *
      * @return ClassCode
      */
-    public function setType($type)
+    public function setCmd($cmd)
     {
-        $this->type = $type;
+        $this->cmd = $cmd;
 
         return $this;
     }
 
     /**
-     * Get type
+     * Get cmd
      *
-     * @return string
+     * @return bool
      */
-    public function getType()
+    public function getCmd()
     {
-        return $this->type;
+        return $this->cmd;
     }
 
     /**

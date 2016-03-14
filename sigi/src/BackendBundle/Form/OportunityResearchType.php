@@ -32,6 +32,7 @@ class OportunityResearchType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $current_id = 1;
 
         $builder
             ->add('name', null,array('label' => 'Nombre','attr' => array('class'=>'form-control')))
@@ -69,9 +70,37 @@ class OportunityResearchType extends AbstractType
                 'attr' => array('class'=>'js-basic-single'),
                 'choice_label' => 'name',))
 
-            /* comentados por relaciones, agregar luego
-            ->add('research')
-            */
+            ->add('secondaryMentor', EntityType::class, array(
+                'label' => 'Agregar un segundo Mentor',
+                'attr' => array('class'=>'js-basic-single-secondaryMentor'),
+                'required' => false,
+                'placeholder' => 'Seleccione al Mentor Secundario',
+                'class' => 'BackendBundle:Mentor',
+                'query_builder' => function (EntityRepository $er)  use ( $current_id ) {return $er
+                    ->createQueryBuilder('m')
+                    ->join('m.user', 'u')
+                    ->where("u.role = 'ROLE_MENTOR'")
+                    ->andWhere('u.id <> :id')
+                    ->setParameter('id', $current_id)
+                    ->orderBy('m.id', 'ASC');},
+                'choice_label' => 'getShowName',))
+
+            ->add('thertiaryMentor', EntityType::class, array(
+                'label' => 'Agregar un tercer Mentor',
+                'attr' => array('class'=>'js-basic-single-thertiaryMentor', 'id'=>'list'),
+                'required' => false,
+                'placeholder' => 'Seleccione al Mentor Terciario',
+                'class' => 'BackendBundle:Mentor',
+                'query_builder' => function (EntityRepository $er)  use ( $current_id ) {return $er
+                    ->createQueryBuilder('m')
+                    ->join('m.user', 'u')
+                    ->where("u.role = 'ROLE_MENTOR'")
+                    ->andWhere('u.id <> :id')
+                    ->setParameter('id', $current_id)
+                    ->orderBy('m.id', 'ASC');},
+                'choice_label' => 'getShowName',))
+
+            ->add('cmd', null,array('label' => 'Es CMD','attr' => array('class'=>'form-control','checked'=>false)))
         ;
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -91,6 +120,10 @@ class OportunityResearchType extends AbstractType
             function (FormEvent $event) {
                 $data = $event->getData();
 
+                //////////// revisamos si puede ser CDM
+                
+
+                //////////// revisamos si hay keywords que agregar 
                 if (isset($data['oportunityKeywords']))
                 {
                     $keywords = $data['oportunityKeywords'];
@@ -118,6 +151,7 @@ class OportunityResearchType extends AbstractType
                     $event->setData($data);
                 }
 
+                //////////// revisamos si hay prerequisitos que agregar 
                 if (isset($data['prerequisites']))
                 {
                     $prerequisites = $data['prerequisites'];
@@ -154,7 +188,8 @@ class OportunityResearchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BackendBundle\Entity\OportunityResearch'
+            'data_class' => 'BackendBundle\Entity\OportunityResearch',
+            'department' => null        
         ));
     }
 }

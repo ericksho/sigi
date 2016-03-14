@@ -20,43 +20,44 @@
     {{ form_start(form) }}
         {{ form_widget(form) }}
 
-		</ul>
+<!--
+			</ul>
 
-        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-		  <div class="panel panel-default">
-		    <div class="panel-heading" role="tab" id="headingOne">
-		      <h4 class="panel-title">
-		        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-		          Agregar un Segundo Mentor
-		        </a>
-		      </h4>
-		    </div>
-		    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-		      <div class="panel-body">
-		        {{ form_widget(secondaryForm) }}
+	        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+			  <div class="panel panel-default">
+			    <div class="panel-heading" role="tab" id="headingOne">
+			      <h4 class="panel-title">
+			        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+			          Agregar un Segundo Mentor
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+			      <div class="panel-body">
+			        {{ form_widget(secondaryForm) }}
 
-		        *Aunque cierre esta pestaña, si escogio un mentor sera agregado, si no quiere agregar uno, dejelo en blanco
+			        *Aunque cierre esta pestaña, si escogio un mentor sera agregado, si no quiere agregar uno, dejelo en blanco
 
-		      </div>
-		    </div>
-		  </div>
-		  <div class="panel panel-default">
-		    <div class="panel-heading" role="tab" id="headingTwo">
-		      <h4 class="panel-title">
-		        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-		          Agregar un Tercer Mentor 
-		        </a>
-		      </h4>
-		    </div>
-		    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-		      <div class="panel-body">
-		      	{{ form_widget(thertiaryForm) }}
-		        *Aunque cierre esta pestaña, si escogio un mentor sera agregado, si no quiere agregar uno, dejelo en blanco
-		      </div>
-		    </div>
-		  </div>
-		</div>
-
+			      </div>
+			    </div>
+			  </div>
+			  <div class="panel panel-default">
+			    <div class="panel-heading" role="tab" id="headingTwo">
+			      <h4 class="panel-title">
+			        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+			          Agregar un Tercer Mentor 
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+			      <div class="panel-body">
+			      	{{ form_widget(thertiaryForm) }}
+			        *Aunque cierre esta pestaña, si escogio un mentor sera agregado, si no quiere agregar uno, dejelo en blanco
+			      </div>
+			    </div>
+			  </div>
+			</div>
+-->
 
 
         <input type="submit" class="btn btn-primary btn1" role="button" value="Crear" />
@@ -79,34 +80,40 @@ window.onload = function() {
 	};
 
  	$(".js-example-tokenizer").select2({
-  	tags: true,
-  	tokenSeparators: [','],
-  	maximumInputLength: 20,
-  	casesensitive: false,
-})
+	  	tags: true,
+	  	tokenSeparators: [','],
+	  	maximumInputLength: 20,
+	  	casesensitive: false,
+	})
 
  	$(".js-tokenizer").select2({
-  	tags: true,
-  	tokenSeparators: [','],
-  	maximumInputLength: 10,
-  	casesensitive: false,
-  	createTag: function(params) {
-        var term = $.trim(params.term);
+	  	tags: true,
+	  	tokenSeparators: [','],
+	  	maximumInputLength: 10,
+	  	casesensitive: false,
+	  	createTag: function(params) {
+	        var term = $.trim(params.term);
 
-        return {id: term.toUpperCase(), text: term.toUpperCase()};
-      }
-})
+	        return {id: term.toUpperCase(), text: term.toUpperCase()};
+	      }
+	})
+
+ 	$(".js-basic-single-secondaryMentor").select2({
+ 		placeholder: "Seleccione un mentor",
+  		allowClear: true
+ 	})
+
+ 	$(".js-basic-single-thertiaryMentor").select2({
+ 		placeholder: "Seleccione un mentor",
+  		allowClear: true
+ 	})
 
  
 
-   var x = document.getElementsByClassName("select2-container");
-   x[0].style.width = "100%";
-   x[1].style.width = "100%";
-   x[2].style.width = "100%";
-   x[2].style.marginBottom= "20px";
+   setWidth();
 
 	$('#secondary_mentor_secondaryMentor').on('change', function() {
-		var ter = document.getElementById("thertiary_mentor_thertiaryMentor");
+		var ter = document.getElementById("thertiary_mentor_secondaryMentor");
 
 		if (ter.value == this.value)
 		{
@@ -128,7 +135,48 @@ window.onload = function() {
   			this.selectedIndex = 0;
 		}
 	})
+
+	$('#oportunity_research_secondaryMentor').on('change', function() {
+		enableAllThertiary();
+		var value = document.getElementById("oportunity_research_secondaryMentor").value;
+		$("#oportunity_research_thertiaryMentor>option[value='"+value+"']").prop('disabled',true);
+		$("#oportunity_research_thertiaryMentor").select2();
+		setWidth();
+	});
+
+	$('#oportunity_research_thertiaryMentor').on('change', function() {
+		enableAllSecondary();
+		var value = document.getElementById("oportunity_research_thertiaryMentor").value;
+		$("#oportunity_research_secondaryMentor>option[value='"+value+"']").prop('disabled',true);
+		$("#oportunity_research_secondaryMentor").select2();
+		setWidth();
+	});
 };
+
+function setWidth()
+{
+	var x = document.getElementsByClassName("select2-container");
+	x[2].style.marginBottom= "20px";
+
+	for (i = 0; i<x.length; i++)
+	{
+		x[i].style.width = "100%";
+	}
+}
+
+function enableAllThertiary()
+{
+	$("#oportunity_research_thertiaryMentor>option").prop('disabled',false);
+	$("#oportunity_research_thertiaryMentor>option").removeProp('disabled'); 
+	$("#oportunity_research_thertiaryMentor>option").select2(); 
+}
+
+function enableAllSecondary()
+{
+	$("#oportunity_research_secondaryMentor>option").prop('disabled',false);
+	$("#oportunity_research_secondaryMentor>option").removeProp('disabled'); 
+	$("#oportunity_research_secondaryMentor>option").select2(); 
+}
 
 </script>
 

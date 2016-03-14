@@ -131,4 +131,20 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
             return null;
         }
     }
+
+    public function findMentorFaculties()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT m.id, f.id FROM BackendBundle:Mentor m
+                JOIN m.department d 
+                JOIN d.faculty f'
+            );
+     
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }   
+    }
 }

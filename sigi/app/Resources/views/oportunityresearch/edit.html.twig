@@ -15,6 +15,7 @@
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
 
+<!--
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 		  <div class="panel panel-default">
 		    <div class="panel-heading" role="tab" id="headingOne">
@@ -53,6 +54,7 @@
 		
 		</br>
 		</br>
+	-->
 		
 
         <input type="submit" class="btn btn-primary btn1" role="button" value="Editar" />
@@ -62,7 +64,7 @@
     {{ form_start(delete_form) }}
         <input type="submit" value="Eliminar" class="btn btn-danger btn3" role="button">
     {{ form_end(delete_form) }}
-
+						
 
 <script type="text/javascript">	
 
@@ -71,6 +73,16 @@ window.onload = function() {
 	$(".js-basic-single").select2({
  		placeholder: "Seleccione el departamento",
   		allowClear: false
+ 	})
+
+ 	$(".js-basic-single-secondaryMentor").select2({
+ 		placeholder: "Seleccione un mentor",
+  		allowClear: true
+ 	})
+
+ 	$(".js-basic-single-thertiaryMentor").select2({
+ 		placeholder: "Seleccione un mentor",
+  		allowClear: true
  	})
 
 	$.fn.select2.defaults.defaults['language'].inputTooLong = function(){
@@ -97,14 +109,10 @@ window.onload = function() {
       }
 })
 
-   var x = document.getElementsByClassName("select2-container");
-   x[0].style.width = "100%";
-   x[1].style.width = "100%";
-   x[2].style.width = "100%";
-   x[2].style.marginBottom= "20px";
+   setWidth();
 
 	$('#secondary_mentor_secondaryMentor').on('change', function() {
-		var ter = document.getElementById("thertiary_mentor_thertiaryMentor");
+		var ter = document.getElementById("thertiary_mentor_secondaryMentor");
 
 		if (ter.value == this.value)
 		{
@@ -127,7 +135,55 @@ window.onload = function() {
 		}
 	})
 
+	$('#oportunity_research_secondaryMentor').on('change', function() {
+		enableAllThertiary();
+		var value = document.getElementById("oportunity_research_secondaryMentor").value;
+		$("#oportunity_research_thertiaryMentor>option[value='"+value+"']").prop('disabled',true);
+		$("#oportunity_research_thertiaryMentor").select2();
+		setWidth();
+	});
+
+	$('#oportunity_research_thertiaryMentor').on('change', function() {
+		enableAllSecondary();
+		var value = document.getElementById("oportunity_research_thertiaryMentor").value;
+		$("#oportunity_research_secondaryMentor>option[value='"+value+"']").prop('disabled',true);
+		$("#oportunity_research_secondaryMentor").select2();
+		setWidth();
+	});
+
+	var_dump(mentorFacutly)
+
 };
+
+function checkCMD()
+{
+
+}
+
+function setWidth()
+{
+	var x = document.getElementsByClassName("select2-container");
+	x[2].style.marginBottom= "20px";
+
+	for (i = 0; i<x.length; i++)
+	{
+		x[i].style.width = "100%";
+	}
+}
+
+function enableAllThertiary()
+{
+	$("#oportunity_research_thertiaryMentor>option").prop('disabled',false);
+	$("#oportunity_research_thertiaryMentor>option").removeProp('disabled'); 
+	$("#oportunity_research_thertiaryMentor>option").select2(); 
+}
+
+function enableAllSecondary()
+{
+	$("#oportunity_research_secondaryMentor>option").prop('disabled',false);
+	$("#oportunity_research_secondaryMentor>option").removeProp('disabled'); 
+	$("#oportunity_research_secondaryMentor>option").select2(); 
+}
 
 </script>
 

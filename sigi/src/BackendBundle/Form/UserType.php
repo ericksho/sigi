@@ -38,7 +38,7 @@ class UserType extends AbstractType
             ->add('phone', null,array('label' => 'Telefono','attr' => array('class'=>'form-control')))
 
         ;
-        if (true){
+        if (false){
             $builder->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => 'Contraseña','attr' => array('disabled' => false, 'class'=>'form-control')),

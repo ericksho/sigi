@@ -46,8 +46,13 @@ security:
 
         - { path: ^/department/$, roles: [ROLE_MENTOR, ROLE_STUDENT] }
         - { path: ^/department/[0-9]+$, roles: [ROLE_MENTOR, ROLE_STUDENT] }
-        - { path: ^/department/new$, roles: ROLE_ADMIN }
+        - { path: ^/department/new$, roles: ROLE_MENTOR }
         - { path: ^/department/[0-9]+/edit$, roles: ROLE_ADMIN }
+
+        - { path: ^/faculty/$, roles: [ROLE_MENTOR, ROLE_STUDENT] }
+        - { path: ^/faculty/[0-9]+$, roles: [ROLE_MENTOR, ROLE_STUDENT] }
+        - { path: ^/faculty/new$, roles: ROLE_MENTOR }
+        - { path: ^/faculty/[0-9]+/edit$, roles: ROLE_ADMIN }
 
         - { path: ^/requirement, roles: ROLE_MENTOR }
 

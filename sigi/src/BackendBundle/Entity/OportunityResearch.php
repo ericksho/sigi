@@ -72,6 +72,13 @@ class OportunityResearch
     private $publish;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="cmd", type="boolean")
+     */
+    private $cmd;
+
+    /**
      * @ORM\OneToMany(targetEntity="Research", mappedBy="oportunityResearch")
      */
     private $researches;
@@ -306,6 +313,30 @@ class OportunityResearch
     public function getPublish()
     {
         return $this->publish;
+    }
+
+    /**
+     * Set cmd
+     *
+     * @param boolean $cmd
+     *
+     * @return OportunityResearch
+     */
+    public function setCmd($cmd)
+    {
+        $this->cmd = $cmd;
+
+        return $this;
+    }
+
+    /**
+     * Get cmd
+     *
+     * @return bool
+     */
+    public function getCmd()
+    {
+        return $this->cmd;
     }
 
     /**
