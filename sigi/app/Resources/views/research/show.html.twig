@@ -52,7 +52,7 @@
                 <th>Keywords:</th>
                 <td>
                     <ul>
-                        {% for keyword in research.oportunityKeywordsOP() %}
+                        {% for keyword in research.oportunityKeywords() %}
                             <li>
                                 {{ keyword.keyword }}
                             </li>
@@ -64,7 +64,7 @@
                 <th>Prerequisitos:</th>
                 <td>
                     <ul>
-                        {% for prerequisite in research.prerequisitesOP() %}
+                        {% for prerequisite in research.prerequisites() %}
                             <li>
                                 {{ prerequisite.courseNumber }}
                             </li>
