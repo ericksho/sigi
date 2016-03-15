@@ -27,7 +27,8 @@ class ResearchType extends AbstractType
 
             ->add('oportunityResearch', EntityType::class, array(
                 'required' => false,
-                'placeholder' => 'Selector Temporal***',
+                'placeholder' => 'Seleccione la oportunidad de donde salio, sugiero no cambiar',
+                'attr' => array('class'=>'js-basic-single'),
                 'class' => 'BackendBundle:OportunityResearch',
                 'choice_label' => 'description',))
 
@@ -35,7 +36,7 @@ class ResearchType extends AbstractType
             ->add('creationDateOP', 'date', array('widget' => 'choice', 'attr' => array('class'=>'form-control'), 'label' => 'Fecha de creación de la oportunidad', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
             ->add('descriptionOP', null,array('label' => 'Descripción de la oportunidad','attr' => array('class'=>'form-control')))
             ->add('modalityOP', ChoiceType::class,array('choices'  => array(1 => 'Alfa numerico', 2 => 'Nota 1-7'),'label' => 'Modalidad','attr' => array('class'=>'form-control')))
-            ->add('oportunityKeywordsOP', EntityType::class, array(
+            ->add('oportunityKeywords', EntityType::class, array(
                 'label' => 'Palabras claves',
                 'required' => false,
                 'placeholder' => 'Keywords relacionadas',
@@ -44,7 +45,7 @@ class ResearchType extends AbstractType
                 'attr' => array('class'=>'js-example-tokenizer'),
                 'choice_label' => 'keyword',))
 
-            ->add('prerequisitesOP', EntityType::class, array(
+            ->add('prerequisites', EntityType::class, array(
                 'label' => 'Prerequisitos (Siglas)',
                 'required' => false,
                 'placeholder' => 'Agregue siglas de prerequisito',
@@ -52,6 +53,7 @@ class ResearchType extends AbstractType
                 'multiple' => true,
                 'attr' => array('class'=>'js-tokenizer'),
                 'choice_label' => 'courseNumber',))
+            ->add('cmd', null,array('label' => 'Es CMD','attr' => array('class'=>'form-control','checked'=>false)))
                /* comentados por relaciones, agregar luego
             ->add('mainMentor')
             ->add('secondaryMentor')

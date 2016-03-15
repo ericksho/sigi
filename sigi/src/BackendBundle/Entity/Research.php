@@ -88,6 +88,13 @@ class Research
     private $nameOP;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="cmd", type="boolean")
+     */
+    private $cmd;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description_op", type="text")
@@ -295,6 +302,30 @@ class Research
     public function getDescriptionOP()
     {
         return $this->descriptionOP;
+    }
+
+    /**
+     * Set cmd
+     *
+     * @param boolean $cmd
+     *
+     * @return Research
+     */
+    public function setCmd($cmd)
+    {
+        $this->cmd = $cmd;
+
+        return $this;
+    }
+
+    /**
+     * Get cmd
+     *
+     * @return boolean
+     */
+    public function getCmd()
+    {
+        return $this->cmd;
     }
 
     /**
@@ -597,6 +628,7 @@ class Research
         $this->setMainMentor($oportunityResearch->getMainMentor());
         $this->setSecondaryMentor($oportunityResearch->getSecondaryMentor());
         $this->setThertiaryMentor($oportunityResearch->getThertiaryMentor());
+        $this->setCmd($oportunityResearch->getCmd());
         return $this;
     }    
 }
