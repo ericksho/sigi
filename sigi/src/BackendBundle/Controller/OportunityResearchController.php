@@ -80,9 +80,7 @@ class OportunityResearchController extends Controller
         $thertiaryForm = $this->createForm('BackendBundle\Form\ThertiaryMentorType', $oportunityResearch, array('current_id'=>$currentUser->getId()));
         $thertiaryForm->handleRequest($request);
 
-        $mentorFacutlyQuery = $em->getRepository('BackendBundle:OportunityResearch')->findMentorFaculties();
-        
-        $mentorFacutly = $mentorFacutlyQuery->getArrayResult();
+        $mentorFacutly = $em->getRepository('BackendBundle:OportunityResearch')->findMentorFaculties();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -99,6 +97,7 @@ class OportunityResearchController extends Controller
             'secondaryForm' => $secondaryForm->createView(),
             'thertiaryForm' => $thertiaryForm-> createView(),
             'mentorFacutly' => $mentorFacutly,
+            'currentMentorId' => $currentUser->getMentor()->getId(),
         ));
     }
 
@@ -142,6 +141,8 @@ class OportunityResearchController extends Controller
         $editForm = $this->createForm(new OportunityResearchType($em), $oportunityResearch);
         $editForm->handleRequest($request);
 
+        $mentorFacutly = $em->getRepository('BackendBundle:OportunityResearch')->findMentorFaculties();
+
         $secondaryForm = $this->createForm('BackendBundle\Form\SecondaryMentorType', $oportunityResearch, array('current_id'=>$currentUser->getId()));
         $secondaryForm->handleRequest($request);
 
@@ -167,6 +168,8 @@ class OportunityResearchController extends Controller
             'secondaryForm' => $secondaryForm->createView(),
             'thertiaryForm' => $thertiaryForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'mentorFacutly' => $mentorFacutly,
+            'currentMentorId' => $currentUser->getMentor()->getId(),
         ));
     }
 

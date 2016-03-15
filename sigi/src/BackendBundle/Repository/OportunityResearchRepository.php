@@ -136,7 +136,7 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
     {
         $query = $this->getEntityManager()
             ->createQuery(
-                'SELECT m.id, f.id FROM BackendBundle:Mentor m
+                'SELECT m.id as mid, f.id as fid FROM BackendBundle:Mentor m
                 JOIN m.department d 
                 JOIN d.faculty f'
             );

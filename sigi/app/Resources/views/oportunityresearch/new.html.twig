@@ -16,7 +16,6 @@
 	
     <h1>Nueva Oportunidad</h1>
 
-
     {{ form_start(form) }}
         {{ form_widget(form) }}
 
@@ -66,9 +65,49 @@
  
     <a href="{{ path('oportunityresearch_index') }}" class="btn btn-info btn2" role="button">Lista de Oportunidades</a>
 
+    <!-- Modal -->
+<div class="modal fade" id="ableCMDModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Cursos CMD</h4>
+      </div>
+      <div class="modal-body">
+        	Al tener almenos dos mentores de diferente facultad, esta oportunidad califica para ser CMD, puede seleccionar la opcion en el checkbox correspondiente
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Gracias</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="disableCMDModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Cursos CMD</h4>
+      </div>
+      <div class="modal-body">
+        	Ya no cumple con requisitos para ser CMD, para poder volver a habilitar la opcion debe tener almenos dos mentores de diferente facultad
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Gracias</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
 
 window.onload = function() {
+
+	$("#oportunity_research_cmd").on('click', function(){
+		if(!canBeCMD && !$('#CMDAlert').length)
+			alertCMDMessage();
+	});
 	
 	$(".js-basic-single").select2({
  		placeholder: "Seleccione el departamento",
@@ -108,9 +147,9 @@ window.onload = function() {
   		allowClear: true
  	})
 
- 
+   	setWidth();
 
-   setWidth();
+	checkCMD();
 
 	$('#secondary_mentor_secondaryMentor').on('change', function() {
 		var ter = document.getElementById("thertiary_mentor_secondaryMentor");
@@ -142,6 +181,7 @@ window.onload = function() {
 		$("#oportunity_research_thertiaryMentor>option[value='"+value+"']").prop('disabled',true);
 		$("#oportunity_research_thertiaryMentor").select2();
 		setWidth();
+		checkCMD();
 	});
 
 	$('#oportunity_research_thertiaryMentor').on('change', function() {
@@ -150,8 +190,81 @@ window.onload = function() {
 		$("#oportunity_research_secondaryMentor>option[value='"+value+"']").prop('disabled',true);
 		$("#oportunity_research_secondaryMentor").select2();
 		setWidth();
+		checkCMD();
 	});
 };
+
+function checkCMD()
+{
+	javascript_array = {{ mentorFacutly|json_encode|raw }};
+	mentorFacutly = [];
+	for	(index = 0; index < javascript_array.length; index++) {
+		var pair = javascript_array[index];
+	    mentorFacutly[pair['mid']] = pair['fid'];
+	}
+
+	//ya con el array cargado revisamos si los mentores corresponden a diferente facultades
+	currentMentorId = {{ currentMentorId|raw }};
+	canBeCMD = false;
+
+	smid = document.getElementById("oportunity_research_secondaryMentor").value;
+	if(smid > 0)
+	{
+		if(mentorFacutly[smid] != mentorFacutly[currentMentorId])
+		{
+			canBeCMD = true;
+		}
+	}
+
+	tmid = document.getElementById("oportunity_research_thertiaryMentor").value;
+	if(tmid > 0)
+	{
+		if(mentorFacutly[tmid] != mentorFacutly[currentMentorId])
+		{
+			canBeCMD = true;
+		}
+
+		if(smid > 0)
+		{
+			if(mentorFacutly[smid] != mentorFacutly[tmid])
+			{
+				canBeCMD = true;
+			}
+		}
+	}
+
+	isCMD = document.getElementById("oportunity_research_cmd").checked;	
+
+	if(!canBeCMD)
+	{
+		if(isCMD)
+		{
+			//alert("ya no cumple con requisitos para ser CMD, para poder volver a habilitar la opcion debe tener almenos dos mentores de diferente facultad");
+			$('#disableCMDModal').modal('show');
+		}
+		document.getElementById("oportunity_research_cmd").checked = false;	
+		document.getElementById("oportunity_research_cmd").setAttribute("onclick","return false;")
+	}
+
+	if(canBeCMD && !isCMD)
+	{
+		$('#ableCMDModal').modal('show');
+		//alert("al tener almenos dos mentores de diferente facultad, esta oportunidad califica para ser CMD, puede seleccionar la opcion en el checkbox correspondiente");
+		document.getElementById("oportunity_research_cmd").setAttribute("onclick","")
+		if($('#CMDAlert').length)
+			$('#CMDAlert').remove();
+	}
+}
+
+function alertCMDMessage()
+{
+	var div = document.createElement('div');
+	div.innerHTML = '<div id="CMDAlert" class="alert alert-warning alert-dismissible" role="alert">'+
+  		'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+  		'<strong>Recuerde!</strong> Esta opcion solo esta disponible para oportunidades con dos o mas mentores de diferente facultad.'+
+  		'</div>';
+	document.getElementById("oportunity_research_cmd").parentElement.appendChild(div);
+}
 
 function setWidth()
 {
