@@ -74,12 +74,6 @@ class OportunityResearchController extends Controller
         $form = $this->createForm(new OportunityResearchType($em), $oportunityResearch);
         $form->handleRequest($request);
 
-        $secondaryForm = $this->createForm('BackendBundle\Form\SecondaryMentorType', $oportunityResearch, array('current_id'=>$currentUser->getId()));
-        $secondaryForm->handleRequest($request);
-
-        $thertiaryForm = $this->createForm('BackendBundle\Form\ThertiaryMentorType', $oportunityResearch, array('current_id'=>$currentUser->getId()));
-        $thertiaryForm->handleRequest($request);
-
         $mentorFacutly = $em->getRepository('BackendBundle:OportunityResearch')->findMentorFaculties();
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -94,8 +88,6 @@ class OportunityResearchController extends Controller
         return $this->render('oportunityresearch/new.html.twig', array(
             'oportunityResearch' => $oportunityResearch,
             'form' => $form->createView(),
-            'secondaryForm' => $secondaryForm->createView(),
-            'thertiaryForm' => $thertiaryForm-> createView(),
             'mentorFacutly' => $mentorFacutly,
             'currentMentorId' => $currentUser->getMentor()->getId(),
         ));
@@ -143,12 +135,6 @@ class OportunityResearchController extends Controller
 
         $mentorFacutly = $em->getRepository('BackendBundle:OportunityResearch')->findMentorFaculties();
 
-        $secondaryForm = $this->createForm('BackendBundle\Form\SecondaryMentorType', $oportunityResearch, array('current_id'=>$currentUser->getId()));
-        $secondaryForm->handleRequest($request);
-
-        $thertiaryForm = $this->createForm('BackendBundle\Form\ThertiaryMentorType', $oportunityResearch, array('current_id'=>$currentUser->getId()));
-        $thertiaryForm->handleRequest($request);
-
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
@@ -165,8 +151,6 @@ class OportunityResearchController extends Controller
         return $this->render('oportunityresearch/edit.html.twig', array(
             'oportunityResearch' => $oportunityResearch,
             'edit_form' => $editForm->createView(),
-            'secondaryForm' => $secondaryForm->createView(),
-            'thertiaryForm' => $thertiaryForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'mentorFacutly' => $mentorFacutly,
             'currentMentorId' => $currentUser->getMentor()->getId(),
