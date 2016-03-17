@@ -53,6 +53,20 @@ class OportunityResearch
     /**
      * @var int
      *
+     * @ORM\Column(name="credits", type="integer")
+     */
+    private $credits;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="responsible_mentor", type="integer")
+     */
+    private $responsibleMentor;
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="modality", type="integer")
      */
     private $modality;
@@ -265,6 +279,54 @@ class OportunityResearch
     public function getPublic()
     {
         return $this->public;
+    }
+
+    /**
+     * Set credits
+     *
+     * @param integer $credits
+     *
+     * @return OportunityResearch
+     */
+    public function setCredits($credits)
+    {
+        $this->credits = $credits;
+
+        return $this;
+    }
+
+    /**
+     * Get credits
+     *
+     * @return int
+     */
+    public function getCredits()
+    {
+        return $this->credits;
+    }
+
+    /**
+     * Set responsibleMentor
+     *
+     * @param integer $responsibleMentor
+     *
+     * @return OportunityResearch
+     */
+    public function setResponsibleMentor($responsibleMentor)
+    {
+        $this->responsibleMentor = $responsibleMentor;
+
+        return $this;
+    }
+
+    /**
+     * Get responsibleMentor
+     *
+     * @return int
+     */
+    public function getResponsibleMentor()
+    {
+        return $this->responsibleMentor;
     }
 
     /**

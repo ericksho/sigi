@@ -310,4 +310,5 @@ class ClassCode
     {
         return $this->graded;
     }
+
 }

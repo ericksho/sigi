@@ -10,6 +10,40 @@ namespace BackendBundle\Repository;
  */
 class ApplicationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getClassCode($oportunity)
+    {
+        $classCode = "ERROR404";
+
+        $credits = $oportunity->getCredits(); //agregar al modelo de datos
+        switch ($oportunity->getResponsibleMentor()) {
+            case 1:
+                $mentorIng = $oportunity->getMainMentor()->getUc();        
+                break;
+
+            case 2:
+                $mentorIng = $oportunity->getSecondaryMentor()->getUc();        
+                break;
+
+            case 3:
+                $mentorIng = $oportunity->getThertiaryMentor()->getUc();        
+                break;
+            
+            default:
+                $mentorIng = false;
+                break;
+        }
+        
+        $studentIng = $oportunity->getStudent()->getUC();
+        $cmd = $oportunity->getCmd();
+        $time = 1;///falta la itegracion con siding 746e
+        $graded = $oportunity->getModality();
+
+        //get classcode object
+
+        //si su code es XXXXX usamos el del depto
+        //retornamos la concatenacion de la sigla y el numero
+    }
+
 	public function findByStudentId($id)
 	{
         $returnResults = null;

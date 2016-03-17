@@ -95,6 +95,20 @@ class Research
     private $cmd;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="credits", type="integer")
+     */
+    private $credits;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="responsible_mentor", type="integer")
+     */
+    private $responsibleMentor;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description_op", type="text")
@@ -609,6 +623,54 @@ class Research
     }
 
     /**
+     * Set credits
+     *
+     * @param integer $credits
+     *
+     * @return Research
+     */
+    public function setCredits($credits)
+    {
+        $this->credits = $credits;
+
+        return $this;
+    }
+
+    /**
+     * Get credits
+     *
+     * @return int
+     */
+    public function getCredits()
+    {
+        return $this->credits;
+    }
+
+    /**
+     * Set responsibleMentor
+     *
+     * @param integer $responsibleMentor
+     *
+     * @return Research
+     */
+    public function setResponsibleMentor($responsibleMentor)
+    {
+        $this->responsibleMentor = $responsibleMentor;
+
+        return $this;
+    }
+
+    /**
+     * Get responsibleMentor
+     *
+     * @return int
+     */
+    public function getResponsibleMentor()
+    {
+        return $this->responsibleMentor;
+    }
+
+    /**
      * Populate from Oportunity
      *
      * @param \BackendBundle\Entity\OportunityResearch
@@ -629,6 +691,7 @@ class Research
         $this->setSecondaryMentor($oportunityResearch->getSecondaryMentor());
         $this->setThertiaryMentor($oportunityResearch->getThertiaryMentor());
         $this->setCmd($oportunityResearch->getCmd());
+        $this->setResponsibleMentor($oportunityResearch->getResponsibleMentor());
         return $this;
     }    
 }

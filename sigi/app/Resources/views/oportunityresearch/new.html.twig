@@ -64,6 +64,8 @@
 
 window.onload = function() {
 
+	setSelectResponsibleChoices();
+
 	$("#oportunity_research_cmd").on('click', function(){
 		if(!canBeCMD && !$('#CMDAlert').length)
 			alertCMDMessage();
@@ -121,6 +123,7 @@ window.onload = function() {
   			alert( repeteadText + "Ya ha sido seleccionado, porfavor seleccione otro mentor" );
   			this.selectedIndex = 0;
 		}
+
 	})
 
 	$('#thertiary_mentor_thertiaryMentor').on('change', function() {
@@ -133,6 +136,7 @@ window.onload = function() {
   			alert( repeteadText + "Ya ha sido seleccionado, porfavor seleccione otro mentor" );
   			this.selectedIndex = 0;
 		}
+
 	})
 
 	$('#oportunity_research_secondaryMentor').on('change', function() {
@@ -142,6 +146,7 @@ window.onload = function() {
 		$("#oportunity_research_thertiaryMentor").select2();
 		setWidth();
 		checkCMD();
+		setSelectResponsibleChoices();
 	});
 
 	$('#oportunity_research_thertiaryMentor').on('change', function() {
@@ -151,6 +156,7 @@ window.onload = function() {
 		$("#oportunity_research_secondaryMentor").select2();
 		setWidth();
 		checkCMD();
+		setSelectResponsibleChoices();
 	});
 };
 
@@ -224,6 +230,32 @@ function alertCMDMessage()
   		'<strong>Recuerde!</strong> Esta opcion solo esta disponible para oportunidades con dos o mas mentores de diferente facultad.'+
   		'</div>';
 	document.getElementById("oportunity_research_cmd").parentElement.appendChild(div);
+}
+
+function setSelectResponsibleChoices()
+{
+	//mostramos todas las opciones y luego escogemos cual esconder
+	$("#oportunity_research_responsibleMentor option").show();
+
+	//vemos si hay secondario
+	if(document.getElementById("oportunity_research_secondaryMentor").value > 0 )
+		$("#oportunity_research_responsibleMentor option[value=2]").text($("#oportunity_research_secondaryMentor option:selected").text());		
+	else
+	{
+		$("#oportunity_research_responsibleMentor option[value=2]").hide();
+		if(document.getElementById("oportunity_research_responsibleMentor").value == 2)
+			document.getElementById("oportunity_research_responsibleMentor").value = 1;
+	}
+
+	//vemos si hay terciario
+	if(document.getElementById("oportunity_research_thertiaryMentor").value > 0 )
+		$("#oportunity_research_responsibleMentor option[value=3]").text($("#oportunity_research_thertiaryMentor option:selected").text());		
+	else
+	{
+		$("#oportunity_research_responsibleMentor option[value=3]").hide();
+		if(document.getElementById("oportunity_research_responsibleMentor").value == 3)
+			document.getElementById("oportunity_research_responsibleMentor").value = 1;
+	}
 }
 
 function setWidth()

@@ -21,7 +21,7 @@ class ClassCodeType extends AbstractType
             ->add('name',null,array('label' => 'Nombre','attr' => array('class'=>'form-control','placeholder'=>"ejemplo: Trabajo Personal Dirigido")))
             ->add('mentorIng',null,array('label' => 'Es mentor de Ingenieria','attr' => array('class'=>'form-control')))
             ->add('studentIng',null,array('label' => 'Es estudiante de Ingenieria','attr' => array('class'=>'form-control')))
-            ->add('type',null,array('label' => 'Tipo','attr' => array('class'=>'form-control','placeholder'=>"ejemplo: OPR, OFG")))
+            ->add('cmd',null,array('label' => 'es CMD?','attr' => array('class'=>'form-control')))
             ->add('time',null,array('label' => 'Vez','attr' => array('class'=>'form-control','placeholder'=>"1 para primera vez que el alumno toma IPRE, 2 para segunda, etc", "min"=>"1","max"=>"6")))
             ->add('graded','choice',array('label' => 'Evaluado con','choices'  => array(true => 'Nota de 1 a 7',false => 'Alfanumerico'),'attr' => array('class'=>'form-control')))
         ;

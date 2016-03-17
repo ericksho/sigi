@@ -54,6 +54,9 @@ class ResearchType extends AbstractType
                 'attr' => array('class'=>'js-tokenizer'),
                 'choice_label' => 'courseNumber',))
             ->add('cmd', null,array('label' => 'Es CMD','attr' => array('class'=>'form-control','checked'=>false)))
+            ->add('credits','choice',array('label' => 'Créditos','choices'  => array(5 => '5 cr.',10 => '10 cr.'),'attr' => array('class'=>'form-control',)))
+
+            ->add('responsibleMentor','choice',array('label' => 'Mentor Responsable','choices'  => array(1 => 'Yo',2 => 'Segundo Mentor', 3=>'Tercer Mentor'),'attr' => array('class'=>'form-control',)))
                /* comentados por relaciones, agregar luego
             ->add('mainMentor')
             ->add('secondaryMentor')

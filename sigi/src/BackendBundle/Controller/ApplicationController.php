@@ -263,9 +263,12 @@ class ApplicationController extends Controller
 
             //como fue aceptado por ambos, creamos la investigación oficial en el sistema
             $research = new Research();
+            //cargamos los datos existentes
             $research->populateFromOportunity($application->getOportunityResearch());
             $research->setStudent($application->getStudent());
+            //calculamos la sigla
             $research->setCode("IPRE101");
+            //calculamos la seccion
             $research->setSection(3);
 
             $em = $this->getDoctrine()->getManager();
