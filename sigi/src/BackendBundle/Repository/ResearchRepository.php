@@ -10,4 +10,53 @@ namespace BackendBundle\Repository;
  */
 class ResearchRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function getSection($classCodeArray, $newResearch, $endSemesterDate)
+    {       
+    	//obtenemos el periodo actual
+    	$endFirst = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findByName("fin primer semestre")->getdate();
+    	$endSecond = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findByName("fin segundo semestre")->getdate();
+
+    	if($endFirst < new \DateTime() > $endSecond) //segundo semestre
+    	{
+    		$endDate = $endSecond;
+    		$startDate = $endFirst;
+    	}
+    	else
+    	{
+    		$startDate = $endSecond;
+    		$endDate = $endFirst;
+    	}
+
+
+    	//cargamos todas las investigaciones
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT r FROM BackendBundle:Research r
+                WHERE r.creation_date < :endDate
+                AND r.creation_date > :startDate
+                AND r.initials_code = :initialsCode
+                AND r.numbers_code = :numbersCode'
+            )->setParameters(array('startDate' => $startDate, 'endDate' => $endDate, 'initialsCode' => $classCodeArray['initialsCode'], 'numbersCode' => $classCodeArray['numbersCode']));
+    
+        try 
+        {
+            $researches = $query->getResult();
+        }
+        catch (\Doctrine\ORM\NoResultException $e) 
+        { 
+            $$researches = null;
+        }
+
+        if(count($researches) == 0 )
+        {
+        	//no hay, lo creamos
+        	$section = 1;
+        }
+        else
+        {
+        	//hay, revisamos los mentores son iguales
+        	if($newResearch->getMainMentor()->getId() == $research)
+        }
+        //filtramos investigaciones que contengan como mentor principal el mentor dado        
+    }
 }

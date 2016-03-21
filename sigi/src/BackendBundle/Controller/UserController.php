@@ -225,7 +225,7 @@ class UserController extends Controller
 
         if (($editForm->isSubmitted() && $editForm->isValid())) {
             // Encode the password (you could also do this via Doctrine listener)
-            if (true)
+            if (strlen($user->getPlainPassword()) > 0)
             {
                 $password = $this->get('security.password_encoder')
                     ->encodePassword($user, $user->getPlainPassword());

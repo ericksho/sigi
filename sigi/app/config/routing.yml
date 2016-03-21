@@ -1,3 +1,7 @@
+backend_deadline:
+    resource: "@BackendBundle/Controller/DeadlineController.php"
+    type:     annotation
+
 backend_prerequisite:
     resource: "@BackendBundle/Controller/PrerequisiteController.php"
     type:     annotation

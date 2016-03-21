@@ -39,9 +39,34 @@ class ApplicationRepository extends \Doctrine\ORM\EntityRepository
         $graded = $oportunity->getModality();
 
         //get classcode object
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT c FROM BackendBundle:ClassCode c
+                WHERE c.mentorIng = :mentorInd
+                AND c.credits = :credits
+                AND c.studentIng = :studentIng
+                AND c.cmd = :cmd
+                AND c.time = :time
+                AND c.graded = :graded'
+            )->setParameters(array('mentorIng' => $mentorIng, 'credits' => $credits, 'studentIng' => $studentIng, 'cmd' => $cmd, 'time' => $time, 'graded' => $graded));
+     
+        try 
+        {
+            $classCodeObject = $query->getResult();
+        }
+        catch (\Doctrine\ORM\NoResultException $e) 
+        { 
+            return "ERROR404";
+        }
 
-        //si su code es XXXXX usamos el del depto
+        //si su code es XXXX usamos el del depto
+        if($classCodeObject->getInitialsCode() = "XXXX")
+            $initials = $oportunity->getDepartment();
+        else
+            $initials = $classCodeObject->getInitialsCode();
+
         //retornamos la concatenacion de la sigla y el numero
+        return array('initialsCode' => $initials, 'numbersCode' => $classCodeObject->getNumbersCode());
     }
 
 	public function findByStudentId($id)

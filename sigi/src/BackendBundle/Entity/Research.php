@@ -25,9 +25,16 @@ class Research
     /**
      * @var string
      *
-     * @ORM\Column(name="code", type="string", length=10)
+     * @ORM\Column(name="initials_code", type="string", length=4)
      */
-    private $code;
+    private $initialsCode;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="numbersCode", type="integer")
+     */
+    private $numbersCode;
 
     /**
      * @var int
@@ -35,6 +42,12 @@ class Research
      * @ORM\Column(name="section", type="integer")
      */
     private $section;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Department", inversedBy="researches")
+     * @ORM\JoinColumn(name="department_id", referencedColumnName="id")
+     */
+    private $department;
 
     /**
      * @var \DateTime
@@ -139,6 +152,53 @@ class Research
         $this->oportunityKeywords = new ArrayCollection();
     }
 
+    /**
+     * Set initialsCode
+     *
+     * @param string $initialsCode
+     *
+     * @return Research
+     */
+    public function setInitialsCode($initialsCode)
+    {
+        $this->initialsCode = $initialsCode;
+
+        return $this;
+    }
+
+    /**
+     * Get initialsCode
+     *
+     * @return string
+     */
+    public function getInitialsCode()
+    {
+        return $this->initialsCode;
+    }
+
+    /**
+     * Set numbersCode
+     *
+     * @param integer $numbersCode
+     *
+     * @return Research
+     */
+    public function setNumbersCode($numbersCode)
+    {
+        $this->numbersCode = $numbersCode;
+
+        return $this;
+    }
+
+    /**
+     * Get numbersCode
+     *
+     * @return int
+     */
+    public function getNumbersCode()
+    {
+        return $this->numbersCode;
+    }
 
     /**
      * Get id

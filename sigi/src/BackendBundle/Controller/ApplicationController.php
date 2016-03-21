@@ -267,8 +267,20 @@ class ApplicationController extends Controller
             $research->populateFromOportunity($application->getOportunityResearch());
             $research->setStudent($application->getStudent());
             //calculamos la sigla
-            $research->setCode("IPRE101");
+            $classCodeArray = $em->getRepository('BackendBundle:Application')->getClassCode($getClassCode($oportunity));
+
+            $research->setInitialsCode($classCodeArray['initialsCode']);
+            $research->setnumbersCode($classCodeArray['numbersCode']);
+
             //calculamos la seccion
+            //revisamos el depto
+
+            //revisamos el profe
+            //vemos que sea este semestre
+            $endSemesterDate = $em->getRepository('BackendBundle:Deadline')->findByName("fin primer semestre")->getdate();
+
+
+
             $research->setSection(3);
 
             $em = $this->getDoctrine()->getManager();
