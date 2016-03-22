@@ -267,21 +267,15 @@ class ApplicationController extends Controller
             $research->populateFromOportunity($application->getOportunityResearch());
             $research->setStudent($application->getStudent());
             //calculamos la sigla
-            $classCodeArray = $em->getRepository('BackendBundle:Application')->getClassCode($getClassCode($oportunity));
+            $em = $this->getDoctrine()->getManager();
+            $classCodeArray = $em->getRepository('BackendBundle:Application')->getClassCode($application->getOportunityResearch(), $application->getStudent());
 
             $research->setInitialsCode($classCodeArray['initialsCode']);
             $research->setnumbersCode($classCodeArray['numbersCode']);
 
-            //calculamos la seccion
-            //revisamos el depto
+            $section = $em->getRepository('BackendBundle:Research')->getSection($classCodeArray, $research);
 
-            //revisamos el profe
-            //vemos que sea este semestre
-            $endSemesterDate = $em->getRepository('BackendBundle:Deadline')->findByName("fin primer semestre")->getdate();
-
-
-
-            $research->setSection(3);
+            $research->setSection($section);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($application);

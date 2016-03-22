@@ -17,7 +17,7 @@ class ClassCodeType extends AbstractType
         $builder
             ->add('initialsCode',null,array('label' => 'Iniciales de la Sigla','attr' => array('class'=>'form-control','placeholder'=>"ejemplo: IIC")))
             ->add('numbersCode',null,array('label' => 'Parte Numerica de la Sigla','attr' => array('class'=>'form-control','placeholder'=>"ejemplo: 1062", "min"=>"1","max"=>"9999")))
-            ->add('credits','choice',array('label' => 'Créditos','choices'  => array(5 => '5 cr.',10 => '10 cr.'),'attr' => array('class'=>'form-control',)))
+            ->add('credits','choice',array('label' => 'Créditos','choices'  => array(5 => '5 cr.',10 => '10 cr.',20 => '20 cr.'),'attr' => array('class'=>'form-control',)))
             ->add('name',null,array('label' => 'Nombre','attr' => array('class'=>'form-control','placeholder'=>"ejemplo: Trabajo Personal Dirigido")))
             ->add('mentorIng',null,array('label' => 'Es mentor de Ingenieria','attr' => array('class'=>'form-control')))
             ->add('studentIng',null,array('label' => 'Es estudiante de Ingenieria','attr' => array('class'=>'form-control')))

@@ -60,3 +60,7 @@ backend_misc:
 backend_faculty:
     resource: "@BackendBundle/Controller/FacultyController.php"
     type:   annotation
+
+backend_class_code:
+    resource: "@BackendBundle/Controller/ClassCodeController.php"
+    type:   annotation

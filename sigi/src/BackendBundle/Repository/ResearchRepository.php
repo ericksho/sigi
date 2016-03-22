@@ -10,13 +10,23 @@ namespace BackendBundle\Repository;
  */
 class ResearchRepository extends \Doctrine\ORM\EntityRepository
 {
-	public function getSection($classCodeArray, $newResearch, $endSemesterDate)
-    {       
-    	//obtenemos el periodo actual
-    	$endFirst = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findByName("fin primer semestre")->getdate();
-    	$endSecond = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findByName("fin segundo semestre")->getdate();
+	public function getSection($classCodeArray, $newResearch)
+    {
+    	$now = new \DateTime();
+    	$Y = $now->format('Y');
 
-    	if($endFirst < new \DateTime() > $endSecond) //segundo semestre
+    	//obtenemos el periodo actual
+    	$endFirst = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findOneByName("fin primer semestre")->getdate();
+    	$d = $endFirst->format('d');
+		$m = $endFirst->format('m');
+		$endFirst->setDate($Y , $m , $d);
+
+    	$endSecond = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findOneByName("fin segundo semestre")->getdate();
+    	$d = $endSecond->format('d');
+		$m = $endSecond->format('m');
+		$endSecond->setDate($Y , $m , $d);
+
+    	if($endFirst < $now && $now > $endSecond) //segundo semestre
     	{
     		$endDate = $endSecond;
     		$startDate = $endFirst;
@@ -28,7 +38,7 @@ class ResearchRepository extends \Doctrine\ORM\EntityRepository
     	}
 
 
-    	//cargamos todas las investigaciones
+    	//cargamos todas las investigaciones del periodo que tengan la misma sigla
         $query = $this->getEntityManager()
             ->createQuery(
                 'SELECT r FROM BackendBundle:Research r
@@ -36,7 +46,7 @@ class ResearchRepository extends \Doctrine\ORM\EntityRepository
                 AND r.creation_date > :startDate
                 AND r.initials_code = :initialsCode
                 AND r.numbers_code = :numbersCode'
-            )->setParameters(array('startDate' => $startDate, 'endDate' => $endDate, 'initialsCode' => $classCodeArray['initialsCode'], 'numbersCode' => $classCodeArray['numbersCode']));
+            )->setParameters(array('startDate' => $startDate->format('Y-m-d'), 'endDate' => $endDate->format('Y-m-d'), 'initialsCode' => $classCodeArray['initialsCode'], 'numbersCode' => $classCodeArray['numbersCode']));
     
         try 
         {
@@ -47,16 +57,46 @@ class ResearchRepository extends \Doctrine\ORM\EntityRepository
             $$researches = null;
         }
 
-        if(count($researches) == 0 )
+        if(count($researches) == 0 ) //si no hay investigaciones con el criterio, creamos la primera seccion
         {
         	//no hay, lo creamos
         	$section = 1;
+        	return $section;
         }
         else
         {
-        	//hay, revisamos los mentores son iguales
-        	if($newResearch->getMainMentor()->getId() == $research)
+        	//si hay, revisamos que los mentores son iguales
+        	$newIds = $newResearch->getMentorsId();
+        	asort($newIds);
+
+        	$section = 0;
+
+        	foreach ($researches as $research) 
+        	{
+	        	$oldIds = $research->getMentorsId();
+	        	asort($oldIds);
+
+    	    	if($newIds == $oldIds) //si los mentores son iguales a una investigacion existente
+    	    	{
+    	    		//revisamos que ambas tengan los mismos profesores responsables
+    	    		$newResponsableMentor = $newResearch->getResponsibleMentorObject();
+    	    		$oldResponsableMentor = $research->getResponsibleMentorObject();
+
+    	    		if( $newResponsableMentor->getId() == $oldResponsableMentor->getId() ) //si los mentores son iguales usamos esta seccion 
+    	    		{
+    	    			$section = $research->getSection();
+    	    			return $section;
+    	    		}//si los mentores no son iguales, seguimos buscando
+    	    	}
+
+    	    	if($section < $research->getSection())//guardamos la mayor seccion correlativamente
+    	    	{
+    	    		$section = $research->getSection();
+    	    	}
+    	    }
+
+    	    //si llegamos a este punto es porque pasamos por todas las investigaciones sin encontrar acierto, retornamos la siguiente seccion
+    	    return $section +1;
         }
-        //filtramos investigaciones que contengan como mentor principal el mentor dado        
     }
 }

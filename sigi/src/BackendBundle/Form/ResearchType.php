@@ -21,7 +21,8 @@ class ResearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('code', null,array('label' => 'Sigla','attr' => array('class'=>'form-control')))
+            ->add('initialsCode', null,array('label' => 'Sigla letras','attr' => array('class'=>'form-control')))
+            ->add('numbersCode', null,array('label' => 'Sigla numero','attr' => array('class'=>'form-control')))
             ->add('section', null,array('label' => 'Sección','attr' => array('class'=>'form-control')))
             ->add('creationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Fecha de creación'))//fecha debe ser creada automaticamente
 
@@ -54,7 +55,7 @@ class ResearchType extends AbstractType
                 'attr' => array('class'=>'js-tokenizer'),
                 'choice_label' => 'courseNumber',))
             ->add('cmd', null,array('label' => 'Es CMD','attr' => array('class'=>'form-control','checked'=>false)))
-            ->add('credits','choice',array('label' => 'Créditos','choices'  => array(5 => '5 cr.',10 => '10 cr.'),'attr' => array('class'=>'form-control',)))
+            ->add('credits','choice',array('label' => 'Créditos','choices'  => array(5 => '5 cr.',10 => '10 cr.',20 => '20 cr.'),'attr' => array('class'=>'form-control',)))
 
             ->add('responsibleMentor','choice',array('label' => 'Mentor Responsable','choices'  => array(1 => 'Yo',2 => 'Segundo Mentor', 3=>'Tercer Mentor'),'attr' => array('class'=>'form-control',)))
                /* comentados por relaciones, agregar luego

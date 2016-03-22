@@ -10,7 +10,7 @@ namespace BackendBundle\Repository;
  */
 class ApplicationRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getClassCode($oportunity)
+    public function getClassCode($oportunity, $student)
     {
         $classCode = "ERROR404";
 
@@ -33,7 +33,7 @@ class ApplicationRepository extends \Doctrine\ORM\EntityRepository
                 break;
         }
         
-        $studentIng = $oportunity->getStudent()->getUC();
+        $studentIng = $student->getUC();
         $cmd = $oportunity->getCmd();
         $time = 1;///falta la itegracion con siding 746e
         $graded = $oportunity->getModality();
@@ -42,7 +42,7 @@ class ApplicationRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->getEntityManager()
             ->createQuery(
                 'SELECT c FROM BackendBundle:ClassCode c
-                WHERE c.mentorIng = :mentorInd
+                WHERE c.mentorIng = :mentorIng
                 AND c.credits = :credits
                 AND c.studentIng = :studentIng
                 AND c.cmd = :cmd
@@ -53,6 +53,7 @@ class ApplicationRepository extends \Doctrine\ORM\EntityRepository
         try 
         {
             $classCodeObject = $query->getResult();
+            $classCodeObject = $classCodeObject[0];
         }
         catch (\Doctrine\ORM\NoResultException $e) 
         { 
@@ -60,7 +61,8 @@ class ApplicationRepository extends \Doctrine\ORM\EntityRepository
         }
 
         //si su code es XXXX usamos el del depto
-        if($classCodeObject->getInitialsCode() = "XXXX")
+        $initials = $classCodeObject->getInitialsCode();
+        if($initials = "XXXX")
             $initials = $oportunity->getDepartment();
         else
             $initials = $classCodeObject->getInitialsCode();

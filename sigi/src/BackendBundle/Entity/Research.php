@@ -570,6 +570,35 @@ class Research
     }
 
     /**
+     * Get mentors id
+     *
+     * @return array
+     */
+    public function getMentorsId()
+    {
+        $mentors = array();
+        $count = 0;
+        $main = $this->mainMentor;
+        $secondary = $this->secondaryMentor;
+        $thertiary = $this->thertiaryMentor;
+
+        if (!is_null($main))
+        {
+            $mentors[$count] = $main->getId();
+            $count = $count + 1;
+        }
+        if(!is_null($secondary))
+        {
+            $mentors[$count] = $secondary->getId();
+            $count = $count + 1;
+        }
+        if(!is_null($thertiary))
+            $mentors[$count] = $thertiary->getId();
+
+        return $mentors;
+    }    
+
+    /**
      * Get keywordsOP
      *
      * @return array
@@ -731,6 +760,26 @@ class Research
     }
 
     /**
+     * Get responsibleMentor object
+     *
+     * @return int
+     */
+    public function getResponsibleMentorObject()
+    {
+        switch ($this->getResponsibleMentor()) {
+            case 1:
+                return $this->getMainMentor();
+                break;
+            case 2:
+                return $this->getSecondaryMentor();
+                break;
+            case 3:
+                return $this->getThertiaryMentor();
+                break;
+        }
+    }
+
+    /**
      * Populate from Oportunity
      *
      * @param \BackendBundle\Entity\OportunityResearch
@@ -741,7 +790,7 @@ class Research
     {
         $this->setOportunityResearch($oportunityResearch);
         $this->setPrerequisites($oportunityResearch->getPrerequisites());
-        $this->setOportunityKeywordOP($oportunityResearch->getKeywords());
+        $this->setOportunityKeyword($oportunityResearch->getKeywords());
         $this->setCreationDate(new \DateTime());
         $this->setCreationDateOP($oportunityResearch->getCreationDate());
         $this->setName($oportunityResearch->getName());

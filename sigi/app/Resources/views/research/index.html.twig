@@ -18,7 +18,7 @@
         {% for research in researches %}
             <tr>
                 <td><a href="{{ path('research_show', { 'id': research.id }) }}">{{ research.id }}</a></td>
-                <td>{{ research.code }}</td>
+                <td>{{ research.initialsCode }}{{ research.numbersCode }}</td>
                 <td>{{ research.section }}</td>
                 <td>{% if research.creationDate %}{{ research.creationDate|date('Y-m-d') }}{% endif %}</td>
                 <td><a href="{{ path('research_show', { 'id': research.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a></td>

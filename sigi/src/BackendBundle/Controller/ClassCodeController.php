@@ -4,19 +4,23 @@ namespace BackendBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use BackendBundle\Entity\ClassCode;
 use BackendBundle\Form\ClassCodeType;
 
 /**
  * ClassCode controller.
  *
+ * @Route("/classcode")
  */
 class ClassCodeController extends Controller
 {
     /**
      * Lists all ClassCode entities.
      *
+     * @Route("/", name="class_code_index")
+     * @Method("GET")
      */
     public function indexAction()
     {
@@ -32,6 +36,8 @@ class ClassCodeController extends Controller
     /**
      * Creates a new ClassCode entity.
      *
+     * @Route("/new", name="class_code_new")
+     * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
     {
@@ -56,6 +62,8 @@ class ClassCodeController extends Controller
     /**
      * Finds and displays a ClassCode entity.
      *
+     * @Route("/{id}", name="class_code_show")
+     * @Method("GET")
      */
     public function showAction(ClassCode $classCode)
     {
@@ -70,6 +78,8 @@ class ClassCodeController extends Controller
     /**
      * Displays a form to edit an existing ClassCode entity.
      *
+     * @Route("/{id}/edit", name="class_code_edit")
+     * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, ClassCode $classCode)
     {
@@ -95,6 +105,8 @@ class ClassCodeController extends Controller
     /**
      * Deletes a ClassCode entity.
      *
+     * @Route("/{id}", name="class_code_delete")
+     * @Method("DELETE")
      */
     public function deleteAction(Request $request, ClassCode $classCode)
     {
