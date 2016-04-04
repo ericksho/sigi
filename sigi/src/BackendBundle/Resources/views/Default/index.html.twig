@@ -1,6 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Bienvenido a SIGI</h1>
+    <h1 ALIGN=center>Bienvenido a SIGI</h1>
+    <h4 ALIGN=center>Sistema de Investigación y Gestión de la Información</h4>
+    <h4 ALIGN=center><a href="http://www.ing.puc.cl">Escuela de Ingeniería UC</a></h4>
+
+    </br>
+    </br>
+    </br>
+
+	{% if not is_granted(['IS_AUTHENTICATED_FULLY', 'IS_AUTHENTICATED_REMEMBERED']) %}
+    <p>Para contemplar las Oportunidades de Investigación te recomendamos loguearte con tu usuario y contraseña haciendo click en: <a href="{{path('notification_index')}}">Iniciar Sesión</a> </p>
+    <p>O bien, puedes revisar las Oportunidades de Investigación de carácter público <a href="{{path('publicOportunities')}}">aquí</a>
+    {% endif %}
 
 {% endblock %}
