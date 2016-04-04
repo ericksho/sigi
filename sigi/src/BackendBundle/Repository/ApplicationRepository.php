@@ -62,8 +62,8 @@ class ApplicationRepository extends \Doctrine\ORM\EntityRepository
 
         //si su code es XXXX usamos el del depto
         $initials = $classCodeObject->getInitialsCode();
-        if($initials = "XXXX")
-            $initials = $oportunity->getDepartment();
+        if($initials = "XXXX" && $oportunity->getDepartment()->getFaculty()->getId() == 1)//si el departamento no es de ingenieria, la sigla es ING
+            $initials = $oportunity->getDepartment()->getInitialsCode();
         else
             $initials = $classCodeObject->getInitialsCode();
 

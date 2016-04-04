@@ -42,10 +42,10 @@ class ResearchRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->getEntityManager()
             ->createQuery(
                 'SELECT r FROM BackendBundle:Research r
-                WHERE r.creation_date < :endDate
-                AND r.creation_date > :startDate
-                AND r.initials_code = :initialsCode
-                AND r.numbers_code = :numbersCode'
+                WHERE r.creationDate < :endDate
+                AND r.creationDate > :startDate
+                AND r.initialsCode = :initialsCode
+                AND r.numbersCode = :numbersCode'
             )->setParameters(array('startDate' => $startDate->format('Y-m-d'), 'endDate' => $endDate->format('Y-m-d'), 'initialsCode' => $classCodeArray['initialsCode'], 'numbersCode' => $classCodeArray['numbersCode']));
     
         try 

@@ -82,7 +82,7 @@ class ApplicationController extends Controller
             $application->setOportunityResearch($oportunity);
         }
 
-        $form = $this->createForm('BackendBundle\Form\ApplicationType', $application, array('choices_array' => array('Aplicado' => 1),'oportunityId' => $oportunityId,'studentId'=>$currentUser->getStudent()->getId()));
+        $form = $this->createForm('BackendBundle\Form\ApplicationType', $application, array('choices_array' => array('Aplicando' => 1),'oportunityId' => $oportunityId,'studentId'=>$currentUser->getStudent()->getId()));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -254,12 +254,15 @@ class ApplicationController extends Controller
         {
             $application->setState(3); //aceptado por el estudiante
             $application->setLastUpdateDate(new \DateTime());
+            $em = $this->getDoctrine()->getManager();
 
             $notification = new Notification();
-            $reciever = $currentUser;
+            $mentor = $application->getOportunityResearch()->getMainMentor();
+            $reciever = $mentor->getUser();
             $sender = $application->getStudent()->getUser();
             $message = "Felicitaciones, su aplicacion a la oportunidad ".$application->getOportunityResearch()->getName()." ah sido aceptada por el alumno, feliz investigación";
             $notification->sendNotification($sender, $reciever, $message);
+            $em = $this->getDoctrine()->getManager();
 
             //como fue aceptado por ambos, creamos la investigación oficial en el sistema
             $research = new Research();
@@ -278,6 +281,7 @@ class ApplicationController extends Controller
             $research->setSection($section);
 
             $em = $this->getDoctrine()->getManager();
+
             $em->persist($application);
             $em->persist($notification);
             $em->persist($research);

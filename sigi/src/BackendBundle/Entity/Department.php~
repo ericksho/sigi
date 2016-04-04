@@ -223,28 +223,4 @@ class Department
     {
         return $this->oportunities;
     }
-
-    /**
-     * Set initialsCode
-     *
-     * @param string $initialsCode
-     *
-     * @return Department
-     */
-    public function setInitialsCode($initialsCode)
-    {
-        $this->initialsCode = $initialsCode;
-
-        return $this;
-    }
-
-    /**
-     * Get initialsCode
-     *
-     * @return string
-     */
-    public function getInitialsCode()
-    {
-        return $this->initialsCode;
-    }
 }

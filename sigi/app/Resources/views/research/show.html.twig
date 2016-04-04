@@ -37,16 +37,25 @@
                 <th>Modalidad:</th>
                 <td>{{ research.modalityOP }}</td>
             </tr>
-                <ul>
-                    {% for mentorName in research.getMentorsName() %}
-                        <li>
-                            {{ mentorName }}
-                        </li>
-                    {% endfor %}
-                </ul>
+            <tr>
+                <th>Creditos:</th>
+                <td>{{ research.credits }} cr.</td>
+            </tr>
+            <tr>
+                <th>Mentor(s):</th>
+                <td>
+                    <ul>
+                        {% for mentorName in research.getMentorsName() %}
+                            <li>
+                                {{ mentorName }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+               </td>
+            </tr>
             <tr>
                 <th>Estudiante:</th>
-                <td></td>
+                <td>{{research.getStudent().getNameText()}}</td>
             </tr>
             <tr>
                 <th>Keywords:</th>

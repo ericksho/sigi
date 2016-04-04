@@ -17,6 +17,7 @@ class DepartmentType extends AbstractType
     {
         $builder
             ->add('name', null,array('label' => 'Nombre','attr' => array('class'=>'form-control')))
+            ->add('initialsCode', null,array('label' => 'Iniciales Sigla','attr' => array('class'=>'form-control')))
             ->add('faculty', EntityType::class, array(
                 'label' => 'Facultad',
                 'required' => false,

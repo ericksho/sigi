@@ -152,6 +152,31 @@ class Research
         $this->oportunityKeywords = new ArrayCollection();
     }
 
+
+    /**
+     * Set department
+     *
+     * @param \BackendBundle\Entity\Department $department
+     *
+     * @return Research
+     */
+    public function setDepartment(\BackendBundle\Entity\Department $department)
+    {
+        $this->department = $department;
+
+        return $this;
+    }
+
+    /**
+     * Get department
+     *
+     * @return \BackendBundle\Entity\Department
+     */
+    public function getDepartment()
+    {
+        return $this->department;
+    }
+
     /**
      * Set initialsCode
      *
@@ -337,7 +362,7 @@ class Research
      *
      * @return Research
      */
-    public function setName($nameOP)
+    public function setNameOP($nameOP)
     {
         $this->nameOP = $nameOP;
 
@@ -458,6 +483,16 @@ class Research
         $this->student = $student;
 
         return $this;
+    }
+
+    /**
+     * Get student
+     *
+     * @return \BackendBundle\Entity\Student $student
+     */
+    public function getStudent()
+    {
+        return $this->student;
     }
 
     /**
@@ -793,7 +828,7 @@ class Research
         $this->setOportunityKeyword($oportunityResearch->getKeywords());
         $this->setCreationDate(new \DateTime());
         $this->setCreationDateOP($oportunityResearch->getCreationDate());
-        $this->setName($oportunityResearch->getName());
+        $this->setNameOP($oportunityResearch->getName());
         $this->setDescriptionOP($oportunityResearch->getDescription());
         $this->setModalityOP($oportunityResearch->getModality());
         $this->setMainMentor($oportunityResearch->getMainMentor());
@@ -801,6 +836,8 @@ class Research
         $this->setThertiaryMentor($oportunityResearch->getThertiaryMentor());
         $this->setCmd($oportunityResearch->getCmd());
         $this->setResponsibleMentor($oportunityResearch->getResponsibleMentor());
+        $this->setDepartment($oportunityResearch->getDepartment());
+        $this->setCredits($oportunityResearch->getCredits());
         return $this;
     }    
 }
