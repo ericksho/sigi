@@ -11,6 +11,22 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findOportunitiesByName($name)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT o FROM BackendBundle:OportunityResearch o
+                WHERE LOWER(o.name) LIKE LOWER(:name)'
+            )->setParameter('name', '%'.$name.'%');
+     
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
 	public function findOportunitiesByUserId($id)
 	{
         $returnResults = null;

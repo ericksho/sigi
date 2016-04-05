@@ -40,6 +40,25 @@ class OportunityResearchController extends Controller
     }
 
     /**
+     * Search and Lists all OportunityResearch Searches.
+     *
+     * @Route("/search", name="oportunityresearch_search")
+     * @Method({"GET", "POST"})
+     */
+    public function searchAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $name = $request->query->get('name');
+
+        $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findOportunitiesByName($name);
+
+        return $this->render('oportunityresearch/search.html.twig', array(
+            'oportunityResearches' => $oportunityResearches,
+        ));
+    }
+
+    /**
      * Lists all OportunityResearch Applications.
      *
      * @Route("/applications/{id}", name="oportunityresearch_applications")

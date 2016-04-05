@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Mis Oportunidades</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha de creación</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Publica</th>
+                <th>Modalidad</th>
+                <th>Publicada</th>
+                <th>Vacantes</th>
+                <th>Postulaciones</th>
+                <th>keywords</th>
+                <th>Prerequisitos</th>
+                <th>Mentores</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for oportunityResearch in oportunityResearches %}
+            <tr>
+                <td><a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}">{{ oportunityResearch.id }}</a></td>
+                <td>{% if oportunityResearch.creationDate %}{{ oportunityResearch.creationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ oportunityResearch.name }}</td>
+                <td>{{ oportunityResearch.description }}</td>
+                <td>{{ oportunityResearch.public }}</td>
+                <td>{{ oportunityResearch.modality }}</td>
+                <td>{% if oportunityResearch.publish %}Si{% else %}No{% endif %}</td>
+                <td>{{ oportunityResearch.getOpenVacants() }}/{{ oportunityResearch.vacants }}</td>
+                <td><a href="{{ path('oportunityresearch_applications', { 'id': oportunityResearch.id }) }}">{{ oportunityResearch.applications|length }}</a></td>
+                <td>
+                    <ul>
+                        {% for keyword in oportunityResearch.oportunityKeywords() %}
+                            <li>
+                                {{ keyword.keyword }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        {% for prerequisite in oportunityResearch.prerequisites() %}
+                            <li>
+                                {{ prerequisite.courseNumber }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        {% for mentorName in oportunityResearch.getMentorsName() %}
+                            <li>
+                                {{ mentorName }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td><a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a></td>
+                <td><a href="{{ path('oportunityresearch_edit', { 'id': oportunityResearch.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+   
+{% endblock %}

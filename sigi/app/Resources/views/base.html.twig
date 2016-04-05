@@ -75,18 +75,17 @@
 
                     {% if is_granted('ROLE_MENTOR') %}
                       <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Requisitos <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Varios <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                          <li><a href="{{path('requirement_new')}}">Crear Nuevo</a></li>
-                          <li><a href="{{path('requirement_index')}}">Ver Listado</a></li>
-                        </ul>
-                      </li>
-
-                      <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Keywords <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="{{path('keyword_new')}}">Crear Nueva</a></li>
-                        <li><a href="{{path('keyword_index')}}">Ver Listado</a></li>
+                          <li>&nbsp;Requisitos</li>
+                          <li class="divider"></li>
+                          <li><a href="{{path('requirement_new')}}">Crear Requisito</a></li>
+                          <li><a href="{{path('requirement_index')}}">Ver Requisitos</a></li>
+                          <li class="divider"></li>
+                          <li>&nbsp;Keywords</li>
+                          <li class="divider"></li>
+                        <li><a href="{{path('keyword_new')}}">Crear Keywords</a></li>
+                        <li><a href="{{path('keyword_index')}}">Ver Keywords</a></li>
                       </ul>
                     </li>
                     {% endif %}
@@ -95,18 +94,15 @@
                       <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Departamentos <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="{{path('department_new')}}">Crear Nuevo</a></li>
-                          <li><a href="{{path('department_index')}}">Ver Listado</a></li>
-                        </ul>
-                      </li>
-                    {% endif %}
-
-                    {% if is_granted('ROLE_MENTOR') %}
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Facultades <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                          <li><a href="{{path('faculty_new')}}">Crear Nuevo</a></li>
-                          <li><a href="{{path('faculty_index')}}">Ver Listado</a></li>
+                          <li>&nbsp;Facultades</li>
+                          <li class="divider"></li>
+                          <li><a href="{{path('faculty_new')}}">Ingresar Facultad</a></li>
+                          <li><a href="{{path('faculty_index')}}">Ver Facultades</a></li>
+                          <li class="divider"></li>
+                          <li>&nbsp;Departamentos</li>
+                          <li class="divider"></li>
+                          <li><a href="{{path('department_new')}}">Ingresar Departamento</a></li>
+                          <li><a href="{{path('department_index')}}">Ver Departamentos</a></li>
                         </ul>
                       </li>
                     {% endif %}
@@ -124,19 +120,15 @@
                     {% endif %}
 
                     {% if is_granted('ROLE_ADMIN') %}
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Usuarios <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                          <li><a href="{{path('user_new')}}">Crear Nuevo</a></li>
-                          <li><a href="{{path('user_index')}}">Ver Listado</a></li>
-                        </ul>
-                      </li>
 
                       <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Siglas <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                          <li><a href="{{path('class_code_new')}}">Crear Nueva</a></li>
-                          <li><a href="{{path('class_code_index')}}">Ver Listado</a></li>
+                          <li><a href="{{path('user_new')}}">Crear Usuario</a></li>
+                          <li><a href="{{path('user_index')}}">Ver Usuarios</a></li>
+                          <li class="divider"></li>
+                          <li><a href="{{path('class_code_new')}}">Crear Sigla</a></li>
+                          <li><a href="{{path('class_code_index')}}">Ver Siglas</a></li>
                         </ul>
                       </li>
                     {% endif %}
@@ -145,12 +137,16 @@
                   
 
                   <ul class="nav navbar-nav navbar-right">
-                    <form class="navbar-form navbar-left" role="search">
+
+                    <form class="navbar-form navbar-left" role="search" action="{{ path('oportunityresearch_search')  }}" method="GET">
                       <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Oportunidad...">
+                        <input type="query" name="name" class="form-control" placeholder="Oportunidad...">
                       </div>
                       <button type="submit" class="btn btn-default">Buscar</button>
                     </form>
+
+                    ***
+
                     {% if is_granted(['IS_AUTHENTICATED_FULLY', 'IS_AUTHENTICATED_REMEMBERED']) %}
                       <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.name }} {{ app.user.lastname }} <span class="caret"></span></a>

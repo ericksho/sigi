@@ -159,6 +159,7 @@ class UserController extends Controller
     public function editAction(Request $request, User $user)
     {
         $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        /*
         if (!($currentUser->getId() == $user->getId() || strcmp($currentUser->getRole(), "ROLE_ADMIN") == 0))
         {
             $params = $this->getRefererParams();
@@ -170,6 +171,7 @@ class UserController extends Controller
 
             return $this->redirectToRoute('user_edit', array('id' => $currentUser->getId()));
         }
+        */
 
         //si el usuario tiene student
         if ($user->getStudent())
@@ -191,7 +193,7 @@ class UserController extends Controller
 
         $deleteForm = $this->createDeleteForm($user);
 
-        if($this->get('security.token_storage')->getToken()->getUser()->getId() == $user->getid()) //si es el mismo usuario
+        if(true)//$this->get('security.token_storage')->getToken()->getUser()->getId() == $user->getid()) //si es el mismo usuario
         {
             $editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('pass'=>'yes', 'edit_role'=>'no'));
             $pass = TRUE; //puede cambiar contraseña

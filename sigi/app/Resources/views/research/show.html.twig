@@ -86,9 +86,11 @@
 
 
     <a href="{{ path('research_index') }}" class="btn btn-info btn1" role="button" >Investigaciones</a>
-    <a href="{{ path('research_edit', { 'id': research.id }) }}" class="btn btn-primary btn2" role="button">Editar</a>
-    {{ form_start(delete_form) }}
-        <input type="submit" value="Eliminar" class="btn btn-danger btn2" role="button">
-    {{ form_end(delete_form) }}
+    {% if is_granted(['ROLE_MENTOR']) %}
+        <a href="{{ path('research_edit', { 'id': research.id }) }}" class="btn btn-primary btn2" role="button">Editar</a>
+        {{ form_start(delete_form) }}
+            <input type="submit" value="Eliminar" class="btn btn-danger btn2" role="button">
+        {{ form_end(delete_form) }}
+    {% endif %}
 
 {% endblock %}

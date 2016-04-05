@@ -99,7 +99,7 @@ class ApplicationController extends Controller
             //notificacion de systema a estudiante
             $notification2 = new Notification();
             $reciever = $application->getStudent()->getUser();
-            $message = "Felicitaciones, su postulación a la oportunidad de investigación: ".$application->getOportunityResearch()->getName()." ah sido ingresada y notifiacada al mentor, este se pondrá en contacto con usted para coordinar su reunión";
+            $message = "Felicitaciones, su postulación a la oportunidad de investigación: ".$application->getOportunityResearch()->getName()." ha sido ingresada y notifiacada al mentor, este se pondrá en contacto con usted para coordinar su reunión";
             $notification2->sendSystemMessage($reciever, $message);  
 
             $em = $this->getDoctrine()->getManager();
@@ -165,7 +165,7 @@ class ApplicationController extends Controller
             $notification = new Notification();
             $sender = $currentUser;
             $reciever = $application->getStudent()->getUser();
-            $message = "Felicitaciones, su aplicacion a la oportunidad ".$application->getOportunityResearch()->getName()." ah sido aceptada";
+            $message = "Felicitaciones, su aplicacion a la oportunidad ".$application->getOportunityResearch()->getName()." ha sido aceptada";
             $notification->sendNotification($sender, $reciever, $message);
 
             $em = $this->getDoctrine()->getManager();
@@ -196,7 +196,7 @@ class ApplicationController extends Controller
             $notification = new Notification();
             $sender = $currentUser;
             $reciever = $application->getStudent()->getUser();
-            $message = "Lamentamos comunicarle que su aplicacion a la oportunidad ".$application->getOportunityResearch()->getName()." no ah sido aceptada";
+            $message = "Lamentamos comunicarle que su aplicacion a la oportunidad ".$application->getOportunityResearch()->getName()." no ha sido aceptada";
             $notification->sendNotification($sender, $reciever, $message);
 
             $em = $this->getDoctrine()->getManager();
@@ -227,7 +227,7 @@ class ApplicationController extends Controller
             $notification = new Notification();
             $reciever = $currentUser;
             $sender = $application->getStudent()->getUser();
-            $message = "Lamentamos comunicarle que la aplicacion a la oportunidad ".$application->getOportunityResearch()->getName()." no ah sido aceptada por el alumno";
+            $message = "Lamentamos comunicarle que la aplicacion a la oportunidad ".$application->getOportunityResearch()->getName()." no ha sido aceptada por el alumno";
             $notification->sendNotification($sender, $reciever, $message);
 
             $em = $this->getDoctrine()->getManager();
@@ -260,7 +260,7 @@ class ApplicationController extends Controller
             $mentor = $application->getOportunityResearch()->getMainMentor();
             $reciever = $mentor->getUser();
             $sender = $application->getStudent()->getUser();
-            $message = "Felicitaciones, su aplicacion a la oportunidad ".$application->getOportunityResearch()->getName()." ah sido aceptada por el alumno, feliz investigación";
+            $message = "Felicitaciones, su aplicacion a la oportunidad ".$application->getOportunityResearch()->getName()." ha sido aceptada por el alumno, feliz investigación";
             $notification->sendNotification($sender, $reciever, $message);
             $em = $this->getDoctrine()->getManager();
 

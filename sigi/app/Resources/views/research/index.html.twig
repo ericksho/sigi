@@ -22,11 +22,16 @@
                 <td>{{ research.section }}</td>
                 <td>{% if research.creationDate %}{{ research.creationDate|date('Y-m-d') }}{% endif %}</td>
                 <td><a href="{{ path('research_show', { 'id': research.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a></td>
-                <td><a href="{{ path('research_edit', { 'id': research.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a></td>
+                {% if is_granted('ROLE_MENTOR') %}
+                    <td><a href="{{ path('research_edit', { 'id': research.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a></td>
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('research_new') }}" class="btn btn-primary btn-sm" role="button">Crear Nueva Investigación</a>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('research_new') }}" class="btn btn-primary btn-sm" role="button">Crear Nueva Investigación</a>
+    {% endif %}
    
 {% endblock %}
