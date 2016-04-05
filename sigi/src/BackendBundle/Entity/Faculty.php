@@ -34,14 +34,8 @@ class Faculty
      */
     private $departments;
 
-    /**
-     * @ORM\OneToMany(targetEntity="OportunityResearch", mappedBy="faculty")
-     */
-    private $oportunities;
-
     public function __construct() {
         $this->departments = new ArrayCollection();
-        $this->oportunities = new ArrayCollection();
     }
 
     /**

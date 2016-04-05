@@ -51,7 +51,7 @@ class ApplicationType extends AbstractType
                 // *this line is important*
                 'choices_as_values' => true,
             ))
-            ->add('applicationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Fecha de aplicación', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
+            ->add('applicationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Fecha de Postulación', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
             ->add('lastUpdateDate', 'datetime', array('widget' => 'single_text', 'format' => 'dd/MM/yyyy HH:mm:ss','attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Ultima actualización', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
         ;
     }

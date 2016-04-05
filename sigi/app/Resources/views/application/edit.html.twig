@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Editando Aplicación {{ application.id }}</h1>
+    <h1>Editando Postulación {{ application.id }}</h1>
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
         <input type="submit" class="btn btn-primary btn1" role="button" value="Editar" />
     {{ form_end(edit_form) }}
 
-    <a href="{{ path('application_index') }}" class="btn btn-info btn2" role="button" >Listar Aplicaciones</a>
+    <a href="{{ path('application_index') }}" class="btn btn-info btn2" role="button" >Listar Postulación</a>
     {{ form_start(delete_form) }}
         <input type="submit" value="Eliminar" class="btn btn-danger btn3" role="button">
     {{ form_end(delete_form) }}

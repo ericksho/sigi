@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Aplicación {{ application.id }}</h1>
+    <h1>Postulación {{ application.id }}</h1>
 
     <table class="table">
         <tbody>
@@ -14,7 +14,7 @@
                 <td>{{ application.getOportunityResearch().getName() }}</td>
             </tr>
             <tr>
-                <th>Fecha de aplicación: </th>
+                <th>Fecha de Postulación: </th>
                 <td>{% if application.applicationDate %}{{ application.applicationDate|date('d/M/y') }}{% endif %}</td>
             </tr>
             <tr>
@@ -28,7 +28,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('application_index') }}" class="btn btn-info btn1" role="button" >Mis Aplicaciones</a>
+    <a href="{{ path('application_index') }}" class="btn btn-info btn1" role="button" >Mis Postulaciones</a>
     {% if (application.state == 1 and is_mentor_owner) %}
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary btn2" data-toggle="modal" data-target="#MentorAgreeModal">Aceptar Postulante</button>
@@ -36,7 +36,7 @@
     {% endif %}
 
     {% if (application.state == 2 and is_student_owner) %}
-        <button type="button" class="btn btn-primary btn2" data-toggle="modal" data-target="#StudentAgreeModal">Aceptar Postulación</button>
+        <button type="button" class="btn btn-primary btn2" data-toggle="modal" data-target="#StudentAgreeModal">Confirmar Postulación</button>
         <button type="button" class="btn btn-danger btn3" data-toggle="modal" data-target="#StudentDeleteModal">Cancelar Postulación</button>
     {% endif %}
     
@@ -49,7 +49,7 @@
             <h4 class="modal-title" id="myModalLabel">Rechazar Postulante</h4>
           </div>
           <div class="modal-body">
-            Esta acción no tiene vuelta atrás, si elimina la aplicación el alumno no podrá verla y el proceso será interrumpido
+            Esta acción no tiene vuelta atrás, si elimina la Postulación el alumno no podrá verla y el proceso será interrumpido
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default " data-dismiss="modal">No, quiero mas tiempo</button>
@@ -68,7 +68,7 @@
             <h4 class="modal-title" id="myModalLabel">Aceptar Postulante</h4>
           </div>
           <div class="modal-body">
-            Esta acción no tiene vuelta atrás, si elimina la aplicación el profesor no podrá verla y el proceso será interrumpido. ¿Desea continuar?
+            Esta acción no tiene vuelta atrás, si elimina la postulación el profesor no podrá verla y el proceso será interrumpido. ¿Desea continuar?
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default " data-dismiss="modal">No, quiero mas tiempo</button>
@@ -85,7 +85,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Aceptar Postulante</h4>
+            <h4 class="modal-title" id="myModalLabel">Aceptar postulante</h4>
           </div>
           <div class="modal-body">
             Esta acción no tiene vuelta atrás, una vez aceptado el postulante, este deberá aceptar la postulación también, tras lo cual los datos serán enviados al DARA quedando un regristro permanente
