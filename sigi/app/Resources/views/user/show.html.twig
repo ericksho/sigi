@@ -16,12 +16,12 @@
 
             {% if user.role == "ROLE_STUDENT" %}
                 <tr>
-                    <th>Especialidad:</th>
-                    <td>{{ user.student.specialty }}</td>
+                    <th>Facultad:</th>
+                    <td>{{ user.student.department.getFaculty().name }}</td>
                 </tr>
                 <tr>
-                    <th>Facultad:</th>
-                    <td>{{ user.student.faculty }}</td>
+                    <th>Departamento:</th>
+                    <td>{{ user.student.department.name }}</td>
                 </tr>
             {% endif %}
             {% if user.role == "ROLE_MENTOR" %}

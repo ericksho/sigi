@@ -57,10 +57,16 @@ class Department
      */
     private $oportunities;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Student", mappedBy="department")
+     */
+    private $students;
+
     public function __construct() {
         $this->mentors = new ArrayCollection();
         $this->researches = new ArrayCollection();
         $this->oportunities = new ArrayCollection();
+        $this->students = new ArrayCollection();
     }
 
 

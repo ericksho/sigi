@@ -1,5 +1,5 @@
 php app/console doctrine:generate:entity
-php app/console doctrine:generate:entities BackendBundle/Entity/OportunityResearch
+php app/console doctrine:generate:entities BackendBundle/Entity/Student
 php app/console generate:doctrine:crud
 php app/console doctrine:schema:validate
 php app/console doctrine:schema:update --force
