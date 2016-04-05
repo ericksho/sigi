@@ -19,7 +19,6 @@ class StudentType extends AbstractType
     {
         $builder
             ->add('uc',null,array('attr' => array('class'=>'form-control')))
-            ->add('studentNumber',null,array('attr' => array('class'=>'form-control')))
             ->add('specialty',null,array('attr' => array('class'=>'form-control')))
             ->add('faculty',null,array('attr' => array('class'=>'form-control')))
         ;

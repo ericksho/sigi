@@ -36,13 +36,6 @@ class Student
     private $uc;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="Student_number", type="integer", unique=true)
-     */
-    private $studentNumber;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="specialty", type="string", length=30)
