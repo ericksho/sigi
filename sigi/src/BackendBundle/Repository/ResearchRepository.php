@@ -12,19 +12,11 @@ class ResearchRepository extends \Doctrine\ORM\EntityRepository
 {
 	public function getSection($classCodeArray, $newResearch)
     {
-    	$now = new \DateTime();
-    	$Y = $now->format('Y');
-
+        $now = new \DateTime();
     	//obtenemos el periodo actual
     	$endFirst = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findOneByName("fin primer semestre")->getdate();
-    	$d = $endFirst->format('d');
-		$m = $endFirst->format('m');
-		$endFirst->setDate($Y , $m , $d);
 
     	$endSecond = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findOneByName("fin segundo semestre")->getdate();
-    	$d = $endSecond->format('d');
-		$m = $endSecond->format('m');
-		$endSecond->setDate($Y , $m , $d);
 
     	if($endFirst < $now && $now > $endSecond) //segundo semestre
     	{

@@ -8,7 +8,8 @@
             <tr>
                 <th>Id</th>
                 <th>Nombre</th>
-                <th>Fecha</th>
+                <th>Dia</th>
+                <th>Mes</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -18,7 +19,8 @@
             <tr>
                 <td><a href="{{ path('deadline_show', { 'id': deadline.id }) }}">{{ deadline.id }}</a></td>
                 <td>{{ deadline.name }}</td>
-                <td>{% if deadline.date %}{{ deadline.date|date('d-M') }}{% endif %}</td>
+                <td>{{ deadline.day }}</td>
+                <td>{{ deadline.month }}</td>
                 <td><a href="{{ path('deadline_show', { 'id': deadline.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a></td>
                 <td><a href="{{ path('deadline_edit', { 'id': deadline.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a></tr>
             </tr>

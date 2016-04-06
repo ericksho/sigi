@@ -29,11 +29,18 @@ class Deadline
     private $name;
 
     /**
-     * @var \DateTime
+     * @var int
      *
-     * @ORM\Column(name="date", type="date")
+     * @ORM\Column(name="month", type="integer")
      */
-    private $date;
+    private $month;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="day", type="integer")
+     */
+    private $day;
 
 
     /**
@@ -70,19 +77,6 @@ class Deadline
         return $this->name;
     }
 
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     *
-     * @return Deadline
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
 
     /**
      * Get date
@@ -91,6 +85,59 @@ class Deadline
      */
     public function getDate()
     {
-        return $this->date;
+        $now = new \DateTime();
+        $Y = $now->format('Y');
+
+        $date = new \DateTime();
+        $date->setDate($Y , $this->getMonth() , $this->getDay());
+        return $date;
+    }
+
+    /**
+     * Set month
+     *
+     * @param integer $month
+     *
+     * @return Deadline
+     */
+    public function setMonth($month)
+    {
+        $this->month = $month;
+
+        return $this;
+    }
+
+    /**
+     * Get month
+     *
+     * @return integer
+     */
+    public function getMonth()
+    {
+        return $this->month;
+    }
+
+    /**
+     * Set day
+     *
+     * @param integer $day
+     *
+     * @return Deadline
+     */
+    public function setDay($day)
+    {
+        $this->day = $day;
+
+        return $this;
+    }
+
+    /**
+     * Get day
+     *
+     * @return integer
+     */
+    public function getDay()
+    {
+        return $this->day;
     }
 }

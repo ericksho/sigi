@@ -13,4 +13,37 @@
     {{ form_start(delete_form) }}
         <input type="submit" value="Eliminar" class="btn btn-danger btn3" role="button">
     {{ form_end(delete_form) }}
+
+
+<script type="text/javascript">	
+
+window.onload = function() {
+
+	$("#deadline_month").on('change', function(){
+		month = document.getElementById("deadline_month").value;
+
+		if( (month & 1) && (month < 8) || !(month & 1) && (month >= 8))
+		{
+		    // 31
+		    document.getElementById("deadline_day").max = 31;
+		}
+		else
+		{
+		    // 30
+		    document.getElementById("deadline_day").max = 30;
+		    if(document.getElementById("deadline_day").value > 30)
+		    	document.getElementById("deadline_day").value = 30;
+		}
+
+		if(month == 2)
+		{
+			document.getElementById("deadline_day").max = 28;
+		    if(document.getElementById("deadline_day").value > 28)
+		    	document.getElementById("deadline_day").value = 28;
+		}
+	});
+}
+
+</script>
+    
 {% endblock %}

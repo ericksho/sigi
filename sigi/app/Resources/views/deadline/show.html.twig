@@ -10,12 +10,16 @@
                 <td>{{ deadline.id }}</td>
             </tr>
             <tr>
-                <th>Name</th>
+                <th>Nombre</th>
                 <td>{{ deadline.name }}</td>
             </tr>
             <tr>
-                <th>Date</th>
-                <td>{% if deadline.date %}{{ deadline.date|date('d-M') }}{% endif %}</td>
+                <th>Dia</th>
+                <td>{{ deadline.day }}</td>
+            </tr>
+            <tr>
+                <th>Mes</th>
+                <td>{{ deadline.month }}</td>
             </tr>
         </tbody>
     </table>
