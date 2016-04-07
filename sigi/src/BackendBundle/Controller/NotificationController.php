@@ -84,6 +84,25 @@ class NotificationController extends Controller
             return $this->redirectToRoute('notification_show', array('id' => $notification->getId()));
         }
 
+        /* mail */
+        if(is_null($notification->getSender()))
+            $recipients = array($notification->getReciever()->getEmail())
+        else
+            $recipients = array($notification->getReciever()->getEmail(), $notification->getSender()->getEmail())
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Nueva Notification - '.$notification->getId())
+            ->setFrom('sigi@uc.cl')
+            ->setTo(array(
+                'ericksho@gmail.com' => 'Erick Svec',
+                'evsvec@uc.cl',
+            ))
+            ->setBody('hola mundo! sin tls')
+        ;
+
+        $this->get('mailer')->send($message);
+        /* fin mail */
+
         return $this->render('notification/new.html.twig', array(
             'notification' => $notification,
             'form' => $form->createView(),

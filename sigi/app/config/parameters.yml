@@ -5,8 +5,11 @@ parameters:
     database_name: symfony
     database_user: root
     database_password: francisco123
+
     mailer_transport: smtp
-    mailer_host: 127.0.0.1
-    mailer_user: null
-    mailer_password: null
+    mailer_host: smtp-externo.puc.cl
+    mailer_user: evsvec@uc.cl
+    mailer_password: ericksh012
+    mailer_port: 25
+
     secret: f3bb896506e84e0b2ec954bafecbe8479a08f20b
