@@ -82,7 +82,7 @@ class ApplicationController extends Controller
             $application->setOportunityResearch($oportunity);
         }
 
-        $form = $this->createForm('BackendBundle\Form\ApplicationType', $application, array('choices_array' => array('Aplicando' => 1),'oportunityId' => $oportunityId,'studentId'=>$currentUser->getStudent()->getId()));
+        $form = $this->createForm('BackendBundle\Form\ApplicationType', $application, array('choices_array' => array('Postulando' => 1),'oportunityId' => $oportunityId,'studentId'=>$currentUser->getStudent()->getId()));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

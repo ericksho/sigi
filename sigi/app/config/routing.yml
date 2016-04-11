@@ -64,3 +64,7 @@ backend_faculty:
 backend_class_code:
     resource: "@BackendBundle/Controller/ClassCodeController.php"
     type:   annotation
+
+backend_reporter:
+    resource: "@BackendBundle/Controller/ReporterController.php"
+    type:   annotation

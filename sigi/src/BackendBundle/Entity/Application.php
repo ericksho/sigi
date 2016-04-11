@@ -100,25 +100,25 @@ class Application
     public function getStateByText($text)
     {
         switch ($text) {
-            case 'Aplicado':
+            case 'Postulado por Alumno':
                 return 1;
                 break;
             case 'Aceptado por Mentor':
                 return 2;
                 break;
-            case 'Aceptado por Ambos, en proceso':
+            case 'Confirmado por Ambos, en proceso':
                 return 3;
                 break;
             case 'Enviado a Dara':
                 return 4;
                 break;
-            case 'Investigación Oficial en Dara':
+            case 'Sigla inscrita en Banner':
                 return 5;
                 break;
             case 'No seleccionado por Mentor':
                 return 6;
                 break;
-            case 'No aceptado por Alumno':
+            case 'No confirmado por Alumno':
                 return 7;
                 break;
             
@@ -139,25 +139,25 @@ class Application
     {
         switch ($state) {
             case 1:
-                return 'Aplicado';
+                return 'Postulado por Alumno';
                 break;
             case 2:
                 return 'Aceptado por Mentor';
                 break;
             case 3:
-                return 'Aceptado por Ambos, en proceso';
+                return 'Confirmado por Ambos, en proceso';
                 break;
             case 4:
                 return 'Enviado a Dara';
                 break;
             case 5:
-                return 'Investigación Oficial en Dara';
+                return 'Sigla inscrita en Banner';
                 break;
             case 6:
                 return 'No seleccionado por Mentor';
                 break;
             case 7:
-                return 'No aceptado por Alumno';
+                return 'No confirmado por Alumno';
                 break;
             
             default:

@@ -18,6 +18,8 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new BackendBundle\BackendBundle(),
             new BeSimple\SsoAuthBundle\BeSimpleSsoAuthBundle(),
+            new Liuggio\ExcelBundle\LiuggioExcelBundle(),
+
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
