@@ -17,9 +17,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
             new BackendBundle\BackendBundle(),
-            new BeSimple\SsoAuthBundle\BeSimpleSsoAuthBundle(),
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
-
+            new BeSimple\SsoAuthBundle\BeSimpleSsoAuthBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

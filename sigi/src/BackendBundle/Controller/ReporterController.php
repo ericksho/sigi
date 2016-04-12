@@ -24,37 +24,54 @@ class ReporterController extends Controller
      */
     public function unsendResearchesAction()
     {
-        $em = $this->getDoctrine()->getManager();
+      $em = $this->getDoctrine()->getManager();
 
-        $researches = $em->getRepository('BackendBundle:Research')->findAll();
+      $researches = $em->getRepository('BackendBundle:Research')->findAll();
 
-        // ask the service for a Excel5
-       $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+      $this->createXLSX("myfile", "", $researches);
 
-       $phpExcelObject->getProperties()->setCreator("liuggio")
-           ->setLastModifiedBy("Giulio De Donato")
-           ->setTitle("Office 2005 XLSX Test Document")
-           ->setSubject("Office 2005 XLSX Test Document")
-           ->setDescription("Test document for Office 2005 XLSX, generated using PHP classes.")
-           ->setKeywords("office 2005 openxml php")
-           ->setCategory("Test result file");
-       $phpExcelObject->setActiveSheetIndex(0)
-           ->setCellValue('A1', 'Hello')
-           ->setCellValue('B2', 'world!');
-       $phpExcelObject->getActiveSheet()->setTitle('Simple');
-
-       // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-       $phpExcelObject->setActiveSheetIndex(0);
-
-        // Save Excel 2007 file        
-        $objWriter = PHPExcel_IOFactory::createWriter($phpExcelObject, 'Excel2007');
-        $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
-
-        return $this->render('reporter/unsendResearches.html.twig', array(
-            'researches' => $researches,
-        ));
+      return $this->render('reporter/unsendResearches.html.twig', array(
+          'researches' => $researches,
+      ));
 
 
+    }
+
+    //Hardcoded report :S
+    private function createXLSX($filename, $path, $dataArray)
+    {
+      // ask the service for a 2007 excel
+      $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
+
+      $phpExcelObject->getProperties()->setCreator("liuggio")
+          ->setLastModifiedBy("Giulio De Donato")
+          ->setKeywords("IPRE");
+
+      //set headers
+      $phpExcelObject->setActiveSheetIndex(0)->setCellValue('A1', "Nombre");
+      $phpExcelObject->setActiveSheetIndex(0)->setCellValue('B1', "Descripcion");
+      $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C1', "Sigla");
+
+
+      //set data
+      $number = 2;
+      foreach ($dataArray as $data) 
+      {
+        $phpExcelObject->getActiveSheet()->setCellValue("A".$number, $data->getNameOP());
+        $phpExcelObject->getActiveSheet()->setCellValue("B".$number, $data->getDescriptionOP());
+        $phpExcelObject->getActiveSheet()->setCellValue("C".$number, $data->getInitialsCode().$data->getNumbersCode());
+          
+        $number++;
+      }
+
+      $phpExcelObject->getActiveSheet()->setTitle('Hoja 1');
+
+      // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+      $phpExcelObject->setActiveSheetIndex(0);
+
+      // Save Excel 2007 file        
+      $writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
+      $writer->save($path.$filename.".xlsx");
     }
 
 }

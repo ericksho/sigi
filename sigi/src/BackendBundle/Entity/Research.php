@@ -254,9 +254,9 @@ class Research
      *
      * @return string
      */
-    public function getCode()
+    public function getClassCode()
     {
-        return $this->code;
+        return $this->getInitialsCode().$this->getNumbersCode();
     }
 
     /**
