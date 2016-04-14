@@ -667,4 +667,48 @@ class User  implements UserInterface, \Serializable
     {
         return $this->name." ".$this->lastName;
     }
+
+    /**
+     * Get full name
+     *
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->lastName." ".$this->secondSurname.", ".$this->name." ".$this->middleName;
+    }
+
+    /**
+     * Get Rut text
+     *
+     * @return string
+     */
+    public function getRutText() {
+        $nRut = $this->getRut();
+
+        $dv = $this->getVerifierDigit($nRut);
+        return $nRut . "-" . $dv;
+    }
+
+    /**
+     * Get verifier digit
+     *
+     * @return string
+     */
+    public function getVerifierDigit($nRut) {
+        $nRut = (string)$nRut;
+        while($nRut[0] == "0") {
+            $nRut = substr($nRut, 1);
+        }
+        $factor = 2;
+        $suma = 0;
+        for($i = strlen($nRut) - 1; $i >= 0; $i--) {
+            $suma += $factor * $nRut[$i];
+            $factor = $factor % 7 == 0 ? 2 : $factor + 1;
+        }
+        $dv = 11 - $suma % 11;
+        /* Por alguna razón me daba que 11 % 11 = 11. Esto lo resuelve. */
+        $dv = $dv == 11 ? 0 : ($dv == 10 ? "K" : $dv);
+        return $dv;
+    }
 }

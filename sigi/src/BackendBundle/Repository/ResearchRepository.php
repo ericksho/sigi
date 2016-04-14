@@ -10,6 +10,29 @@ namespace BackendBundle\Repository;
  */
 class ResearchRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getSemester($research)
+    {
+        $now = new \DateTime();
+
+        $Y = $now->format('Y');
+
+        $date = $research->getCreationDate();
+        $date->setDate($Y , $date->format("m") , $date->format("d"));
+        //obtenemos el periodo actual
+        $endFirst = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findOneByName("fin primer semestre")->getdate();
+
+        $endSecond = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findOneByName("fin segundo semestre")->getdate();
+
+        if($endFirst < $date && $date > $endSecond) //segundo semestre
+        {   
+            return 2;
+        }
+        else
+        {
+            return 1;
+        }
+    }
+
 	public function getSection($classCodeArray, $newResearch)
     {
         $now = new \DateTime();

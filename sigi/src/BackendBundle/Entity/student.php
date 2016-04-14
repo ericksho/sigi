@@ -179,6 +179,54 @@ class Student
     }
 
     /**
+     * Get student getFullName
+     *
+     * @return string
+     */
+    public function getFullName()
+    {
+        if (is_null($this->user))
+        {
+            return "Ocurrio un error al cargar el nombre";
+        }
+        else {
+            return $this->user->getFullName();
+        }
+    }
+
+    /**
+     * Get student Rut
+     *
+     * @return string
+     */
+    public function getRut()
+    {
+        if (is_null($this->user))
+        {
+            return "0";
+        }
+        else {
+            return $this->user->getRut();
+        }
+    }
+
+    /**
+     * Get student Rut
+     *
+     * @return string
+     */
+    public function getRutText()
+    {
+        if (is_null($this->user))
+        {
+            return "0";
+        }
+        else {
+            return $this->user->getRutText();
+        }
+    }
+
+    /**
      * Add application
      *
      * @param \BackendBundle\Entity\Application $application

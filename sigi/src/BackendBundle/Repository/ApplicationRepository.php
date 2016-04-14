@@ -68,7 +68,7 @@ class ApplicationRepository extends \Doctrine\ORM\EntityRepository
             $initials = $classCodeObject->getInitialsCode();
 
         //retornamos la concatenacion de la sigla y el numero
-        return array('initialsCode' => $initials, 'numbersCode' => $classCodeObject->getNumbersCode());
+        return array('initialsCode' => $initials, 'numbersCode' => $classCodeObject->getNumbersCode(), 'name' => $classCodeObject->getName());
     }
 
 	public function findByStudentId($id)
