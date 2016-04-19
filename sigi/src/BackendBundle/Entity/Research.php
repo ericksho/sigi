@@ -605,6 +605,86 @@ class Research
     }
 
     /**
+     * Get mentorsName
+     *
+     * @return array
+     */
+    public function getMentorsNameWResponsible()
+    {
+        $mentors = array();
+        $count = 0;
+        $main = $this->mainMentor;
+        $secondary = $this->secondaryMentor;
+        $thertiary = $this->thertiaryMentor;
+
+        if (!is_null($main))
+        {
+            if($this->getResponsibleMentor() == 1)
+                $mentors[$count] = $main->getShowName()." (Principal)";    
+            else
+                $mentors[$count] = $main->getShowName();
+            $count = $count + 1;
+        }
+        if(!is_null($secondary))
+        {
+            if($this->getResponsibleMentor() == 2)
+                $mentors[$count] = $secondary->getShowName()." (Principal)";
+            else
+                $mentors[$count] = $secondary->getShowName();
+            $count = $count + 1;
+        }
+        if(!is_null($thertiary))
+        { 
+            if($this->getResponsibleMentor() == 2)
+                $mentors[$count] = $thertiary->getShowName()." (Principal)";
+            else
+                $mentors[$count] = $thertiary->getShowName();
+        } 
+
+        return $mentors;
+    }
+
+    /**
+     * Get mentorsName
+     *
+     * @return array
+     */
+    public function getMentorsRutWResponsible()
+    {
+        $mentors = array();
+        $count = 0;
+        $main = $this->mainMentor;
+        $secondary = $this->secondaryMentor;
+        $thertiary = $this->thertiaryMentor;
+
+        if (!is_null($main))
+        {
+            if($this->getResponsibleMentor() == 1)
+                $mentors[$count] = $main->getRutText()." (Principal)";    
+            else
+                $mentors[$count] = $main->getRutText();
+            $count = $count + 1;
+        }
+        if(!is_null($secondary))
+        {
+            if($this->getResponsibleMentor() == 2)
+                $mentors[$count] = $secondary->getRutText()." (Principal)";
+            else
+                $mentors[$count] = $secondary->getRutText();
+            $count = $count + 1;
+        }
+        if(!is_null($thertiary))
+        { 
+            if($this->getResponsibleMentor() == 2)
+                $mentors[$count] = $thertiary->getRutText()." (Principal)";
+            else
+                $mentors[$count] = $thertiary->getRutText();
+        } 
+
+        return $mentors;
+    }
+
+    /**
      * Get mentors id
      *
      * @return array

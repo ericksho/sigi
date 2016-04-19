@@ -297,6 +297,16 @@ class Mentor
     }
 
     /**
+     * Get Rut
+     *
+     * @return integer
+     */
+    public function getRutText()
+    {
+        return $this->getUser()->getRutText();
+    }
+
+    /**
      * Add oportunitiesAsMain
      *
      * @param \BackendBundle\Entity\OportunityResearch $oportunitiesAsMain

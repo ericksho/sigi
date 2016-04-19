@@ -19,9 +19,9 @@ class ResearchRepository extends \Doctrine\ORM\EntityRepository
         $date = $research->getCreationDate();
         $date->setDate($Y , $date->format("m") , $date->format("d"));
         //obtenemos el periodo actual
-        $endFirst = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findOneByName("fin primer semestre")->getdate();
+        $endFirst = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findOneByName("fin primer semestre")->getDate();
 
-        $endSecond = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findOneByName("fin segundo semestre")->getdate();
+        $endSecond = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findOneByName("fin segundo semestre")->getDate();
 
         if($endFirst < $date && $date > $endSecond) //segundo semestre
         {   
@@ -37,9 +37,9 @@ class ResearchRepository extends \Doctrine\ORM\EntityRepository
     {
         $now = new \DateTime();
     	//obtenemos el periodo actual
-    	$endFirst = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findOneByName("fin primer semestre")->getdate();
+    	$endFirst = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findOneByName("fin primer semestre")->getDate();
 
-    	$endSecond = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findOneByName("fin segundo semestre")->getdate();
+    	$endSecond = $this->getEntityManager()->getRepository('BackendBundle:Deadline')->findOneByName("fin segundo semestre")->getDate();
 
     	if($endFirst < $now && $now > $endSecond) //segundo semestre
     	{

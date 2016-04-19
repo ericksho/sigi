@@ -41,10 +41,11 @@ class ReporterController extends Controller
     //Hardcoded report :S
     private function generateProgramacionXLSX($dataArray)
     {
+      $em = $this->getDoctrine()->getManager();
       //new \DateTime()
       $today = date("d-M-Y");
       $filename = "Programacion_".$today;
-      $path = "";
+      $path = "Programaciones/";
       // ask the service for a 2007 excel
       $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 
@@ -100,11 +101,27 @@ class ReporterController extends Controller
         }
         $phpExcelObject->getActiveSheet()->setCellValue("E".$number, $method);
         //Nombre curso  
-        $phpExcelObject->getActiveSheet()->setCellValue("F".$number, $research->getSection());
+        $classCodeArray = $em->getRepository('BackendBundle:Application')->getClassCode($research->getOportunityResearch(), $research->getStudent());
+        $phpExcelObject->getActiveSheet()->setCellValue("F".$number, $classCodeArray["name"]);
         //Nombre y Apellidos Profesor 
-        $phpExcelObject->getActiveSheet()->setCellValue("G".$number, $research->getSection());
+        $mentorsName = "";
+        foreach ($research->getMentorsNameWResponsible() as $name) {
+          if ($mentorsName != "")
+            $mentorsName = $mentorsName."\n";
+          $mentorsName = $mentorsName.$name;
+        }
+        $phpExcelObject->getActiveSheet()->setCellValue("G".$number, $mentorsName);
+        $phpExcelObject->getActiveSheet()->getStyle('G'.$number)->getAlignment()->setWrapText(true);
         //RUN //Profesor  
-        $phpExcelObject->getActiveSheet()->setCellValue("H".$number, $research->getSection());
+        $mentorsRut = "";
+        foreach ($research->getMentorsRutWResponsible() as $rut) {
+          if ($mentorsRut != "")
+            $mentorsRut = $mentorsRut."\n";
+          $mentorsRut = $mentorsRut.$rut;
+        }
+        $phpExcelObject->getActiveSheet()->setCellValue("H".$number, $mentorsRut);
+        $phpExcelObject->getActiveSheet()->getStyle('H'.$number)->getAlignment()->setWrapText(true);
+        //$phpExcelObject->getActiveSheet()->setCellValue("H".$number, $research->getMentorsRutWResponsible());
         //Retiro  
         $phpExcelObject->getActiveSheet()->setCellValue("I".$number, "No retirable");
         //Vacantes  
@@ -162,8 +179,8 @@ class ReporterController extends Controller
 
       //new \DateTime()
       $today = date("d-M-Y");
-      $filename = "Inscripcion".$today;
-      $path = "";
+      $filename = "Inscripcion_".$today;
+      $path = "Inscripciones/";
 
       // ask the service for a 2007 excel
       $phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
