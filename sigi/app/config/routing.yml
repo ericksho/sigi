@@ -68,3 +68,7 @@ backend_class_code:
 backend_reporter:
     resource: "@BackendBundle/Controller/ReporterController.php"
     type:   annotation
+
+jmose_command_scheduler:
+    resource: "@JMoseCommandSchedulerBundle/Resources/config/routing.yml"
+    prefix:   /

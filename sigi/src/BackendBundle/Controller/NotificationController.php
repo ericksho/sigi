@@ -89,7 +89,7 @@ class NotificationController extends Controller
 
             $message = \Swift_Message::newInstance()
                 ->setSubject('Nueva Notification - '.$notification->getId())
-                ->setFrom('sigi@uc.cl')
+                ->setFrom('gestionipre@ing.puc.cl')
                 ->setTo(array(
                     'ericksho@gmail.com' => 'Erick Svec',
                     'evsvec@uc.cl',

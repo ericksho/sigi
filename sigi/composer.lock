@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "759fd8e3c1afae26d58bf5fa8335778f",
-    "content-hash": "5ebf29cf826656e8185edf812b00eb2d",
+    "hash": "0b0ec628608af27f2ffdeaf924a959bc",
+    "content-hash": "1ab1bd2c95865bd8e30e9d7b22be4e77",
     "packages": [
         {
             "name": "besimple/sso-auth-bundle",
@@ -14,12 +14,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/BeSimple/BeSimpleSsoAuthBundle.git",
-                "reference": "d8be760bf4572373dfd7251356ba5cc397836ceb"
+                "reference": "f6f3317f12d180f9d275e85a9bf210b99efc8831"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/BeSimple/BeSimpleSsoAuthBundle/zipball/f6f3317f12d180f9d275e85a9bf210b99efc8831",
-                "reference": "d8be760bf4572373dfd7251356ba5cc397836ceb",
+                "reference": "f6f3317f12d180f9d275e85a9bf210b99efc8831",
                 "shasum": ""
             },
             "require": {
@@ -983,6 +983,62 @@
             "time": "2014-01-12 16:20:24"
         },
         {
+            "name": "jmose/command-scheduler-bundle",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/J-Mose/CommandSchedulerBundle.git",
+                "reference": "84e86f951da91743e947b167e1a5630ec3bf652a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/J-Mose/CommandSchedulerBundle/zipball/84e86f951da91743e947b167e1a5630ec3bf652a",
+                "reference": "84e86f951da91743e947b167e1a5630ec3bf652a",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/doctrine-bundle": "~1.0",
+                "doctrine/orm": "~2.2,>=2.2.3,<2.6",
+                "mtdowling/cron-expression": "~1.0",
+                "php": ">=5.5.9",
+                "sensio/framework-extra-bundle": "~2.3|~3.0",
+                "symfony/symfony": "~2.7|~3.0",
+                "twig/twig": "~1.15"
+            },
+            "require-dev": {
+                "doctrine/doctrine-fixtures-bundle": "~2.2",
+                "liip/functional-test-bundle": "1.2.2|~1.3",
+                "phpunit/phpunit": "~4.4",
+                "satooshi/php-coveralls": "~0.6"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "JMose\\CommandSchedulerBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Julien Guyon",
+                    "email": "julienguyon@hotmail.com"
+                }
+            ],
+            "description": "This Symfony2 bundle will allow you to schedule all your commands just like UNIX crontab",
+            "homepage": "https://github.com/J-Mose/CommandSchedulerBundle",
+            "keywords": [
+                "command",
+                "cron",
+                "scheduler",
+                "symfony",
+                "task"
+            ],
+            "time": "2016-01-14 10:30:00"
+        },
+        {
             "name": "kriswallsmith/buzz",
             "version": "v0.15",
             "source": {
@@ -1169,6 +1225,50 @@
                 "psr-3"
             ],
             "time": "2015-10-14 12:51:02"
+        },
+        {
+            "name": "mtdowling/cron-expression",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mtdowling/cron-expression.git",
+                "reference": "c9ee7886f5a12902b225a1a12f36bb45f9ab89e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mtdowling/cron-expression/zipball/c9ee7886f5a12902b225a1a12f36bb45f9ab89e5",
+                "reference": "c9ee7886f5a12902b225a1a12f36bb45f9ab89e5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0|~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Cron": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "CRON for PHP: Calculate the next or previous run date and determine if a CRON expression is due",
+            "keywords": [
+                "cron",
+                "schedule"
+            ],
+            "time": "2016-01-26 21:23:30"
         },
         {
             "name": "paragonie/random_compat",

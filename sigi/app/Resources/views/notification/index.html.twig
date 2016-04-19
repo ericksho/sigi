@@ -33,7 +33,7 @@
                         <td>{% if notification.timestamp %}{{ notification.timestamp|date('Y-m-d H:i:s') }}{% endif %}</td>
                         <td>{% if notification.readed %}Si{% else %}No{% endif %}</td>
                         {% if notification.systemMessage %}
-                            <td>Mensaje de SIGI</td>
+                            <td>Mensaje de Gestión IPre</td>
                         {% else %}
                             <td>{{ notification.sender.username }}</td>
                         {% endif %}
