@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Lista de Emails</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for emailList in emailLists %}
+            <tr>
+                <td>{{ emailList.name }}</td>
+                <td>{{ emailList.email }}</td>
+                <td><a href="{{ path('emaillist_show', { 'id': emailList.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a></td>
+                <td><a href="{{ path('emaillist_edit', { 'id': emailList.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a></tr>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}

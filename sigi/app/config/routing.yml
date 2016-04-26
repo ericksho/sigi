@@ -1,3 +1,7 @@
+backend_email_list:
+    resource: "@BackendBundle/Controller/EmailListController.php"
+    type:     annotation
+
 backend_deadline:
     resource: "@BackendBundle/Controller/DeadlineController.php"
     type:     annotation

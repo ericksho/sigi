@@ -20,6 +20,7 @@ class SendProgramacionxlsxCommand extends ContainerAwareCommand
     {
         //generacion xlsx
         $em = $this->getContainer()->get('doctrine')->getManager();
+        $emailDara = $em->getRepository('BackendBundle:EmailList')->findOneByName('Email Dara');
         $researches = $em->getRepository('BackendBundle:Research')->findAll();
         try
         { 
@@ -41,7 +42,7 @@ class SendProgramacionxlsxCommand extends ContainerAwareCommand
         $message = \Swift_Message::newInstance()
             ->setSubject('Programación de Cursos IPre')
             ->setFrom('gestionIPre@ing.puc.cl')
-            ->setTo(array('evsvec@uc.cl'))
+            ->setTo(array($emailDara->getEmail()))
             ->setBody("Hola, adjuntamos la programación de cursos de este mes, saludos, \nGestión IPre")
             ->attach(\Swift_Attachment::fromPath($path.$filename.".xlsx"))
         ;
