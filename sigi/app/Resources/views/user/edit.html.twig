@@ -90,6 +90,11 @@ window.onload = function() {
     var x = document.getElementsByClassName("select2-container");
     x[0].style.width = "100%";
     x[0].style.marginBottom= "20px";
+    
+    for (i = 0; i<x.length; i++)
+    {
+        x[i].style.width = "100%";
+    }
 
 
         collapseJS();
@@ -120,7 +125,7 @@ function collapseJS()
     		$("#collapseMentor :input").attr("disabled", true);
     		$("#collapseOther :input").attr("disabled", true);
 
-    		beak;
+    		break;
 
 		case "ROLE_STUDENT":
     		$("#collapseAdmin").collapse('hide');
@@ -133,7 +138,7 @@ function collapseJS()
     		$("#collapseMentor :input").attr("disabled", true);
     		$("#collapseOther :input").attr("disabled", true);
 
-    		beak;
+    		break;
 
 		case "ROLE_MENTOR":
     		$("#collapseAdmin").collapse('hide');
@@ -145,7 +150,7 @@ function collapseJS()
     		$("#collapseStudent :input").attr("disabled", true);
     		$("#collapseMentor :input").attr("disabled", false);
     		$("#collapseOther :input").attr("disabled", true);
-    		beak;
+    		break;
 
 		case "ROLE_OTHER":
     		$("#collapseAdmin").collapse('hide');
@@ -158,7 +163,7 @@ function collapseJS()
     		$("#collapseMentor :input").attr("disabled", true);
     		$("#collapseOther :input").attr("disabled", false);
 
-    		beak;
+    		break;
     	}
 }
 </script>

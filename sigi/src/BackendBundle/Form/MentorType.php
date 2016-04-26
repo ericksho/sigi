@@ -23,7 +23,7 @@ class MentorType extends AbstractType
         $builder
             ->add('uc',null,array('attr' => array('class'=>'form-control')))
             ->add('department', EntityType::class, array(
-                'label' => 'Departamento',
+                'label' => 'Facultad/Escuela/Departamento',
                 'required' => false,
                 'class' => 'BackendBundle:Department',
                 'multiple' => false,
