@@ -16,7 +16,7 @@ class FacultyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', null,array('label' => 'Nombre','attr' => array('class'=>'form-control')))
+            ->add('name', null,array('label' => 'Facultad/Escuela','attr' => array('class'=>'form-control')))
             /*
             ->add('departments', EntityType::class, array(
                 'label' => 'Departamentos',

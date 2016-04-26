@@ -16,7 +16,7 @@
 
             {% if user.role == "ROLE_STUDENT" %}
                 <tr>
-                    <th>Facultad:</th>
+                    <th>Facultad/Escuela:</th>
                     <td>{{ user.student.department.getFaculty().name }}</td>
                 </tr>
                 <tr>

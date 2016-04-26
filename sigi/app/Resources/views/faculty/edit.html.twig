@@ -6,14 +6,14 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Editar Facultad</h1>
+    <h1>Editar Facultad/Escuela</h1>
 
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
         <input type="submit" class="btn btn-primary btn1" value="Editar" />
     {{ form_end(edit_form) }}
 
-    <a href="{{ path('faculty_index')}}" class="btn btn-info btn2" role="button" >Ver Facultades</a>
+    <a href="{{ path('faculty_index')}}" class="btn btn-info btn2" role="button" >Ver Facultades/Escuelas</a>
     
     {{ form_start(delete_form) }}
         <input type="submit" class="btn btn-danger btn3" value="Eliminar">

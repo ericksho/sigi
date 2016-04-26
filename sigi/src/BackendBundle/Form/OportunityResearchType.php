@@ -41,7 +41,7 @@ class OportunityResearchType extends AbstractType
             ->add('public', ChoiceType::class,array('choices'  => array(1 => 'Publica', 2 => 'Privada'),'label' => 'Publica','attr' => array('class'=>'form-control')))
             ->add('modality', ChoiceType::class,array('choices'  => array(1 => 'Nota 1-7', 2 => 'Alfa numerico'),'label' => 'Método de evaluación','attr' => array('class'=>'form-control')))
             ->add('publish', null,array('label' => 'Publicada','attr' => array('class'=>'form-control','checked'=>true)))
-            ->add('vacants','integer',array('label' => 'Vacantes','attr' => array('class'=>'form-control','min'=>1,'max' => 10),'scale'=>0))
+            ->add('vacants','integer',array('label' => 'Vacantes','attr' => array('class'=>'form-control','min'=>1,'max' => 10 ),'scale'=>0))
             ->add('credits','choice',array('label' => 'Créditos','choices'  => array(5 => '5 cr.',10 => '10 cr.', 20 => '20 cr.'),'attr' => array('class'=>'form-control',)))
             ->add('oportunityKeywords', EntityType::class, array(
                 'label' => 'Palabras claves',
@@ -62,7 +62,7 @@ class OportunityResearchType extends AbstractType
                 'choice_label' => 'courseNumber',))
 
             ->add('department', EntityType::class, array(
-                'label' => 'Departamento',
+                'label' => 'Facultad/Escuela/Departamento',
                 'required' => false,
                 'placeholder' => 'Agregue siglas de prerequisito',
                 'class' => 'BackendBundle:Department',

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Facultad</h1>
+    <h1>Facultad/Escuela</h1>
 
     <table class="table">
         <tbody>
@@ -16,10 +16,10 @@
         </tbody>
     </table>
 
-        <a href="{{ path('faculty_edit', { 'id': faculty.id }) }}" class="btn btn-primary btn1" role="button" >Editar Facultad</a>
+        <a href="{{ path('faculty_edit', { 'id': faculty.id }) }}" class="btn btn-primary btn1" role="button" >Editar Facultad/Escuela</a>
 
         {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('faculty_index') }}" class="btn btn-info btn1" role="button" >Ver Facultades</a>
+            <a href="{{ path('faculty_index') }}" class="btn btn-info btn1" role="button" >Ver Facultades/Escuelas</a>
 
             {{ form_start(delete_form) }}
                 <input type="submit" value="Eliminar" class="btn btn-danger btn2" role="button">

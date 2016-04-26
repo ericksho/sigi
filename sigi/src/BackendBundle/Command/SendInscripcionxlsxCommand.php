@@ -19,6 +19,7 @@ class SendInscripcionxlsxCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
+        $emailDara = $em->getRepository('BackendBundle:EmailList')->findOneByName('Email Dara');
         $researches = $em->getRepository('BackendBundle:Research')->findAll();
         try
         { 
@@ -40,7 +41,7 @@ class SendInscripcionxlsxCommand extends ContainerAwareCommand
         $message = \Swift_Message::newInstance()
             ->setSubject('Inscripcion de alumnos a Cursos IPre')
             ->setFrom('gestionIPre@ing.puc.cl')
-            ->setTo(array('racesped@uc.cl'))
+            ->setTo(array($emailDara->getEmail()))
             ->setBody("Hola, adjuntamos la inscripción de alumnos a cursos IPre de este mes, saludos, \nGestión IPre")
             ->attach(\Swift_Attachment::fromPath($path.$filename.".xlsx"))
         ;
