@@ -140,7 +140,7 @@
 
                     <form class="navbar-form navbar-left" role="search" action="{{ path('oportunityresearch_search')  }}" method="GET">
                       <div class="form-group">
-                        <input type="query" name="name" class="form-control" placeholder="Oportunidad...">
+                        <input type="query" name="name" id="search-form" class="form-control" placeholder="Oportunidad...">
                       </div>
                       <button type="submit" class="btn btn-default">Buscar</button>
                     </form>
@@ -171,6 +171,13 @@
         {% block body %}
           
         {% endblock %}
+        <script type="text/javascript">
+
+window.onload = function() {
+      document.getElementById("search-form").style.width = "115px";
+    };
+
+  </script>
 
               <img src="{{ asset('imgs/background-tree.png') }}" class="bottom-tree" />
               <img src="{{ asset('imgs/background-line.jpg') }}" class="bottom-line" />
