@@ -1,27 +1,23 @@
 <?php
 // src/BackendBundle/Command/GreetCommand.php
 namespace BackendBundle\Command;
-
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class SendProgramacionxlsxCommand extends ContainerAwareCommand
+class SendInscripcionxlsxCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
             ->setName('send:inscripcion')
-            ->setDescription('Envia la inscripcion de cursos, para usarse automaticamente los 28 de cada mes.')
+            ->setDescription('Envia la inscripcion de cursos los 1 de cada mes')
         ;
     }
-
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
-      //gererar inscrpcion
         $em = $this->getContainer()->get('doctrine')->getManager();
         $researches = $em->getRepository('BackendBundle:Research')->findAll();
         try
@@ -36,46 +32,37 @@ class SendProgramacionxlsxCommand extends ContainerAwareCommand
         $date = date("d-M-Y h:i:s");
         $output->writeln($date.": Inscripcion generada");
 
-        //enviar inscripcion
-        if(is_null($notification->getSender()))
-            $recipients = array($notification->getReciever()->getEmail());
-        else
-            $recipients = array($notification->getReciever()->getEmail(), $notification->getSender()->getEmail());
-
+        //enviar por email
         $today = date("d-M-Y");
-        $filename = "inscrpcion_".$today;
-        $path = "Inscripciones/";
+        $filename = "Inscripcion_".$today;
+        $path = $this->getContainer()->get('kernel')->getRootDir()."/../web/Inscripciones/";
 
         $message = \Swift_Message::newInstance()
-            ->setSubject('Programación de Cursos IPre')
-            ->setFrom('gestionipre@ing.puc.cl')
-            ->setTo(array('evsvec@uc.cl'))
-            ->setBody("Hola, adjuntamos la inscripción de cursos de este mes, saludos, \nGestión IPre")
+            ->setSubject('Inscripcion de alumnos a Cursos IPre')
+            ->setFrom('gestionIPre@ing.puc.cl')
+            ->setTo(array('racesped@uc.cl'))
+            ->setBody("Hola, adjuntamos la inscripción de alumnos a cursos IPre de este mes, saludos, \nGestión IPre")
             ->attach(\Swift_Attachment::fromPath($path.$filename.".xlsx"))
         ;
-
-        $this->get('mailer')->send($message);
+        $this->getContainer()->get('mailer')->send($message);
+        $output->writeln($date.": Inscripcion enviada");
         /* fin mail */
     }
-
 
     //Hardcoded report :S
     private function generateInscripcionXLSX($dataArray)
     {
       $em = $this->getContainer()->get('doctrine')->getManager();
-
       //new \DateTime()
       $today = date("d-M-Y");
       $filename = "Inscripcion_".$today;
-      $path = $this->get('kernel')->getRootDir()."web/Inscripciones/";
+      $path = $this->getContainer()->get('kernel')->getRootDir()."/../web/Inscripciones/";
 
       // ask the service for a 2007 excel
       $phpExcelObject = $this->getContainer()->get('phpexcel')->createPHPExcelObject();
-
       $phpExcelObject->getProperties()->setCreator("liuggio")
           ->setLastModifiedBy("Gestion IPre")
           ->setKeywords("IPre");
-
       //set headers
         //Sigla 
       $phpExcelObject->setActiveSheetIndex(0)->setCellValue('A1', "Sigla");
@@ -91,10 +78,8 @@ class SendProgramacionxlsxCommand extends ContainerAwareCommand
       $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F1', "Nombre y Apellidos Alumno");
         //RUN Alumno
       $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G1', "RUN Alumno");
-
       //set data
       $number = 1;
-
       foreach ($dataArray as $research) 
       {
         $number++;
@@ -115,7 +100,6 @@ class SendProgramacionxlsxCommand extends ContainerAwareCommand
         //RUN Alumno 
         $phpExcelObject->getActiveSheet()->setCellValue("G".$number, $research->getStudent()->getRutText());
       }
-
       //agregamos los bordes
       $styleArray = array(
           'borders' => array(
@@ -125,12 +109,9 @@ class SendProgramacionxlsxCommand extends ContainerAwareCommand
               ),
           ),
       );
-
       $phpExcelObject->getActiveSheet()->getStyle('A1:G'.$number)->applyFromArray($styleArray);
-
       //headers bold
       $phpExcelObject->getActiveSheet()->getStyle("A1:G1")->getFont()->setBold(true);
-
       //autosize a las columnas
       $phpExcelObject->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
       $phpExcelObject->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
@@ -139,15 +120,12 @@ class SendProgramacionxlsxCommand extends ContainerAwareCommand
       $phpExcelObject->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
       $phpExcelObject->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
       $phpExcelObject->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
-
       //nombre de la hoja
       $phpExcelObject->getActiveSheet()->setTitle('Hoja 1');
-
       // Set active sheet index to the first sheet, so Excel opens this as the first sheet
       $phpExcelObject->setActiveSheetIndex(0);
-
       // Save Excel 2007 file        
       $writer = $this->getContainer()->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
       $writer->save($path.$filename.".xlsx");
     }
-} 
+}

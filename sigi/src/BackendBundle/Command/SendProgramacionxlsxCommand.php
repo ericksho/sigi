@@ -1,7 +1,6 @@
 <?php
 // src/BackendBundle/Command/GreetCommand.php
 namespace BackendBundle\Command;
-
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,14 +13,12 @@ class SendProgramacionxlsxCommand extends ContainerAwareCommand
     {
         $this
             ->setName('send:programacion')
-            ->setDescription('Envia la programacion de cursos, para usarse automaticamente los 15 de cada mes.')
+            ->setDescription('Envia la programacion de cursos los 15 de cada mes')
         ;
     }
-
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
-      //gererar programacion
+        //generacion xlsx
         $em = $this->getContainer()->get('doctrine')->getManager();
         $researches = $em->getRepository('BackendBundle:Research')->findAll();
         try
@@ -36,28 +33,22 @@ class SendProgramacionxlsxCommand extends ContainerAwareCommand
         $date = date("d-M-Y h:i:s");
         $output->writeln($date.": Programacion generada");
 
-        //enviar programacion
-        if(is_null($notification->getSender()))
-            $recipients = array($notification->getReciever()->getEmail());
-        else
-            $recipients = array($notification->getReciever()->getEmail(), $notification->getSender()->getEmail());
-
+        //enviar por email
         $today = date("d-M-Y");
         $filename = "Programacion_".$today;
-        $path = "Programaciones/";
+        $path = $this->getContainer()->get('kernel')->getRootDir()."/../web/Programaciones/";
 
         $message = \Swift_Message::newInstance()
             ->setSubject('Programación de Cursos IPre')
-            ->setFrom('gestionipre@ing.puc.cl')
+            ->setFrom('gestionIPre@ing.puc.cl')
             ->setTo(array('evsvec@uc.cl'))
             ->setBody("Hola, adjuntamos la programación de cursos de este mes, saludos, \nGestión IPre")
             ->attach(\Swift_Attachment::fromPath($path.$filename.".xlsx"))
         ;
-
-        $this->get('mailer')->send($message);
+        $this->getContainer()->get('mailer')->send($message);
+        $output->writeln($date.": Programacion enviada");
         /* fin mail */
     }
-
     //Hardcoded report :S
     private function generateProgramacionXLSX($dataArray)
     {
@@ -65,15 +56,13 @@ class SendProgramacionxlsxCommand extends ContainerAwareCommand
       //new \DateTime()
       $today = date("d-M-Y");
       $filename = "Programacion_".$today;
+      $path = $this->getContainer()->get('kernel')->getRootDir()."/../web/Programaciones/";
 
-      $path = $this->get('kernel')->getRootDir()."web/Programaciones/";
       // ask the service for a 2007 excel
       $phpExcelObject = $this->getContainer()->get('phpexcel')->createPHPExcelObject();
-
       $phpExcelObject->getProperties()->setCreator("liuggio")
           ->setLastModifiedBy("Gestion IPre")
           ->setKeywords("IPre");
-
       //set headers
         //Sigla 
       $phpExcelObject->setActiveSheetIndex(0)->setCellValue('A1', "Sigla");
@@ -97,7 +86,6 @@ class SendProgramacionxlsxCommand extends ContainerAwareCommand
       $phpExcelObject->setActiveSheetIndex(0)->setCellValue('J1', "Vacantes");
         //Horario
       $phpExcelObject->setActiveSheetIndex(0)->setCellValue('K1', "Horario");
-
       //set data
       $number = 1;
       foreach ($dataArray as $research) 
@@ -150,7 +138,6 @@ class SendProgramacionxlsxCommand extends ContainerAwareCommand
         //Horario        
         $phpExcelObject->getActiveSheet()->setCellValue("K".$number, "Sin horario");
       }
-
       //agregamos los bordes
       $styleArray = array(
           'borders' => array(
@@ -160,12 +147,9 @@ class SendProgramacionxlsxCommand extends ContainerAwareCommand
               ),
           ),
       );
-
       $phpExcelObject->getActiveSheet()->getStyle('A1:K'.$number)->applyFromArray($styleArray);
-
       //headers bold
       $phpExcelObject->getActiveSheet()->getStyle("A1:K1")->getFont()->setBold(true);
-
       //autosize a las columnas
       $phpExcelObject->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
       $phpExcelObject->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
@@ -178,16 +162,90 @@ class SendProgramacionxlsxCommand extends ContainerAwareCommand
       $phpExcelObject->getActiveSheet()->getColumnDimension('I')->setAutoSize(true);
       $phpExcelObject->getActiveSheet()->getColumnDimension('J')->setAutoSize(true);
       $phpExcelObject->getActiveSheet()->getColumnDimension('K')->setAutoSize(true);
-
       //nombre de la hoja
       $phpExcelObject->getActiveSheet()->setTitle('Hoja 1');
-
       // Set active sheet index to the first sheet, so Excel opens this as the first sheet
       $phpExcelObject->setActiveSheetIndex(0);
-
       // Save Excel 2007 file        
       $writer = $this->getContainer()->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
       $writer->save($path.$filename.".xlsx");
     }
-
+    //Hardcoded report :S
+    private function generateInscripcionXLSX($dataArray)
+    {
+      $em = $this->getContainer()->get('doctrine')->getManager();
+      //new \DateTime()
+      $today = date("d-M-Y");
+      $filename = "Inscripcion_".$today;
+      $path = $this->get('kernel')->getRootDir()."web/Inscripciones/";
+      // ask the service for a 2007 excel
+      $phpExcelObject = $this->getContainer()->get('phpexcel')->createPHPExcelObject();
+      $phpExcelObject->getProperties()->setCreator("liuggio")
+          ->setLastModifiedBy("Gestion IPre")
+          ->setKeywords("IPre");
+      //set headers
+        //Sigla 
+      $phpExcelObject->setActiveSheetIndex(0)->setCellValue('A1', "Sigla");
+        //Sec 
+      $phpExcelObject->setActiveSheetIndex(0)->setCellValue('B1', "Sec");
+        //Cr. 
+      $phpExcelObject->setActiveSheetIndex(0)->setCellValue('C1', "Cr.");
+        //Semestre  
+      $phpExcelObject->setActiveSheetIndex(0)->setCellValue('D1', "Semestre");
+        //Nombre Curso  
+      $phpExcelObject->setActiveSheetIndex(0)->setCellValue('E1', "Nombre Curso");
+        //Nombre y Apellidos Alumno  
+      $phpExcelObject->setActiveSheetIndex(0)->setCellValue('F1', "Nombre y Apellidos Alumno");
+        //RUN Alumno
+      $phpExcelObject->setActiveSheetIndex(0)->setCellValue('G1', "RUN Alumno");
+      //set data
+      $number = 1;
+      foreach ($dataArray as $research) 
+      {
+        $number++;
+        //Sigla 
+        $phpExcelObject->getActiveSheet()->setCellValue("A".$number, $research->getInitialsCode().$research->getNumbersCode());
+        //Sec 
+        $phpExcelObject->getActiveSheet()->setCellValue("B".$number, $research->getSection());
+        //Cr. 
+        $phpExcelObject->getActiveSheet()->setCellValue("C".$number, $research->getCredits());
+        //Semestre  
+        $semester = $em->getRepository('BackendBundle:Research')->getSemester($research);
+        $phpExcelObject->getActiveSheet()->setCellValue("D".$number, $semester);
+        //Nombre Curso
+        $classCodeArray = $em->getRepository('BackendBundle:Application')->getClassCode($research->getOportunityResearch(), $research->getStudent());
+        $phpExcelObject->getActiveSheet()->setCellValue("E".$number, $classCodeArray["name"]);
+        //Nombre y Apellidos Alumno
+        $phpExcelObject->getActiveSheet()->setCellValue("F".$number, $research->getStudent()->getFullName());
+        //RUN Alumno 
+        $phpExcelObject->getActiveSheet()->setCellValue("G".$number, $research->getStudent()->getRutText());
+      }
+      //agregamos los bordes
+      $styleArray = array(
+          'borders' => array(
+              'allborders' => array(
+                  'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                  'color' => array('argb' => '000000'),
+              ),
+          ),
+      );
+      $phpExcelObject->getActiveSheet()->getStyle('A1:G'.$number)->applyFromArray($styleArray);
+      //headers bold
+      $phpExcelObject->getActiveSheet()->getStyle("A1:G1")->getFont()->setBold(true);
+      //autosize a las columnas
+      $phpExcelObject->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+      $phpExcelObject->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+      $phpExcelObject->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+      $phpExcelObject->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+      $phpExcelObject->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+      $phpExcelObject->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+      $phpExcelObject->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+      //nombre de la hoja
+      $phpExcelObject->getActiveSheet()->setTitle('Hoja 1');
+      // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+      $phpExcelObject->setActiveSheetIndex(0);
+      // Save Excel 2007 file        
+      $writer = $this->getContainer()->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
+      $writer->save($path.$filename.".xlsx");
+    }
 }

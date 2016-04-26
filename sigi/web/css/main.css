@@ -54,3 +54,20 @@ body {
     border-style: solid;
     margin-bottom: 15px;
 }
+.required:after{
+  content: " *";
+  color: red;
+}
+.bottom-tree{
+  position:fixed;
+  bottom:0px;
+  right:15px;
+  z-index: -1;
+} 
+.bottom-line{
+  position:fixed;
+  bottom:0px;
+  left:15px;
+  width: 90%;
+  height:32px;
+}
