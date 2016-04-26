@@ -85,6 +85,19 @@ window.onload = function() {
 	  	tokenSeparators: [','],
 	  	maximumInputLength: 20,
 	  	casesensitive: false,
+	  	createTag: function(newTag) {
+	  		if(/^\d.*/.test(newTag.term))
+		        return {
+		            id: 'k' + newTag.term,
+		            text: 'k' + newTag.term
+		        };
+	        else
+	        	return {
+	            id: newTag.term,
+	            text: newTag.term
+	        };
+
+	    }
 	})
 
  	$(".js-tokenizer").select2({
