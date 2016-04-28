@@ -109,17 +109,20 @@ class Application
             case 'Confirmado por Ambos, en proceso':
                 return 3;
                 break;
-            case 'Enviado a Dara':
+            case 'Sigla Enviada a Dara':
                 return 4;
                 break;
-            case 'Sigla inscrita en Banner':
+            case 'Inscripción alumno Enviada a Dara':
                 return 5;
                 break;
-            case 'No seleccionado por Mentor':
+            case 'Sigla inscrita en Banner':
                 return 6;
                 break;
-            case 'No confirmado por Alumno':
+            case 'No seleccionado por Mentor':
                 return 7;
+                break;
+            case 'No confirmado por Alumno':
+                return 8;
                 break;
             
             default:
@@ -148,15 +151,18 @@ class Application
                 return 'Confirmado por Ambos, en proceso';
                 break;
             case 4:
-                return 'Enviado a Dara';
+                return 'Sigla Enviada a Dara';
                 break;
             case 5:
-                return 'Sigla inscrita en Banner';
+                return 'Inscripción alumno Enviada a Dara';
                 break;
             case 6:
-                return 'No seleccionado por Mentor';
+                return 'Sigla inscrita en Banner';
                 break;
             case 7:
+                return 'No seleccionado por Mentor';
+                break;
+            case 8:
                 return 'No confirmado por Alumno';
                 break;
             

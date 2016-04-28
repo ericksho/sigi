@@ -102,7 +102,8 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
                 JOIN o.applications a
                 WHERE a.state = 3
                 OR a.state = 4
-                OR a.state = 5'
+                OR a.state = 5
+                OR a.state = 6'
             );
      
         try {

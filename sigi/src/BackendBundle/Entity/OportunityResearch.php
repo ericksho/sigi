@@ -840,7 +840,7 @@ class OportunityResearch
     {
         $usedVacants = 0;
         foreach ($this->applications as $application) {
-            if ($application->getState() == 3 || $application->getState() == 4 || $application->getState() == 5 )
+            if ($application->getState() == 3 || $application->getState() == 4 || $application->getState() == 5 || $application->getState() == 6)
             {
                 $usedVacants = $usedVacants + 1;
             }

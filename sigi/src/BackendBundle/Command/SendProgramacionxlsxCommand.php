@@ -21,7 +21,9 @@ class SendProgramacionxlsxCommand extends ContainerAwareCommand
         //generacion xlsx
         $em = $this->getContainer()->get('doctrine')->getManager();
         $emailDara = $em->getRepository('BackendBundle:EmailList')->findOneByName('Email Dara');
-        $researches = $em->getRepository('BackendBundle:Research')->findAll();
+
+        $researches = $em->getRepository('BackendBundle:Research')->programationUnsendedToDara();
+
         try
         { 
             $this->generateProgramacionXLSX($researches);
@@ -48,7 +50,11 @@ class SendProgramacionxlsxCommand extends ContainerAwareCommand
         ;
         $this->getContainer()->get('mailer')->send($message);
         $output->writeln($date.": Programacion enviada");
-        /* fin mail */
+
+        // seteamos los estados como programacion envada a dara
+        foreach ($researches as $research) {
+          $research->getApplication()->setStatus(4);
+        }
     }
     //Hardcoded report :S
     private function generateProgramacionXLSX($dataArray)

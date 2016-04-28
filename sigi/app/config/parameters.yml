@@ -2,9 +2,12 @@
 parameters:
     database_host: 127.0.0.1
     database_port: null
-    database_name: symfony
-    database_user: root
-    database_password: francisco123
+    #database_name: symfony
+    database_name: c35sgestionipre
+    #database_user: root
+    database_user: c35gestoripre
+    #database_password: francisco123
+    database_password: 8xFhWCJq_nH
     mailer_transport: smtp
     mailer_host: smtp-externo.puc.cl
     mailer_user: evsvec@uc.cl

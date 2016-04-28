@@ -10,6 +10,44 @@ namespace BackendBundle\Repository;
  */
 class ResearchRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function programationUnsendedToDara()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT r FROM BackendBundle:Research r
+                JOIN r.application a
+                WHERE a.state = 3'
+            );
+    
+        try 
+        {
+            $researches = $query->getResult();
+        }
+        catch (\Doctrine\ORM\NoResultException $e) 
+        { 
+            $$researches = null;
+        }
+    }
+
+    public function inscriptionUnsendedToDara()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT r FROM BackendBundle:Research r
+                JOIN r.application a
+                WHERE a.state = 4'
+            );
+    
+        try 
+        {
+            $researches = $query->getResult();
+        }
+        catch (\Doctrine\ORM\NoResultException $e) 
+        { 
+            $$researches = null;
+        }
+    }
+
     public function getSemester($research)
     {
         $now = new \DateTime();

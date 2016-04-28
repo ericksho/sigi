@@ -20,7 +20,7 @@ class SendInscripcionxlsxCommand extends ContainerAwareCommand
     {
         $em = $this->getContainer()->get('doctrine')->getManager();
         $emailDara = $em->getRepository('BackendBundle:EmailList')->findOneByName('Email Dara');
-        $researches = $em->getRepository('BackendBundle:Research')->findAll();
+        $researches = $em->getRepository('BackendBundle:Research')->inscriptionUnsendedToDara();
         try
         { 
             $this->generateInscripcionXLSX($researches);
@@ -47,7 +47,11 @@ class SendInscripcionxlsxCommand extends ContainerAwareCommand
         ;
         $this->getContainer()->get('mailer')->send($message);
         $output->writeln($date.": Inscripcion enviada");
-        /* fin mail */
+        
+        // seteamos los estados como inscripciones envadas a dara
+        foreach ($researches as $research) {
+          $research->getApplication()->setStatus(5);
+        }
     }
 
     //Hardcoded report :S
