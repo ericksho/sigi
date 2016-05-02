@@ -73,6 +73,27 @@ swiftmailer:
 # CommandScheduler Configuration
 jmose_command_scheduler:
     log_path: "%kernel.root_dir%/../web/SchedulerLog"
+    # Namespaces listed here won't be listed in the list
+    excluded_command_namespaces:
+        - _global
+        - assets
+        - debug
+        - cache
+        - scheduler
+        - server
+        - container
+        - config
+        - generate
+        - init
+        - router
+        - doctrine
+        - lint
+        - orm
+        - security
+        - swiftmailer
+        - translation
+        - twig
+        - yaml
 
 
 
