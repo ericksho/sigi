@@ -64,7 +64,7 @@
 
         
 
-	<input type="submit" class="btn btn-primary btn1" role="button" value="Editar" />
+	<input type="submit" class="btn btn-primary btn1" role="button" value="Editar" onclick="return isValid();"/>
 	{{ form_end(edit_form) }}
 
 
@@ -80,6 +80,16 @@
 <script type="text/javascript">
 
 window.onload = function() {
+
+    addVerifierDigit();
+
+    $('#myForm').on('submit', function(e){
+        e.preventDefault();
+        var len = $('#username').val().length;
+        if (len < 6 && len > 1) {
+            this.submit();
+        }
+    });
 
 
     $(".js-basic-single").select2({
@@ -100,14 +110,71 @@ window.onload = function() {
         collapseJS();
     };
 
-var checker = document.getElementById('changePass');
-var pass1 = document.getElementById('change_password_plainPassword_first');
-var pass2 = document.getElementById('change_password_plainPassword_second');
-checker.onchange = function() {
-  pass1.disabled = !this.checked;
-  pass2.disabled = !this.checked;
+    var checker = document.getElementById('changePass');
+    var pass1 = document.getElementById('change_password_plainPassword_first');
+    var pass2 = document.getElementById('change_password_plainPassword_second');
+    checker.onchange = function() {
+    pass1.disabled = !this.checked;
+    pass2.disabled = !this.checked;
 };
 
+function isValid()
+{
+    var rut = document.getElementById("user_rut").value + "-" + document.getElementById("vd").value;
+    if(!validaRut(rut))
+    { 
+        alert("Rut no valido");
+        document.getElementById("user_rut").focus();
+    } 
+    return validaRut(rut);
+}
+
+
+function addVerifierDigit()
+{
+    var t = document.createTextNode("-");
+    document.getElementById("user_rut").parentElement.appendChild(t);
+
+    var input = document.createElement("input");
+    input.type = "text";
+    input.id="vd"
+    input.className = "form-control";
+    input.style.width = "10%";
+    input.style.display = "inline";
+    input.style.marginLeft = "3px";
+    document.getElementById("user_rut").parentElement.appendChild(input);
+
+    document.getElementById("user_rut").style.width = "87%";
+    document.getElementById("user_rut").style.display = "inline";
+    document.getElementById("user_rut").style.marginRight = "3px";
+
+    document.getElementById("user_rut").parentElement.childNodes[0].style.display = "block";
+
+    if(document.getElementById("user_rut").value.length > 0)
+    {
+        input.value = dv(document.getElementById("user_rut").value);
+    }
+}
+
+
+    // Valida el rut con su cadena completa "XXXXXXXX-X"
+function validaRut(rutCompleto) 
+{
+    if (!/^[0-9]+-[0-9kK]{1}$/.test( rutCompleto ))
+        return false;
+    var tmp     = rutCompleto.split('-');
+    var digv    = tmp[1]; 
+    var rut     = tmp[0];
+    if ( digv == 'K' ) digv = 'k' ;
+    return (dv(rut) == digv );
+}
+function dv(T)
+{
+    var M=0,S=1;
+    for(;T;T=Math.floor(T/10))
+        S=(S+T%10*(9-M++%6))%11;
+    return S?S-1:'k';
+}  
 
 function collapseJS()
 {
