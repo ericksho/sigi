@@ -25,8 +25,10 @@ class ResearchRepository extends \Doctrine\ORM\EntityRepository
         }
         catch (\Doctrine\ORM\NoResultException $e) 
         { 
-            $$researches = null;
+            $researches = null;
         }
+
+        return $researches;
     }
 
     public function inscriptionUnsendedToDara()
@@ -46,6 +48,8 @@ class ResearchRepository extends \Doctrine\ORM\EntityRepository
         { 
             $$researches = null;
         }
+
+        return $researches;
     }
 
     public function getSemester($research)

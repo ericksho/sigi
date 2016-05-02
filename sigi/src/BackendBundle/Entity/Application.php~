@@ -30,7 +30,8 @@ class Application
     private $state;
 
     /**
-     * @ORM\OneToOne(targetEntity="Research", mappedBy="application")
+     * @ORM\OneToOne(targetEntity="Research", inversedBy="application")
+     * @ORM\JoinColumn(name="research_id", referencedColumnName="id")
      */
     private $research;
 
@@ -285,28 +286,5 @@ class Application
     {
         return $this->oportunityResearch;
     }
-
-    /**
-     * Set research
-     *
-     * @param \BackendBundle\Entity\Research $research
-     *
-     * @return Application
-     */
-    public function setResearch(\BackendBundle\Entity\Research $research = null)
-    {
-        $this->research = $research;
-
-        return $this;
-    }
-
-    /**
-     * Get research
-     *
-     * @return \BackendBundle\Entity\Research
-     */
-    public function getResearch()
-    {
-        return $this->research;
-    }
 }
+

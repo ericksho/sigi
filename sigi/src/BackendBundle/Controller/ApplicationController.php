@@ -269,6 +269,7 @@ class ApplicationController extends Controller
             //cargamos los datos existentes
             $research->populateFromOportunity($application->getOportunityResearch());
             $research->setStudent($application->getStudent());
+            $research->setApplication($application);
             //calculamos la sigla
             $em = $this->getDoctrine()->getManager();
             $classCodeArray = $em->getRepository('BackendBundle:Application')->getClassCode($application->getOportunityResearch(), $application->getStudent());

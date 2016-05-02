@@ -44,8 +44,7 @@ class Research
     private $section;
 
     /**
-     * @ORM\OneToOne(targetEntity="Application", inversedBy="research")
-     * @ORM\JoinColumn(name="application_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Application", mappedBy="research")
      */
     private $application;
 
@@ -926,52 +925,5 @@ class Research
         $this->setCredits($oportunityResearch->getCredits());
         return $this;
     }    
-
-    /**
-     * Set application
-     *
-     * @param \BackendBundle\Entity\Application $application
-     *
-     * @return Research
-     */
-    public function setApplication(\BackendBundle\Entity\Application $application = null)
-    {
-        $this->application = $application;
-
-        return $this;
-    }
-
-    /**
-     * Get application
-     *
-     * @return \BackendBundle\Entity\Application
-     */
-    public function getApplication()
-    {
-        return $this->application;
-    }
-
-    /**
-     * Add prerequisite
-     *
-     * @param \BackendBundle\Entity\Prerequisite $prerequisite
-     *
-     * @return Research
-     */
-    public function addPrerequisite(\BackendBundle\Entity\Prerequisite $prerequisite)
-    {
-        $this->prerequisites[] = $prerequisite;
-
-        return $this;
-    }
-
-    /**
-     * Remove prerequisite
-     *
-     * @param \BackendBundle\Entity\Prerequisite $prerequisite
-     */
-    public function removePrerequisite(\BackendBundle\Entity\Prerequisite $prerequisite)
-    {
-        $this->prerequisites->removeElement($prerequisite);
-    }
 }
+

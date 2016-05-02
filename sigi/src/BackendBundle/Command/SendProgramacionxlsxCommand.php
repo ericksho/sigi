@@ -23,37 +23,46 @@ class SendProgramacionxlsxCommand extends ContainerAwareCommand
         $emailDara = $em->getRepository('BackendBundle:EmailList')->findOneByName('Email Dara');
 
         $researches = $em->getRepository('BackendBundle:Research')->programationUnsendedToDara();
-
-        try
-        { 
-            $this->generateProgramacionXLSX($researches);
-        }
-        catch(Exception $e)
-        {
-            $output->writeln($e->getMessage());
-            return $e->getMessage();
-        } 
         $date = date("d-M-Y h:i:s");
-        $output->writeln($date.": Programacion generada");
 
-        //enviar por email
-        $today = date("d-M-Y");
-        $filename = "Programacion_".$today;
-        $path = $this->getContainer()->get('kernel')->getRootDir()."/../web/Programaciones/";
+        if (count($researches) == 0)
+        {
+          $output->writeln($date.": No hay programaciones para este periodo");
+        }
+        else
+        {
+          try
+          { 
+            $this->generateProgramacionXLSX($researches);
+          }
+          catch(Exception $e)
+          {
+              $output->writeln($e->getMessage());
+              return $e->getMessage();
+          } 
+          
+          $output->writeln($date.": Programacion generada");
 
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Programación de Cursos IPre')
-            ->setFrom('gestionIPre@ing.puc.cl')
-            ->setTo(array($emailDara->getEmail()))
-            ->setBody("Hola, adjuntamos la programación de cursos de este mes, saludos, \nGestión IPre")
-            ->attach(\Swift_Attachment::fromPath($path.$filename.".xlsx"))
-        ;
-        $this->getContainer()->get('mailer')->send($message);
-        $output->writeln($date.": Programacion enviada");
+          //enviar por email
+          $today = date("d-M-Y");
+          $filename = "Programacion_".$today;
+          $path = $this->getContainer()->get('kernel')->getRootDir()."/../web/Programaciones/";
 
-        // seteamos los estados como programacion envada a dara
-        foreach ($researches as $research) {
-          $research->getApplication()->setStatus(4);
+          $message = \Swift_Message::newInstance()
+              ->setSubject('Programación de Cursos IPre')
+              ->setFrom('gestionIPre@ing.puc.cl')
+              ->setTo(array($emailDara->getEmail()))
+              ->setBody("Hola, adjuntamos la programación de cursos de este mes, saludos, \nGestión IPre")
+              ->attach(\Swift_Attachment::fromPath($path.$filename.".xlsx"))
+          ;
+          $this->getContainer()->get('mailer')->send($message);
+          $output->writeln($date.": Programacion enviada");
+
+          // seteamos los estados como programacion envada a dara
+          foreach ($researches as $research) {
+            $research->getApplication()->setState(4);
+            $em->flush();
+          }
         }
     }
     //Hardcoded report :S

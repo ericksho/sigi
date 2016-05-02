@@ -21,36 +21,45 @@ class SendInscripcionxlsxCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getManager();
         $emailDara = $em->getRepository('BackendBundle:EmailList')->findOneByName('Email Dara');
         $researches = $em->getRepository('BackendBundle:Research')->inscriptionUnsendedToDara();
-        try
-        { 
-            $this->generateInscripcionXLSX($researches);
-        }
-        catch(Exception $e)
-        {
-            $output->writeln($e->getMessage());
-            return $e->getMessage();
-        } 
         $date = date("d-M-Y h:i:s");
-        $output->writeln($date.": Inscripcion generada");
 
-        //enviar por email
-        $today = date("d-M-Y");
-        $filename = "Inscripcion_".$today;
-        $path = $this->getContainer()->get('kernel')->getRootDir()."/../web/Inscripciones/";
-
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Inscripcion de alumnos a Cursos IPre')
-            ->setFrom('gestionIPre@ing.puc.cl')
-            ->setTo(array($emailDara->getEmail()))
-            ->setBody("Hola, adjuntamos la inscripción de alumnos a cursos IPre de este mes, saludos, \nGestión IPre")
-            ->attach(\Swift_Attachment::fromPath($path.$filename.".xlsx"))
-        ;
-        $this->getContainer()->get('mailer')->send($message);
-        $output->writeln($date.": Inscripcion enviada");
-        
-        // seteamos los estados como inscripciones envadas a dara
-        foreach ($researches as $research) {
-          $research->getApplication()->setStatus(5);
+        if (count($researches) == 0)
+        {
+          $output->writeln($date.": No hay inscripciones para este periodo");
+        }
+        else
+        {
+          try
+          { 
+              $this->generateInscripcionXLSX($researches);
+          }
+          catch(Exception $e)
+          {
+              $output->writeln($e->getMessage());
+              return $e->getMessage();
+          } 
+          $output->writeln($date.": Inscripcion generada");
+  
+          //enviar por email
+          $today = date("d-M-Y");
+          $filename = "Inscripcion_".$today;
+          $path = $this->getContainer()->get('kernel')->getRootDir()."/../web/Inscripciones/";
+  
+          $message = \Swift_Message::newInstance()
+              ->setSubject('Inscripcion de alumnos a Cursos IPre')
+              ->setFrom('gestionIPre@ing.puc.cl')
+              ->setTo(array($emailDara->getEmail()))
+              ->setBody("Hola, adjuntamos la inscripción de alumnos a cursos IPre de este mes, saludos, \nGestión IPre")
+              ->attach(\Swift_Attachment::fromPath($path.$filename.".xlsx"))
+          ;
+          $this->getContainer()->get('mailer')->send($message);
+          $output->writeln($date.": Inscripcion enviada");
+          
+          // seteamos los estados como inscripciones envadas a dara
+          foreach ($researches as $research) {
+            $research->getApplication()->setState(5);
+            $em->flush();
+          }
         }
     }
 

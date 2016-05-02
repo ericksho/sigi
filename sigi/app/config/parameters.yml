@@ -9,7 +9,7 @@ parameters:
     #database_password: francisco123
     database_password: 8xFhWCJq_nH
     mailer_transport: smtp
-    mailer_host: smtp-externo.puc.cl
-    mailer_user: evsvec@uc.cl
-    mailer_password: ericksh012
+    mailer_host: smtp.office365.com
+    mailer_user: gestionipre@ing.puc.cl
+    mailer_password: Francisco123
     secret: f3bb896506e84e0b2ec954bafecbe8479a08f20b
