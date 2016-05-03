@@ -1,21 +1,117 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet" />
+
+
+{% endblock %}
+
 {% block body %}
-    <h1>Mis Oportunidades</h1>
+    <h1>Oportunidades de Investigación</h1>
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              Búsqueda Avanzada
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="creationDate1" class="col-sm-2 control-label">Creado después de</label>
+                <div class="col-sm-10">
+                  <input type="date" class="form-control" id="creationDate">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="creationDate2" class="col-sm-2 control-label">Creado antes de</label>
+                <div class="col-sm-10">
+                  <input type="date" class="form-control" id="creationDate">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="name" class="col-sm-2 control-label">Nombre</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="name" placeholder="Nombre de la Oportunidad">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="description" class="col-sm-2 control-label">Descripción</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="description" placeholder="Descripción de la Oportunidad">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="modality" class="col-sm-2 control-label">Método de evaluación</label>
+                <div class="col-sm-10">
+                  <select class="form-control" id="modality">
+                      <option disabled selected value> -- seleccione uno -- </option>
+                      <option>Alfa numerico</option>
+                      <option>Nota 1-7</option>
+                    </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="vacants" class="col-sm-2 control-label">Vacantes Disponibles</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control" id="vacants">
+                </div>
+              </div>
+
+              ///////////////////////
+              <div class="form-group">
+                <label for="keyword" class="col-sm-2 control-label">Keywords</label>
+                <div class="col-sm-10">
+                  {{ form_widget(keywordForm) }}
+                </div>
+              </div>
+
+              ///////////////////////
+              <div class="form-group">
+                <label for="prerequisites" class="col-sm-2 control-label">Prerequisitos</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="prerequisites" placeholder="Nombre de la Oportunidad">
+                </div>
+              </div>
+
+              ///////////////////////
+              <div class="form-group">
+                <label for="mentors" class="col-sm-2 control-label">Mentores</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="mentors" placeholder="Nombre de la Oportunidad">
+                </div>
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Fecha de creación</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
-                <th>Publica</th>
-                <th>Modalidad</th>
-                <th>Publicada</th>
+                <th>Método de evaluación</th>
                 <th>Vacantes</th>
                 <th>Postulaciones</th>
-                <th>keywords</th>
+                <th>Keywords</th>
                 <th>Prerequisitos</th>
                 <th>Mentores</th>
                 <th></th>
@@ -25,13 +121,10 @@
         <tbody>
         {% for oportunityResearch in oportunityResearches %}
             <tr>
-                <td><a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}">{{ oportunityResearch.id }}</a></td>
                 <td>{% if oportunityResearch.creationDate %}{{ oportunityResearch.creationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ oportunityResearch.name }}</td>
                 <td>{{ oportunityResearch.description }}</td>
-                <td>{{ oportunityResearch.public }}</td>
-                <td>{{ oportunityResearch.modality }}</td>
-                <td>{% if oportunityResearch.publish %}Si{% else %}No{% endif %}</td>
+                <td>{{ oportunityResearch.getModalityText() }}</td>
                 <td>{{ oportunityResearch.getOpenVacants() }}/{{ oportunityResearch.vacants }}</td>
                 <td><a href="{{ path('oportunityresearch_applications', { 'id': oportunityResearch.id }) }}">{{ oportunityResearch.applications|length }}</a></td>
                 <td>
@@ -67,5 +160,22 @@
         {% endfor %}
         </tbody>
     </table>
-   
+
+
+    <script type="text/javascript"> 
+
+window.onload = function() {
+
+    $(".js-example-tokenizer").select2({
+    tags: true,
+})
+};
+   </script>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
+        
 {% endblock %}

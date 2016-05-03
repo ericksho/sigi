@@ -53,8 +53,20 @@ class OportunityResearchController extends Controller
 
         $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findOportunitiesByName($name);
 
+        $keywordForm = $this->createFormBuilder(new oportunityResearch())
+            ->add('oportunityKeywords', EntityType::class, array(
+                'label' => 'Palabras claves',
+                'required' => false,
+                'placeholder' => 'Keywords relacionadas',
+                'class' => 'BackendBundle:Keyword',
+                'multiple' => true,
+                'attr' => array('class'=>'js-example-tokenizer'),
+                'choice_label' => 'keyword',))
+            ->getForm();
+
         return $this->render('oportunityresearch/search.html.twig', array(
             'oportunityResearches' => $oportunityResearches,
+            'keywordForm' => $keywordForm->createView(),
         ));
     }
 
