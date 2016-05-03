@@ -23,26 +23,37 @@ class User  implements UserInterface, \Serializable
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
     /**
-    * @ORM\OneToOne(targetEntity="Mentor", mappedBy="user")
+    * @ORM\OneToOne(targetEntity="Mentor", mappedBy="user", cascade={"persist"})
     */
     private $mentor;
+
     /**
-    * @ORM\OneToOne(targetEntity="Other", mappedBy="user")
+    * @ORM\OneToOne(targetEntity="Other", mappedBy="user", cascade={"persist"})
     */
     private $other;
+
     /**
-    * @ORM\OneToOne(targetEntity="Student", mappedBy="user")
+    * @ORM\OneToOne(targetEntity="Student", mappedBy="user", cascade={"persist"})
     */
     private $student;
+
+    /**
+    * @ORM\OneToOne(targetEntity="Restorer", mappedBy="user", cascade={"persist"})
+    */
+    private $restorer;
+
     /**
      * @ORM\OneToMany(targetEntity="Notification", mappedBy="sender")
      */
     private $sendedNotifications;
+
     /**
      * @ORM\OneToMany(targetEntity="Notification", mappedBy="reciever")
      */
     private $recievedNotifications;
+
     public function __construct() {
         $this->features = new ArrayCollection();
         $this->isActive = true;
@@ -50,11 +61,11 @@ class User  implements UserInterface, \Serializable
         // $this->salt = md5(uniqid(null, true));
     }
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="user_type", type="integer")
+     * @ORM\Column(name="role", type="string", length=20)
      */
-    private $userType;
+    private $role;
     /**
      * @var string
      *
@@ -119,25 +130,49 @@ class User  implements UserInterface, \Serializable
         return $this->id;
     }
     /**
-     * Set userType
+     * Set role
      *
-     * @param integer $userType
+     * @param string $role
      *
      * @return User
      */
-    public function setUserType($userType)
+    public function setRole($role)
     {
-        $this->userType = $userType;
+        $this->role = $role;
         return $this;
     }
     /**
-     * Get userType
+     * Get role
      *
-     * @return int
+     * @return string
      */
-    public function getUserType()
+    public function getRole()
     {
-        return $this->userType;
+        return $this->role;
+    }
+    /**
+     * Get roleText
+     *
+     * @return string
+     */
+    public function getRoleText()
+    {
+        $text = '';
+        switch ($this->role) {
+            case 'ROLE_ADMIN':
+                $text = 'Administrador';
+                break;
+            case 'ROLE_STUDENT':
+                $text = 'Estudiante';
+                break;
+            case 'ROLE_MENTOR':
+                $text = 'Mentor';
+                break;
+            case 'ROLE_OTHER':
+                $text = 'Otro';
+                break;
+        }
+        return $text;
     }
     /**
      * Set username
@@ -158,7 +193,8 @@ class User  implements UserInterface, \Serializable
      */
     public function getUsername()
     {
-        return $this->username;
+        //return $this->username;
+        return $this->name." ".$this->lastName;
     }
     /**
      * Set rut
@@ -330,8 +366,14 @@ class User  implements UserInterface, \Serializable
     }
 
     /**
-     * @Assert\NotBlank()
-     * @Assert\Length(max = 4096)
+     * @Assert\NotBlank(message="Debe ingresar contraseña")
+     * @Assert\Length(
+     *      min = "5",
+     *      max = "12",
+     *      minMessage = "Contraseña debe ser de almenos 5 caracteres",
+     *      maxMessage = "Contraseña debe ser de menos de 12 caracteres",
+     *      groups = {"Default"}
+     * )
      */
     private $plainPassword;
 
@@ -347,12 +389,23 @@ class User  implements UserInterface, \Serializable
 
     public function setPlainPassword($password)
     {
-        $this->plainPassword = $password;
+        if (strlen($password) > 4) {
+            $this->plainPassword = $password;
+        }
+        else
+        {
+            $this->plainPassword = $this->plainPassword;   
+        }
     }
 
     public function setPassword($password)
     {
-        $this->password = $password;
+        if (strlen($password)>4) {
+            $this->password = $password;
+        }
+        else
+            $this->password = $this->password;
+
     }
 
     /**
@@ -374,7 +427,7 @@ class User  implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return array('ROLE_STUDENT');
+        return array($this->role);
     }
 
     public function eraseCredentials()
@@ -403,5 +456,264 @@ class User  implements UserInterface, \Serializable
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized);
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return User
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set mentor
+     *
+     * @param \BackendBundle\Entity\Mentor $mentor
+     *
+     * @return User
+     */
+    public function setMentor(\BackendBundle\Entity\Mentor $mentor = null)
+    {
+        $this->mentor = $mentor;
+        $mentor->setUser($this);
+
+        return $this;
+    }
+
+    /**
+     * Get mentor
+     *
+     * @return \BackendBundle\Entity\Mentor
+     */
+    public function getMentor()
+    {
+        return $this->mentor;
+    }
+
+    /**
+     * Set other
+     *
+     * @param \BackendBundle\Entity\Other $other
+     *
+     * @return User
+     */
+    public function setOther(\BackendBundle\Entity\Other $other = null)
+    {
+        $this->other = $other;
+        $other->setUser($this);
+
+        return $this;
+    }
+
+    /**
+     * Get other
+     *
+     * @return \BackendBundle\Entity\Other
+     */
+    public function getOther()
+    {
+        return $this->other;
+    }
+
+    /**
+     * Set student
+     *
+     * @param \BackendBundle\Entity\Student $student
+     *
+     * @return User
+     */
+    public function setStudent(\BackendBundle\Entity\Student $student)
+    {
+        $this->student = $student;
+        $student->setUser($this);
+
+        return $this;
+    }
+
+    /**
+     * Get student
+     *
+     * @return \BackendBundle\Entity\Student
+     */
+    public function getStudent()
+    {
+        return $this->student;
+    }
+
+    /**
+     * Add sendedNotification
+     *
+     * @param \BackendBundle\Entity\Notification $sendedNotification
+     *
+     * @return User
+     */
+    public function addSendedNotification(\BackendBundle\Entity\Notification $sendedNotification)
+    {
+        $this->sendedNotifications[] = $sendedNotification;
+
+        return $this;
+    }
+
+    /**
+     * Remove sendedNotification
+     *
+     * @param \BackendBundle\Entity\Notification $sendedNotification
+     */
+    public function removeSendedNotification(\BackendBundle\Entity\Notification $sendedNotification)
+    {
+        $this->sendedNotifications->removeElement($sendedNotification);
+    }
+
+    /**
+     * Get sendedNotifications
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSendedNotifications()
+    {
+        return $this->sendedNotifications;
+    }
+
+    /**
+     * hasUnreadNotifications
+     *
+     * @return bool
+     */
+    public function hasUnreadNotifications()
+    {
+        $hasUnread = false;
+
+        $notifications = $this->getRecievedNotifications();
+
+        foreach ($notifications as $notification) {
+            if(!$notification->getReaded())
+                $hasUnread = true;
+        }
+
+        return $hasUnread;
+    }
+
+    /**
+     * howManyUnreadNotifications
+     *
+     * @return bool
+     */
+    public function howManyUnreadNotifications()
+    {
+        $unreaded = 0;
+
+        $notifications = $this->getRecievedNotifications();
+
+        foreach ($notifications as $notification) {
+            if(!$notification->getReaded())
+                $unreaded++;
+        }
+
+        return $unreaded;
+    }
+
+    /**
+     * Add recievedNotification
+     *
+     * @param \BackendBundle\Entity\Notification $recievedNotification
+     *
+     * @return User
+     */
+    public function addRecievedNotification(\BackendBundle\Entity\Notification $recievedNotification)
+    {
+        $this->recievedNotifications[] = $recievedNotification;
+
+        return $this;
+    }
+
+    /**
+     * Remove recievedNotification
+     *
+     * @param \BackendBundle\Entity\Notification $recievedNotification
+     */
+    public function removeRecievedNotification(\BackendBundle\Entity\Notification $recievedNotification)
+    {
+        $this->recievedNotifications->removeElement($recievedNotification);
+    }
+
+    /**
+     * Get recievedNotifications
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRecievedNotifications()
+    {
+        return $this->recievedNotifications;
+    }
+
+    /**
+     * Get name to show
+     *
+     * @return string
+     */
+    public function getShowName()
+    {
+        return $this->name." ".$this->lastName;
+    }
+
+    /**
+     * Get full name
+     *
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->lastName." ".$this->secondSurname.", ".$this->name." ".$this->middleName;
+    }
+
+    /**
+     * Get Rut text
+     *
+     * @return string
+     */
+    public function getRutText() {
+        $nRut = $this->getRut();
+
+        $dv = $this->getVerifierDigit($nRut);
+        return $nRut . "-" . $dv;
+    }
+
+    /**
+     * Get verifier digit
+     *
+     * @return string
+     */
+    public function getVerifierDigit($nRut) {
+        $nRut = (string)$nRut;
+        while($nRut[0] == "0") {
+            $nRut = substr($nRut, 1);
+        }
+        $factor = 2;
+        $suma = 0;
+        for($i = strlen($nRut) - 1; $i >= 0; $i--) {
+            $suma += $factor * $nRut[$i];
+            $factor = $factor % 7 == 0 ? 2 : $factor + 1;
+        }
+        $dv = 11 - $suma % 11;
+        /* Por alguna razón me daba que 11 % 11 = 11. Esto lo resuelve. */
+        $dv = $dv == 11 ? 0 : ($dv == 10 ? "K" : $dv);
+        return $dv;
     }
 }

@@ -98,28 +98,5 @@ class Restorer
     {
         return $this->auth;
     }
-
-    /**
-     * Set user
-     *
-     * @param \BackendBundle\Entity\User $user
-     *
-     * @return Restorer
-     */
-    public function setUser(\BackendBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \BackendBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 }
+

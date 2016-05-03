@@ -40,6 +40,11 @@ class User  implements UserInterface, \Serializable
     private $student;
 
     /**
+    * @ORM\OneToOne(targetEntity="Restorer", mappedBy="user", cascade={"persist"})
+    */
+    private $restorer;
+
+    /**
      * @ORM\OneToMany(targetEntity="Notification", mappedBy="sender")
      */
     private $sendedNotifications;
@@ -710,5 +715,29 @@ class User  implements UserInterface, \Serializable
         /* Por alguna razón me daba que 11 % 11 = 11. Esto lo resuelve. */
         $dv = $dv == 11 ? 0 : ($dv == 10 ? "K" : $dv);
         return $dv;
+    }
+
+    /**
+     * Set restorer
+     *
+     * @param \BackendBundle\Entity\Restorer $restorer
+     *
+     * @return User
+     */
+    public function setRestorer(\BackendBundle\Entity\Restorer $restorer = null)
+    {
+        $this->restorer = $restorer;
+
+        return $this;
+    }
+
+    /**
+     * Get restorer
+     *
+     * @return \BackendBundle\Entity\Restorer
+     */
+    public function getRestorer()
+    {
+        return $this->restorer;
     }
 }
