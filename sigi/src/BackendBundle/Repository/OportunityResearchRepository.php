@@ -27,6 +27,93 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
         }
     }
 
+    public function searchFromForm($form)
+    {
+        $data = $form->getData();
+
+        $queryBuilder = $this->createQueryBuilder('o');
+        $parameters = array();
+
+        if (!is_null($data["creationDate1"]))
+        {
+            $queryBuilder->andWhere('o.creationDate > :creationDate1');
+            $parameters['creationDate1'] = $data["creationDate1"];
+        }
+
+        if (!is_null($data["creationDate2"]))
+        {
+            $queryBuilder->andWhere('o.creationDate < :creationDate2');
+            $parameters['creationDate2'] = $data["creationDate2"];
+        }
+
+        if (!is_null($data["name"]))
+        {
+            $queryBuilder->andWhere('LOWER(o.name) LIKE LOWER(:name)');
+            $parameters['name'] = '%'.$data["name"].'%';
+        }
+
+        if (!is_null($data["description"]))
+        {
+            $queryBuilder->andWhere('LOWER(o.description) LIKE LOWER(:description)');
+            $parameters['description'] = '%'.$data["description"].'%';
+        }
+
+        if (!is_null($data["modality"]))
+        {
+            $queryBuilder->andWhere('o.modality = :modality');
+            $parameters['modality'] = $data["modality"];
+        }
+
+        if (count($data["oportunityKeywords"])>0)
+        {
+            foreach ($data["oportunityKeywords"] as $keyword) 
+            {
+                $queryBuilder->join('o.oportunityKeywords', 'k'.$keyword->getId());
+                $queryBuilder->andWhere('k'.$keyword->getId().'.id = :kid'.$keyword->getId());
+                $parameters['kid'.$keyword->getId()] = $keyword->getId();
+            }
+        }
+
+        if (count($data["prerequisites"])>0)
+        {
+            foreach ($data["prerequisites"] as $prerequisite) 
+            {
+                $queryBuilder->join('o.prerequisites', 'p'.$prerequisite->getId());
+                $queryBuilder->andWhere('p'.$prerequisite->getId().'.id = :pid'.$prerequisite->getId());
+                $parameters['pid'.$prerequisite->getId()] = $prerequisite->getId();
+            }
+        }
+
+        if (count($data["mentors"])>0)
+        {
+            foreach ($data["mentors"] as $mentor) 
+            {
+                $queryBuilder->leftjoin('o.mainMentor', 'mm'.$mentor->getId());
+                $queryBuilder->orWhere('mm'.$mentor->getId().'.id = :mmid'.$mentor->getId());
+                $parameters['mmid'.$mentor->getId()] = $mentor->getId();
+            }
+
+            foreach ($data["mentors"] as $mentor) 
+            {
+                $queryBuilder->leftjoin('o.secondaryMentor', 'sm'.$mentor->getId());
+                $queryBuilder->orWhere('sm'.$mentor->getId().'.id = :smid'.$mentor->getId());
+                $parameters['smid'.$mentor->getId()] = $mentor->getId();
+            }
+
+            foreach ($data["mentors"] as $mentor) 
+            {
+                $queryBuilder->leftjoin('o.thertiaryMentor', 'tm'.$mentor->getId());
+                $queryBuilder->orWhere('tm'.$mentor->getId().'.id = :tmid'.$mentor->getId());
+                $parameters['tmid'.$mentor->getId()] = $mentor->getId();
+            }
+        }
+
+        $queryBuilder->setParameters($parameters);
+        $query = $queryBuilder->getQuery();
+
+        return $query->getResult();
+    }    
+
 	public function findOportunitiesByUserId($id)
 	{
         $returnResults = null;
