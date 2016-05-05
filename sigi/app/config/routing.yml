@@ -1,3 +1,7 @@
+backend_time_limit:
+    resource: "@BackendBundle/Controller/TimeLimitController.php"
+    type:     annotation
+
 backend_email_list:
     resource: "@BackendBundle/Controller/EmailListController.php"
     type:     annotation

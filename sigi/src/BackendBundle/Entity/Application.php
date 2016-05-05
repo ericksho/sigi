@@ -81,6 +81,7 @@ class Application
     public function setState($state)
     {
         $this->state = $state;
+        $this->lastUpdateDate = new \DateTime();
 
         return $this;
     }

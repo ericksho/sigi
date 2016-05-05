@@ -10,6 +10,32 @@ namespace BackendBundle\Repository;
  */
 class ApplicationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findUnattended($state)
+    {
+        if($state == 1)
+            $TimeLimit = $this->getEntityManager()->getRepository('BackendBundle:TimeLimit')->findOneByName('Plazo para que el mentor acepte/rechaze la postulación');
+        else
+            $TimeLimit = $this->getEntityManager()->getRepository('BackendBundle:TimeLimit')->findOneByName('Plazo para que el alumno acepte/rechaze la postulación');
+
+        $deadlineAction = date('Y-m-d', strtotime('-'.$TimeLimit->getDays().' days'));
+
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT a FROM BackendBundle:Application a
+                WHERE a.state = :state
+                AND a.lastUpdateDate < :deadlineAction'
+            )->setParameters(array('state' => $state, 'deadlineAction' => $deadlineAction));
+     
+        try {
+            $returnResults = $query->getResult();
+
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            $returnResults = null;
+        }
+
+        return $returnResults;
+    }
+
     public function getClassCode($oportunity, $student)
     {
         $classCode = "ERROR404";
