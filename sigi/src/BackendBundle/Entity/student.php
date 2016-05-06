@@ -133,7 +133,7 @@ class Student
      *
      * @return \BackendBundle\Entity\User $user
      */
-    public function getuser()
+    public function getUser()
     {
         return $this->user;
     }

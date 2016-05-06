@@ -330,6 +330,29 @@ class OportunityResearch
     }
 
     /**
+     * Get mentor that is responsibleMentor
+     *
+     * @return \BackendBundle\Entity\Mentor
+     */
+    public function getMentorResponsibleMentor()
+    {
+        switch ($this->getResponsibleMentor() {
+            case 1:
+                return $this->getMainMentor();
+                break;
+            case 2:
+                return $this->getSecondaryMentor();
+                break;
+            case 3:
+                return $this->getThertiaryMentor();
+                break;
+            default:
+                return $this->getMainMentor();
+                break;
+        }
+    }
+
+    /**
      * Set modality
      *
      * @param integer $modality
