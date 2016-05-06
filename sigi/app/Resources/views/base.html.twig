@@ -33,7 +33,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">  
                   <ul class="nav navbar-nav">
                     
-                    {% if is_granted(['ROLE_MENTOR','ROLE_STUDENT','ROLE_OTHER']) %}
+                    {% if false %} <!--is_granted(['ROLE_MENTOR','ROLE_STUDENT','ROLE_OTHER']) %}-->
                       <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         Notificaciones 
@@ -46,6 +46,14 @@
                           <li><a href="{{path('notification_index')}}">Ver Listado</a></li>
                         </ul>
                       </li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_STUDENT') %}
+                      <li><a href="{{ path('student_pendings')}}">Pendientes</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_MENTOR') %}
+                      <li><a href="{{ path('mentor_pendings')}}">Pendientes</a></li>
                     {% endif %}
 
                     {% if is_granted(['ROLE_MENTOR','ROLE_STUDENT']) %}

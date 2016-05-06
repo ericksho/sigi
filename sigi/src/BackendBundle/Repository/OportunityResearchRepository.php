@@ -27,6 +27,73 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
         }
     }
 
+    public function findPending($user)
+    {
+        $returnResults = null;
+
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT o FROM BackendBundle:OportunityResearch o
+                JOIN o.mainMentor mm
+                JOIN mm.user mmu
+                WHERE mmu.id = :id'
+            )->setParameter('id', $id);
+     
+        try {
+            $mainResults = $query->getResult();
+
+            if (count($mainResults) > 0 )
+                $returnResults = $mainResults;
+            
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            
+        }
+
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT o FROM BackendBundle:OportunityResearch o
+                JOIN o.secondaryMentor mm
+                JOIN mm.user mmu
+                WHERE mmu.id = :id'
+            )->setParameter('id', $id);
+     
+        try {
+            $secondaryResults = $query->getResult();
+
+            if (count($secondaryResults) > 0 )
+                if(is_null($returnResults))
+                    $returnResults = $secondaryResults;
+                else
+                    $returnResults = array_merge($returnResults,$secondaryResults);
+            
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            
+        }
+
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT o FROM BackendBundle:OportunityResearch o
+                JOIN o.thertiaryMentor mm
+                JOIN mm.user mmu
+                WHERE mmu.id = :id'
+            )->setParameter('id', $id);
+     
+        try {
+            $thertiaryResults = $query->getResult();
+
+            if (count($thertiaryResults) > 0 )
+                if(is_null($returnResults))
+                    $returnResults = $thertiaryResults;
+                else
+                    $returnResults = array_merge($returnResults,$thertiaryResults);
+            
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            
+        }
+
+        return $returnResults;
+    }
+
     public function searchFromForm($form)
     {
         $data = $form->getData();

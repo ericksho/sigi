@@ -27,6 +27,40 @@ class MiscController extends Controller
             'oportunityResearches' => $oportunityResearches,
         ));
     }
+    
+    /**
+     * Shows mentor pendings.
+     *
+     * @Route("/misc/mpendings", name="mentor_pendings")
+     * @Method("GET")
+     */
+    public function mentorPendingAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $applications = $em->getRepository('BackendBundle:Application')->findUnattended(1);
+
+        return $this->render('misc/mentorPending.html.twig', array(
+            'applications' => $applications,
+        ));
+    }
+
+    /**
+     * Shows student pendings.
+     *
+     * @Route("/misc/spendings", name="student_pendings")
+     * @Method("GET")
+     */
+    public function studentPendingAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findPublished();
+
+        return $this->render('misc/studentPending.html.twig', array(
+            'oportunityResearches' => $oportunityResearches,
+        ));
+    }
 
     /**
      * Lists all public OportunityResearch entities.

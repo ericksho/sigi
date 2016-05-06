@@ -61,7 +61,8 @@ class ApplicationRepository extends \Doctrine\ORM\EntityRepository
         
         $studentIng = $student->getUC();
         $cmd = $oportunity->getCmd();
-        $time = 1;///falta la itegracion con siding 746e
+        $time = 1;///falta la itegracion con siding 746e y //confirmar que no haya tomado otro IPre que este en proceso
+
         $graded = $oportunity->getModality();
 
         //get classcode object
