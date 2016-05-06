@@ -24,7 +24,7 @@ class UserType extends AbstractType
         $edit_role = $options['edit_role'];
 
         $builder
-            ->add('role', ChoiceType::class, array('label' => $role,'attr' => array('class'=>'form-control',"onchange" => "collapseJS();"),
+            ->add('role', ChoiceType::class, array('label' => "Rol",'attr' => array('class'=>'form-control',"onchange" => "collapseJS();"),
                 'choices' => array('Administrador' => 'ROLE_ADMIN', 'Estudiante' => 'ROLE_STUDENT', 'Mentor' => 'ROLE_MENTOR', 'Otro' => 'ROLE_OTHER'),
                 // always include this
                 'choices_as_values' => true))

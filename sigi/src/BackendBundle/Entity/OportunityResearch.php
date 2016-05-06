@@ -336,7 +336,7 @@ class OportunityResearch
      */
     public function getMentorResponsibleMentor()
     {
-        switch ($this->getResponsibleMentor() {
+        switch ($this->getResponsibleMentor()) {
             case 1:
                 return $this->getMainMentor();
                 break;

@@ -20,7 +20,7 @@ class OtherType extends AbstractType
         //$role = $options['role'];
 
         $builder
-            ->add('description',null,array('attr' => array('class'=>'form-control')))
+            ->add('description',null,array('label'=> 'Descripción','attr' => array('class'=>'form-control')))
 
         ;
     }
