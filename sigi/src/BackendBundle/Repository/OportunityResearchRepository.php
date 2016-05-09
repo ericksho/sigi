@@ -175,6 +175,8 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
             }
         }
 
+
+        $queryBuilder->orderBy('o.'.$data["sort"], $data["order"]);
         $queryBuilder->setParameters($parameters);
         $query = $queryBuilder->getQuery();
 

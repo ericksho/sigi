@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use BackendBundle\Entity\OportunityResearch;
 use BackendBundle\Form\OportunityResearchType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use BackendBundle\Entity\Keyword;
 
@@ -81,6 +82,14 @@ class OportunityResearchController extends Controller
                 'multiple' => true,
                 'attr' => array('class'=>'js-tokenizer'),
                 'choice_label' => 'getShowName',))
+            ->add('sort', ChoiceType::class,array('choices'  => array(
+                    'creationDate' => 'Fecha de creación', 
+                    'name' => 'Nombre',
+                    'description' => 'Descripción',
+                ), 
+            'data' => 'creationDate',
+                'label' => 'Ordenar por','attr' => array('class'=>'form-control'), 'required' => false))
+            ->add('order', HiddenType::class, array('data' => 'ASC',))
             ->add('submit', 'submit', array('label' => 'Buscar', 'attr' => array('class'=>"btn btn-default")))
             ->getForm();
      
