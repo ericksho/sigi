@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>TimeLimit list</h1>
+    <h1>Limites de Tiempo</h1>
 
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>Days</th>
-                <th>Actions</th>
+                <th>Nombre</th>
+                <th>Dias</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -18,24 +18,12 @@
                 <td><a href="{{ path('timelimit_show', { 'id': timeLimit.id }) }}">{{ timeLimit.id }}</a></td>
                 <td>{{ timeLimit.name }}</td>
                 <td>{{ timeLimit.days }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('timelimit_show', { 'id': timeLimit.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('timelimit_edit', { 'id': timeLimit.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
+                <td><a href="{{ path('timelimit_show', { 'id': timeLimit.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a></td>
+                <td><a href="{{ path('timelimit_edit', { 'id': timeLimit.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a></tr>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('timelimit_new') }}">Create a new entry</a>
-        </li>
-    </ul>
+    <a href="{{ path('timelimit_new') }}" class="btn btn-primary btn-sm" role="button">Crear Nueva</a>
 {% endblock %}

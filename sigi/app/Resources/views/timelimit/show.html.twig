@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>TimeLimit</h1>
+    <h1>Limite de Tiempo</h1>
 
-    <table>
+    <table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -20,17 +20,9 @@
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('timelimit_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('timelimit_edit', { 'id': timeLimit.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <a href="{{ path('timelimit_index') }}" class="btn btn-info btn1" role="button" >Ver Listado</a>
+    <a href="{{ path('timelimit_edit', { 'id': timeLimit.id }) }}" class="btn btn-primary btn2" role="button">Editar</a>
+        {{ form_start(delete_form) }}
+            <input type="submit" value="Eliminar" class="btn btn-danger btn2" role="button">
+        {{ form_end(delete_form) }}
 {% endblock %}
