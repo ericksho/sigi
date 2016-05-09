@@ -76,39 +76,43 @@
                     </td>
                 <td>
                     <a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}">
-                        <strong>{{ oportunityResearch.name }}</strong>
+                        <strong style="font-size:13pt;" >{{ oportunityResearch.name }}</strong>
                     </a>
                     <br>
                     {{ oportunityResearch.description }}
-                    <br>
-                    Keywords: 
-                    {% for keyword in oportunityResearch.oportunityKeywords() %}
-                        <button type="button" class="btn btn-default btn-xs">{{ keyword.keyword }}</button>
-                    {% endfor %}
-                    <br>
-                    Prerequisitos:
-                    {% if oportunityResearch.prerequisites() |length == 0 %} no tiene.{% endif %}
-                    {% for prerequisite in oportunityResearch.prerequisites() %}
-                        <button type="button" class="btn btn-danger btn-xs">{{ prerequisite.courseNumber }}</button>
-                    {% endfor %}
-                    <br>
-                    Tiene un método de evaluación {{ oportunityResearch.getModalityText() }}, con 
-                    <a href="{{ path('oportunityresearch_applications', { 'id': oportunityResearch.id }) }}">{{ oportunityResearch.getOpenVacants() }}</a>/{{ oportunityResearch.vacants }} vacantes disponibles
+                    <div class="tagline" style="margin-top:10px;">
+                        Keywords: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                        {% for keyword in oportunityResearch.oportunityKeywords() %}
+                            <a href="{{ path('oportunityresearch_search')}}?keyword={{keyword.keyword}}" role="button" class="btn btn-default btn-xs">{{ keyword.keyword }}</a>
+                        {% endfor %}
+                    </div>
+                    <div class="tagline">
+                        Prerequisitos:&nbsp;
+                        {% if oportunityResearch.prerequisites() |length == 0 %} no tiene.{% endif %}
+                        {% for prerequisite in oportunityResearch.prerequisites() %}
+                            <a href="{{ path('oportunityresearch_search')}}?prerequisite={{prerequisite.courseNumber}}" role="button" class="btn btn-danger btn-xs">{{ prerequisite.courseNumber }}</a>
+                        {% endfor %}
+                    </div>
+                    <p style="font-size:10pt; color:grey;">
+                        Tiene un método de evaluación {{ oportunityResearch.getModalityText() }}, con 
+                        <a href="{{ path('oportunityresearch_applications', { 'id': oportunityResearch.id }) }}">{{ oportunityResearch.getOpenVacants() }}</a>/{{ oportunityResearch.vacants }} vacantes disponibles
+                    </p>
                 </td>
                 
                 
-                <td>
+                <td style="width:200px">
                     Mentor(es):
                     <ul style="padding-left:18px;">
-                        {% for mentorName in oportunityResearch.getMentorsName() %}
+                        {% for mentor in oportunityResearch.getMentors() %}
                             <li>
-                                {{ mentorName }}
+                                <a href="{{ path('oportunityresearch_search')}}?mentor={{mentor.id}}">{{ mentor.getShowName() }}</a>
                             </li>
                         {% endfor %}
                     </ul>
                 </td>
-                <td><a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}" class="btn btn-info btn-sm" role="button" style="margin-bottom: 10px;">Ver</a>
-                    <a href="{{ path('oportunityresearch_edit', { 'id': oportunityResearch.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a>
+                <td style="width:68px">
+                    <a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}" class="btn btn-info btn-sm" role="button" style="margin-bottom: 10px; width:52px">Ver</a>
+                    <a href="{{ path('oportunityresearch_edit', { 'id': oportunityResearch.id }) }}" class="btn btn-primary btn-sm" role="button" style="width:52px">Editar</a>
                 </td>
             </tr>
         {% endfor %}

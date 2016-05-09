@@ -27,6 +27,58 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
         }
     }
 
+    public function findOportunitiesByKeyword($keyword)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT o FROM BackendBundle:OportunityResearch o
+                JOIN o.oportunityKeywords k
+                WHERE LOWER(k.keyword) LIKE LOWER(:keyword)'
+            )->setParameter('keyword', '%'.$keyword.'%');
+     
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function findOportunitiesByMentorId($mentorId)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT o FROM BackendBundle:OportunityResearch o
+                LEFT JOIN o.mainMentor mm
+                LEFT JOIN o.secondaryMentor sm
+                LEFT JOIN o.thertiaryMentor tm
+                WHERE mm.id = :mentorId
+                OR sm.id = :mentorId
+                OR tm.id = :mentorId'
+            )->setParameter('mentorId', $mentorId);
+     
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
+    public function findOportunitiesByPrerequisite($prerequisite)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT o FROM BackendBundle:OportunityResearch o
+                JOIN o.prerequisites p
+                WHERE LOWER(p.courseNumber) LIKE LOWER(:prerequisite)'
+            )->setParameter('prerequisite', '%'.$prerequisite.'%');
+     
+        try {
+            return $query->getResult();
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            return null;
+        }
+    }
+
     public function findPending($user)
     {
         $returnResults = null;

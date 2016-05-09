@@ -54,6 +54,18 @@ class OportunityResearchController extends Controller
 
         $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findOportunitiesByName($name);
 
+        $keyword = $request->query->get('keyword');
+        if (!is_null($keyword))
+            $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findOportunitiesByKeyword($keyword);
+
+        $prerequisite = $request->query->get('prerequisite');
+        if (!is_null($prerequisite))
+            $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findOportunitiesByPrerequisite($prerequisite);
+
+        $mentor = $request->query->get('mentor');
+        if (!is_null($mentor))
+            $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findOportunitiesByMentorId($mentor);
+
         $defaultData = array('message' => 'Type your message here');
         $advancedForm = $this->createFormBuilder($defaultData)
             ->add('creationDate1', 'date', array('widget' => 'single_text', 'attr' => array('class'=>'form-control'), 'label' => 'Creado después del', 'required' => false,))

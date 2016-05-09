@@ -588,6 +588,35 @@ class OportunityResearch
         return $mentors;
     }
 
+    /**
+     * Get mentorsName
+     *
+     * @return array
+     */
+    public function getMentors()
+    {
+        $mentors = array();
+        $count = 0;
+        $main = $this->mainMentor;
+        $secondary = $this->secondaryMentor;
+        $thertiary = $this->thertiaryMentor;
+
+        if (!is_null($main))
+        {
+            $mentors[$count] = $main;
+            $count = $count + 1;
+        }
+        if(!is_null($secondary))
+        {
+            $mentors[$count] = $secondary;
+            $count = $count + 1;
+        }
+        if(!is_null($thertiary))
+            $mentors[$count] = $thertiary;
+
+        return $mentors;
+    }
+
 /**
      * Is mentor
      *
