@@ -24,7 +24,8 @@
         "twbs/bootstrap": "^3.3",
         "besimple/sso-auth-bundle": "@dev",
         "liuggio/excelbundle": "^2.0",
-        "jmose/command-scheduler-bundle": "^1.2"
+        "jmose/command-scheduler-bundle": "^1.2",
+        "knplabs/knp-paginator-bundle": "^2.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",

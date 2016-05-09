@@ -38,11 +38,6 @@ class OportunityResearchType extends AbstractType
             ->add('name', null,array('label' => 'Nombre','attr' => array('class'=>'form-control')))
             ->add('creationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Fecha de creación'))
             ->add('description', null,array('label' => 'Descripción','attr' => array('class'=>'form-control')))
-            ->add('public', ChoiceType::class,array('choices'  => array(1 => 'Publica', 2 => 'Privada'),'label' => 'Publica','attr' => array('class'=>'form-control')))
-            ->add('modality', ChoiceType::class,array('choices'  => array(1 => 'Nota 1-7', 2 => 'Alfa numerico'),'label' => 'Método de evaluación','attr' => array('class'=>'form-control')))
-            ->add('publish', null,array('label' => 'Publicada','attr' => array('class'=>'form-control','checked'=>true)))
-            ->add('vacants','integer',array('label' => 'Vacantes','attr' => array('class'=>'form-control','min'=>1,'max' => 10 ),'scale'=>0))
-            ->add('credits','choice',array('label' => 'Créditos','choices'  => array(5 => '5 cr.',10 => '10 cr.', 20 => '20 cr.'),'attr' => array('class'=>'form-control',)))
             ->add('oportunityKeywords', EntityType::class, array(
                 'label' => 'Palabras claves',
                 'required' => false,
@@ -51,7 +46,6 @@ class OportunityResearchType extends AbstractType
                 'multiple' => true,
                 'attr' => array('class'=>'js-example-tokenizer'),
                 'choice_label' => 'keyword',))
-
             ->add('prerequisites', EntityType::class, array(
                 'label' => 'Prerequisitos (Siglas)',
                 'required' => false,
@@ -60,7 +54,11 @@ class OportunityResearchType extends AbstractType
                 'multiple' => true,
                 'attr' => array('class'=>'js-tokenizer'),
                 'choice_label' => 'courseNumber',))
-
+            ->add('public', ChoiceType::class,array('choices'  => array(1 => 'Publica', 2 => 'Privada'),'label' => 'Publica','attr' => array('class'=>'form-control')))
+            ->add('modality', ChoiceType::class,array('choices'  => array(1 => 'Nota 1-7', 2 => 'Alfa numerico'),'label' => 'Método de evaluación','attr' => array('class'=>'form-control')))
+            ->add('publish', null,array('label' => 'Publicada','attr' => array('class'=>'form-control','checked'=>true)))
+            ->add('vacants','integer',array('label' => 'Vacantes','attr' => array('class'=>'form-control','min'=>1,'max' => 10 ),'scale'=>0))
+            ->add('credits','choice',array('label' => 'Créditos','choices'  => array(5 => '5 cr.',10 => '10 cr.', 20 => '20 cr.'),'attr' => array('class'=>'form-control',)))
             ->add('department', EntityType::class, array(
                 'label' => 'Facultad/Escuela/Departamento',
                 'required' => false,
