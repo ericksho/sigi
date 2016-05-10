@@ -1,68 +1,106 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+
 {% block body %}
     <h1>Mis Oportunidades</h1>
 
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                    Búsqueda Avanzada
+                </a>
+                </h4>
+            </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
+
+            <form class="form-horizontal" method="post">
+                {% for child in advancedForm.children %}
+                    {% if 'sort' not in form_label(child) %}
+                        <div class="form-group">
+                            {% if 'token' not in form_label(child) and 'order' not in form_label(child) %}
+                                <label for="mentors" class="col-sm-2 control-label">{{ form_label(child) }}</label>
+                            {% endif %} 
+                            <div class="col-sm-10">
+                                {{ form_widget(child) }}
+                            </div>
+                        </div>
+                    {% else %}   
+                            <div class="form-group">
+                                {% if 'token' not in form_label(child) %}
+                                    <label for="mentors" class="col-sm-2 control-label">{{ form_label(child) }}</label>
+                                {% endif %} 
+                                <div class="col-sm-10">
+                                    <div class="input-group"> 
+                                        {{ form_widget(child) }}
+                                        <div class="input-group-btn"> 
+                                            <button type="button" class="btn btn-default" onclick="setOrder()" aria-label="Help" >
+                                                <span class="glyphicon glyphicon-sort-by-alphabet" id="orderSpan"></span>
+                                            </button> 
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>    
+                        {% endif %} 
+                    {% endfor %}
+                </form>
+            </div>
+          </div>
+       </div>
+    </div>
+
     <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Fecha de creación</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Publica</th>
-                <th>Modalidad</th>
-                <th>Publicada</th>
-                <th>Vacantes</th>
-                <th>Postulaciones</th>
-                <th>keywords</th>
-                <th>Prerequisitos</th>
-                <th>Mentores</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
         <tbody>
         {% for oportunityResearch in oportunityResearches %}
             <tr>
-                <td><a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}">{{ oportunityResearch.id }}</a></td>
-                <td>{% if oportunityResearch.creationDate %}{{ oportunityResearch.creationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ oportunityResearch.name }}</td>
-                <td>{{ oportunityResearch.description }}</td>
-                <td>{{ oportunityResearch.public }}</td>
-                <td>{{ oportunityResearch.modality }}</td>
-                <td>{% if oportunityResearch.publish %}Si{% else %}No{% endif %}</td>
-                <td>{{ oportunityResearch.getOpenVacants() }}/{{ oportunityResearch.vacants }}</td>
-                <td><a href="{{ path('oportunityresearch_applications', { 'id': oportunityResearch.id }) }}">{{ oportunityResearch.applications|length }}</a></td>
+                <td style="width: 90px;">
+                    {% if oportunityResearch.creationDate %}{{ oportunityResearch.creationDate|date('d-m-Y') }}{% endif %}
+                    </td>
                 <td>
-                    <ul>
+                    <a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}">
+                        <strong style="font-size:13pt;" >{{ oportunityResearch.name }}</strong>
+                    </a>
+                    <br>
+                    {{ oportunityResearch.description }}
+                    <div class="tagline" style="margin-top:10px;">
+                        Keywords: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
                         {% for keyword in oportunityResearch.oportunityKeywords() %}
-                            <li>
-                                {{ keyword.keyword }}
-                            </li>
+                            <a href="{{ path('oportunityresearch_search')}}?keyword={{keyword.keyword}}" role="button" class="btn btn-default btn-xs">{{ keyword.keyword }}</a>
                         {% endfor %}
-                    </ul>
-                </td>
-                <td>
-                    <ul>
+                    </div>
+                    <div class="tagline">
+                        Prerequisitos:&nbsp;
+                        {% if oportunityResearch.prerequisites() |length == 0 %} no tiene.{% endif %}
                         {% for prerequisite in oportunityResearch.prerequisites() %}
+                            <a href="{{ path('oportunityresearch_search')}}?prerequisite={{prerequisite.courseNumber}}" role="button" class="btn btn-danger btn-xs">{{ prerequisite.courseNumber }}</a>
+                        {% endfor %}
+                    </div>
+                    <p style="font-size:10pt; color:grey;">
+                        Tiene un método de evaluación {{ oportunityResearch.getModalityText() }}, con <a href="{{ path('oportunityresearch_applications', { 'id': oportunityResearch.id }) }}">{{ oportunityResearch.applications|length }}</a> postulaciones, tiene {{ oportunityResearch.getOpenVacants() }}/{{ oportunityResearch.vacants }} vacantes disponibles
+                    </p>
+                </td>
+                
+                
+                <td style="width:200px">
+                    Mentor(es):
+                    <ul style="padding-left:18px;">
+                        {% for mentor in oportunityResearch.getMentors() %}
                             <li>
-                                {{ prerequisite.courseNumber }}
+                                <a href="{{ path('oportunityresearch_search')}}?mentor={{mentor.id}}">{{ mentor.getShowName() }}</a>
                             </li>
                         {% endfor %}
                     </ul>
                 </td>
-                <td>
-                    <ul>
-                        {% for mentorName in oportunityResearch.getMentorsName() %}
-                            <li>
-                                {{ mentorName }}
-                            </li>
-                        {% endfor %}
-                    </ul>
+                <td style="width:68px">
+                    <a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}" class="btn btn-info btn-sm" role="button" style="margin-bottom: 10px; width:52px">Ver</a>
+                    <a href="{{ path('oportunityresearch_edit', { 'id': oportunityResearch.id }) }}" class="btn btn-primary btn-sm" role="button" style="width:52px">Editar</a>
                 </td>
-                <td><a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}" class="btn btn-info btn-sm" role="button">Ver</a></td>
-                <td><a href="{{ path('oportunityresearch_edit', { 'id': oportunityResearch.id }) }}" class="btn btn-primary btn-sm" role="button">Editar</a></td>
             </tr>
         {% endfor %}
         </tbody>
@@ -70,4 +108,53 @@
 
     <a href="{{ path('oportunityresearch_new') }}" class="btn btn-primary btn-sm" role="button">Crear Nueva Oportunidad</a>
    
+    <script type="text/javascript"> 
+
+window.onload = function() {
+
+    $(".js-tokenizer").select2({
+    tags: true,
+    });
+
+    setWidth();
+
+    if(document.getElementById("form_order").value == "DESC")
+        document.getElementById("orderSpan").className = "glyphicon glyphicon-sort-by-alphabet-alt";
+};
+
+function setOrder()
+{
+    var orderSpan = document.getElementById("orderSpan");
+    var form_order = document.getElementById("form_order");
+    form_order
+
+    if(orderSpan.className == "glyphicon glyphicon-sort-by-alphabet-alt")
+    {
+        orderSpan.className = "glyphicon glyphicon-sort-by-alphabet";
+        form_order.value = "ASC";
+    }
+    else
+    {
+        orderSpan.className = "glyphicon glyphicon-sort-by-alphabet-alt";
+        form_order.value = "DESC";
+    }
+}
+
+function setWidth()
+{
+    var x = document.getElementsByClassName("select2-container");
+
+    for (i = 0; i<x.length; i++)
+    {
+        x[i].style.width = "100%";
+    }
+}
+   </script>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2-rc.1/js/select2.min.js"></script>
+        
 {% endblock %}

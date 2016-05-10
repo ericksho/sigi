@@ -24,9 +24,9 @@ class OportunityResearchController extends Controller
      * Lists all OportunityResearch entities.
      *
      * @Route("/", name="oportunityresearch_index")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -35,8 +35,55 @@ class OportunityResearchController extends Controller
 
         $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findOportunitiesByUserId($id);
 
+        $defaultData = array('message' => 'Type your message here');
+        $advancedForm = $this->createFormBuilder($defaultData)
+            ->add('creationDate1', 'date', array('widget' => 'single_text', 'attr' => array('class'=>'form-control'), 'label' => 'Creado después del', 'required' => false,))
+            ->add('creationDate2', 'date', array('widget' => 'single_text', 'attr' => array('class'=>'form-control'), 'label' => 'Creado antes del', 'required' => false,))
+            ->add('name', null,array('label' => 'Nombre','attr' => array('class'=>'form-control', 'placeholder' => 'Nombre de la Oportunidad',), 'required' => false))
+            ->add('description', null,array('label' => 'Descripción','attr' => array('class'=>'form-control', 'placeholder' => 'Descripción de la Oportunidad',), 'required' => false))
+            ->add('modality', ChoiceType::class,array('choices'  => array(1 => 'Nota 1-7', 2 => 'Alfa numerico'),'label' => 'Método de evaluación','attr' => array('class'=>'form-control'), 'required' => false))
+            ->add('oportunityKeywords', EntityType::class, array(
+                'label' => 'Keywords',
+                'required' => false,
+                'class' => 'BackendBundle:Keyword',
+                'multiple' => true,
+                'attr' => array('class'=>'js-tokenizer'),
+                'choice_label' => 'keyword',))
+            ->add('prerequisites', EntityType::class, array(
+                'label' => 'Prerequisitos',
+                'required' => false,
+                'class' => 'BackendBundle:Prerequisite',
+                'multiple' => true,
+                'attr' => array('class'=>'js-tokenizer'),
+                'choice_label' => 'courseNumber',))
+            ->add('mentors', EntityType::class, array(
+                'label' => 'Otros Mentores',
+                'required' => false,
+                'class' => 'BackendBundle:Mentor',
+                'multiple' => true,
+                'attr' => array('class'=>'js-tokenizer'),
+                'choice_label' => 'getShowName',))
+            ->add('sort', ChoiceType::class,array('choices'  => array(
+                    'creationDate' => 'Fecha de creación', 
+                    'name' => 'Nombre',
+                    'description' => 'Descripción',
+                ), 
+            'data' => 'creationDate',
+                'label' => 'Ordenar por','attr' => array('class'=>'form-control'), 'required' => false))
+            ->add('order', HiddenType::class, array('data' => 'ASC',))
+            ->add('submit', 'submit', array('label' => 'Buscar', 'attr' => array('class'=>"btn btn-default")))
+            ->getForm();
+
+        $advancedForm->handleRequest($request);
+
+        if ($advancedForm->isSubmitted() && $advancedForm->isValid()) 
+        {
+            $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->searchFromFormWithMentor($advancedForm, $currentUser->getMentor());
+        } 
+
         return $this->render('oportunityresearch/index.html.twig', array(
             'oportunityResearches' => $oportunityResearches,
+            'advancedForm' => $advancedForm->createView(),
         ));
     }
 

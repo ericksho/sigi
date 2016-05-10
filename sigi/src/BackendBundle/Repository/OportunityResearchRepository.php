@@ -146,10 +146,24 @@ class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
         return $returnResults;
     }
 
+    public function searchFromFormWithMentor($form,$mentor)
+    {
+        $data = $form->getData();
+    
+        $data['mentors'][] = $mentor;
+
+        return $this->searchFromData($data);
+    }
+
     public function searchFromForm($form)
     {
         $data = $form->getData();
 
+        return $this->searchFromData($data);
+    }
+
+    public function searchFromData($data)
+    {
         $queryBuilder = $this->createQueryBuilder('o');
         $parameters = array();
 

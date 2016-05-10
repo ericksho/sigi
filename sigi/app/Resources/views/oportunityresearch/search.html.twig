@@ -67,7 +67,7 @@
     </div>
 
 
-     <table class="table table-striped">
+    <table class="table table-striped">
         <tbody>
         {% for oportunityResearch in oportunityResearches %}
             <tr>
@@ -112,7 +112,9 @@
                 </td>
                 <td style="width:68px">
                     <a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}" class="btn btn-info btn-sm" role="button" style="margin-bottom: 10px; width:52px">Ver</a>
-                    <a href="{{ path('oportunityresearch_edit', { 'id': oportunityResearch.id }) }}" class="btn btn-primary btn-sm" role="button" style="width:52px">Editar</a>
+                    {% if is_granted('ROLE_MENTOR') %}
+                        <a href="{{ path('oportunityresearch_edit', { 'id': oportunityResearch.id }) }}" class="btn btn-primary btn-sm" role="button" style="width:52px">Editar</a>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
