@@ -35,16 +35,15 @@ class OportunityResearchType extends AbstractType
         $current_id = 1;
 
         $builder
-            ->add('name', null,array('label' => 'Nombre','attr' => array('class'=>'form-control')))
-            ->add('creationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Fecha de creación'))
-            ->add('description', null,array('label' => 'Descripción','attr' => array('class'=>'form-control')))
+            ->add('name', null,array('label' => 'Nombre','attr' => array('class'=>'form-control left-column-form')))
+            ->add('description', null,array('label' => 'Descripción','attr' => array('class'=>'form-control left-column-form')))
             ->add('oportunityKeywords', EntityType::class, array(
                 'label' => 'Palabras claves',
                 'required' => false,
                 'placeholder' => 'Keywords relacionadas',
                 'class' => 'BackendBundle:Keyword',
                 'multiple' => true,
-                'attr' => array('class'=>'js-example-tokenizer'),
+                'attr' => array('class'=>'js-example-tokenizer left-column-form'),
                 'choice_label' => 'keyword',))
             ->add('prerequisites', EntityType::class, array(
                 'label' => 'Prerequisitos (Siglas)',
@@ -52,13 +51,13 @@ class OportunityResearchType extends AbstractType
                 'placeholder' => 'Agregue siglas de prerequisito',
                 'class' => 'BackendBundle:Prerequisite',
                 'multiple' => true,
-                'attr' => array('class'=>'js-tokenizer'),
+                'attr' => array('class'=>'js-tokenizer left-column-form'),
                 'choice_label' => 'courseNumber',))
-            ->add('public', ChoiceType::class,array('choices'  => array(1 => 'Publica', 2 => 'Privada'),'label' => 'Publica','attr' => array('class'=>'form-control')))
-            ->add('modality', ChoiceType::class,array('choices'  => array(1 => 'Nota 1-7', 2 => 'Alfa numerico'),'label' => 'Método de evaluación','attr' => array('class'=>'form-control')))
-            ->add('publish', null,array('label' => 'Publicada','attr' => array('class'=>'form-control','checked'=>true)))
-            ->add('vacants','integer',array('label' => 'Vacantes','attr' => array('class'=>'form-control','min'=>1,'max' => 10 ),'scale'=>0))
-            ->add('credits','choice',array('label' => 'Créditos','choices'  => array(5 => '5 cr.',10 => '10 cr.', 20 => '20 cr.'),'attr' => array('class'=>'form-control',)))
+            ->add('public', ChoiceType::class,array('choices'  => array(1 => 'Publica', 2 => 'Privada'),'label' => 'Publica','attr' => array('class'=>'form-control right-column-form')))
+            ->add('modality', ChoiceType::class,array('choices'  => array(1 => 'Nota 1-7', 2 => 'Alfa numerico'),'label' => 'Método de evaluación','attr' => array('class'=>'form-control right-column-form')))
+            ->add('publish', null,array('label' => 'Publicada','attr' => array('class'=>'form-control right-column-form','checked'=>true)))
+            ->add('vacants','integer',array('label' => 'Vacantes','attr' => array('class'=>'form-control right-column-form','min'=>1,'max' => 10,),'scale'=>0))
+            ->add('credits','choice',array('label' => 'Créditos','choices'  => array(5 => '5 cr.',10 => '10 cr.', 20 => '20 cr.'),'attr' => array('class'=>'form-control right-column-form',)))
             ->add('department', EntityType::class, array(
                 'label' => 'Facultad/Escuela/Departamento',
                 'required' => false,
@@ -66,14 +65,12 @@ class OportunityResearchType extends AbstractType
                 'class' => 'BackendBundle:Department',
                 'multiple' => false,
                 'group_by' => 'faculty.name',
-                'attr' => array('class'=>'js-basic-single'),
+                'attr' => array('class'=>'js-basic-single left-column-form'),
                 'choice_label' => 'name',))
-
-            ->add('responsibleMentor','choice',array('label' => 'Mentor Responsable','choices'  => array(1 => 'Yo',2 => 'Segundo Mentor', 3=>'Tercer Mentor'),'attr' => array('class'=>'form-control',)))
-
+            ->add('responsibleMentor','choice',array('label' => 'Mentor Responsable','choices'  => array(1 => 'Yo',2 => 'Segundo Mentor', 3=>'Tercer Mentor'),'attr' => array('class'=>'form-control left-column-form',)))
             ->add('secondaryMentor', EntityType::class, array(
                 'label' => 'Agregar un segundo Mentor',
-                'attr' => array('class'=>'js-basic-single-secondaryMentor'),
+                'attr' => array('class'=>'js-basic-single-secondaryMentor left-column-form'),
                 'required' => false,
                 'placeholder' => 'Seleccione al Mentor Secundario',
                 'class' => 'BackendBundle:Mentor',
@@ -85,10 +82,9 @@ class OportunityResearchType extends AbstractType
                     ->setParameter('id', $current_id)
                     ->orderBy('m.id', 'ASC');},
                 'choice_label' => 'getShowName',))
-
             ->add('thertiaryMentor', EntityType::class, array(
                 'label' => 'Agregar un tercer Mentor',
-                'attr' => array('class'=>'js-basic-single-thertiaryMentor', 'id'=>'list'),
+                'attr' => array('class'=>'js-basic-single-thertiaryMentor left-column-form', 'id'=>'list'),
                 'required' => false,
                 'placeholder' => 'Seleccione al Mentor Terciario',
                 'class' => 'BackendBundle:Mentor',
@@ -100,8 +96,9 @@ class OportunityResearchType extends AbstractType
                     ->setParameter('id', $current_id)
                     ->orderBy('m.id', 'ASC');},
                 'choice_label' => 'getShowName',))
+            ->add('creationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control right-column-form'), 'label' => 'Fecha de creación'))
 
-            ->add('cmd', null,array('label' => 'Es CMD','attr' => array('class'=>'form-control','checked'=>false)))
+            ->add('cmd', null,array('label' => 'Es CMD','attr' => array('class'=>'form-control right-column-form','checked'=>false)))
         ;
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -112,7 +109,10 @@ class OportunityResearchType extends AbstractType
             // If no data is passed to the form, the data is "null".
             // This should be considered a new "Product"
             if (!$oportunityResearch || null === $oportunityResearch->getCreationDate()) {
-                $form->add('creationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Fecha de creación', 'data' => (new \DateTime())));
+                $form->add('creationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control right-column-form'), 'label' => 'Fecha de creación', 'data' => (new \DateTime())));
+            }
+            if (!$oportunityResearch || null === $oportunityResearch->getVacants()) {
+                $form->add('vacants','integer',array('label' => 'Vacantes','attr' => array('class'=>'form-control right-column-form','min'=>1,'max' => 10, 'value' => 1,),'scale'=>0));
             }
         });
 
