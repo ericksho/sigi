@@ -27,7 +27,7 @@ security:
         - { path: ^/application/$, roles: [ROLE_MENTOR, ROLE_STUDENT] }
         - { path: ^/application/[0-9]+$, roles: [ROLE_MENTOR, ROLE_STUDENT] }
         - { path: ^/application/new, roles: ROLE_STUDENT }
-        - { path: ^/application/[0-9]+/edit$,, roles: ROLE_ADMIN }
+        - { path: ^/application/[0-9]+/edit$, roles: ROLE_ADMIN }
 
         - { path: ^/notification/$, roles: [ROLE_STUDENT, ROLE_MENTOR, ROLE_OTHER] }
         - { path: ^/notification/[0-9]+$, roles: [ROLE_MENTOR, ROLE_STUDENT, ROLE_OTHER] }

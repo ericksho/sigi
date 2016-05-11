@@ -42,7 +42,12 @@
                 <td>{{ application.getStateText() }}</td>
                 <td>{% if application.applicationDate %}{{ application.applicationDate|date('d/M/y') }}{% endif %}</td>
                 <td>{% if application.lastUpdateDate %}{{ application.lastUpdateDate|date('d/M/y H:i:s') }}{% endif %}</td>
-                <td><a href="{{ path('application_show', { 'id': application.id }) }}" class="btn btn-info btn1" role="button">Ver</a></td>
+                <td>
+                    <a href="{{ path('application_show', { 'id': application.id }) }}" class="btn btn-info btn1" role="button">Ver</a>
+                    {% if is_granted('ROLE_ADMIN')%}
+                        <a href="{{ path('application_edit', { 'id': application.id }) }}" class="btn btn-primary btn1" role="button">Editar</a>
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>

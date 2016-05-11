@@ -22,38 +22,72 @@ class ApplicationType extends AbstractType
         $oportunityId = $options['oportunityId'];
         $choices_array = $options['choices_array'];
 
-        $builder
-        ->add('student', EntityType::class, array(
-                'label' => 'Alumno',
-                'attr' => array('class'=>'form-control'),
-                'class' => 'BackendBundle:Student',
-                'choice_label' => 'getNameText',
-                'query_builder' => function (EntityRepository $er)  use ( $studentId ) {return $er
-                    ->createQueryBuilder('s')
-                    ->where("s.id = :id")
-                    ->setParameter('id', $studentId);},
-            ))
-        ->add('oportunityResearch', EntityType::class, array(
-                'label' => 'Oportunidad de Investigación',
-                'attr' => array('class'=>'form-control'),
-                'class' => 'BackendBundle:OportunityResearch',
-                'choice_label' => 'name',
-                'query_builder' => function (EntityRepository $er)  use ( $oportunityId ) {return $er
-                    ->createQueryBuilder('o')
-                    ->where("o.id = :id")
-                    ->setParameter('id', $oportunityId);},
-            ))
+        if(is_null($studentId) && is_null($oportunityId) && is_null($choices_array))
+        {
+            $builder
+                ->add('student', EntityType::class, array(
+                        'label' => 'Alumno',
+                        'attr' => array('class'=>'form-control'),
+                        'class' => 'BackendBundle:Student',
+                        'choice_label' => 'getNameText',
+                        'query_builder' => function (EntityRepository $er)  use ( $studentId ) {return $er
+                            ->createQueryBuilder('s');},
+                    ))
+                ->add('oportunityResearch', EntityType::class, array(
+                        'label' => 'Oportunidad de Investigación',
+                        'attr' => array('class'=>'form-control'),
+                        'class' => 'BackendBundle:OportunityResearch',
+                        'choice_label' => 'name',
+                        'query_builder' => function (EntityRepository $er)  use ( $oportunityId ) {return $er
+                            ->createQueryBuilder('o');},
+                    ))
 
-            ->add('state', ChoiceType::class, array(
-                'label' => 'Estado',
-                'attr' => array('class'=>'form-control'),
-                'choices'  => $choices_array,
-                // *this line is important*
-                'choices_as_values' => true,
-            ))
-            ->add('applicationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Fecha de Postulación', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
-            ->add('lastUpdateDate', 'datetime', array('widget' => 'single_text', 'format' => 'dd/MM/yyyy HH:mm:ss','attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Ultima actualización', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
-        ;
+                    ->add('state', ChoiceType::class, array(
+                        'label' => 'Estado',
+                        'attr' => array('class'=>'form-control'),
+                        'choices'  => array('Postulado por Alumno' =>  1 , 'Aceptado por Mentor' =>  2 , 'Confirmado por Ambos, en proceso' =>  3 , 'Sigla Enviada a Dara' =>  4 , 'Inscripción alumno Enviada a Dara' =>  5 , 'Sigla inscrita en Banner' =>  6 , 'No seleccionado por Mentor' =>  7 , 'No confirmado por Alumno' =>  8),
+                        // *this line is important*
+                        'choices_as_values' => true,
+                    ))
+                    ->add('applicationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => false,'class'=>'form-control'),'label' => 'Fecha de Postulación'))//fecha debe ser creada automaticamente
+                    ->add('lastUpdateDate', 'datetime', array('widget' => 'single_text', 'format' => 'dd/MM/yyyy HH:mm:ss','attr' => array('readonly' => false,'class'=>'form-control'), 'label' => 'Ultima actualización', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
+                ;
+        }
+        else
+        {
+            $builder
+            ->add('student', EntityType::class, array(
+                    'label' => 'Alumno',
+                    'attr' => array('class'=>'form-control'),
+                    'class' => 'BackendBundle:Student',
+                    'choice_label' => 'getNameText',
+                    'query_builder' => function (EntityRepository $er)  use ( $studentId ) {return $er
+                        ->createQueryBuilder('s')
+                        ->where("s.id = :id")
+                        ->setParameter('id', $studentId);},
+                ))
+            ->add('oportunityResearch', EntityType::class, array(
+                    'label' => 'Oportunidad de Investigación',
+                    'attr' => array('class'=>'form-control'),
+                    'class' => 'BackendBundle:OportunityResearch',
+                    'choice_label' => 'name',
+                    'query_builder' => function (EntityRepository $er)  use ( $oportunityId ) {return $er
+                        ->createQueryBuilder('o')
+                        ->where("o.id = :id")
+                        ->setParameter('id', $oportunityId);},
+                ))
+
+                ->add('state', ChoiceType::class, array(
+                    'label' => 'Estado',
+                    'attr' => array('class'=>'form-control'),
+                    'choices'  => $choices_array,
+                    // *this line is important*
+                    'choices_as_values' => true,
+                ))
+                ->add('applicationDate', 'date', array('widget' => 'single_text', 'attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Fecha de Postulación', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
+                ->add('lastUpdateDate', 'datetime', array('widget' => 'single_text', 'format' => 'dd/MM/yyyy HH:mm:ss','attr' => array('readonly' => true,'class'=>'form-control'), 'label' => 'Ultima actualización', 'data' => (new \DateTime())))//fecha debe ser creada automaticamente
+            ;
+        }
     }
     
     /**
