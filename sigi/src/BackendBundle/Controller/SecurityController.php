@@ -75,7 +75,7 @@ class SecurityController extends Controller
             $em->remove($restorer);
             $em->flush();
 
-            return $this->redirectToRoute('notification_index');
+            return $this->redirectToRoute('backend_homepage');
 	    }
 
 	    return $this->render(

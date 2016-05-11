@@ -27,6 +27,28 @@ class MiscController extends Controller
             'oportunityResearches' => $oportunityResearches,
         ));
     }
+
+    /**
+     * Controls pending entries (login)
+     *
+     * @Route("/misc/router", name="login_router")
+     * @Method("GET")
+     */
+    public function routerAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        if(!$this->get('security.context')->isGranted('ROLE_ADMIN'))
+        {
+            if($this->get('security.context')->isGranted('ROLE_MENTOR'))
+                return $this->mentorPendingAction();
+
+            if($this->get('security.context')->isGranted('ROLE_STUDENT'))
+                return $this->studentPendingAction();
+        }
+        
+        return $this->listOportunitiesAction();
+    }
     
     /**
      * Shows mentor pendings.
