@@ -7,13 +7,13 @@
 
     <!-- Nav tabs -->
       <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#Recibidos" aria-controls="Recibidos" role="tab" data-toggle="tab">Postulaciones ({{applications|length}})</a></li>
-        <li role="presentation"><a href="#Enviados" aria-controls="Enviados" role="tab" data-toggle="tab">Enviados</a></li>        
+        <li role="presentation" class="active"><a href="#Postulaciones" aria-controls="Postulaciones" role="tab" data-toggle="tab">Postulaciones ({{applications|length}})</a></li>
+        <li role="presentation"><a href="#Oportunidades" aria-controls="Oportunidades" role="tab" data-toggle="tab">Oportunidades ({{ oportunityResearches |length}})</a></li>        
       </ul>
 
       <!-- Tab panes -->
       <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="Recibidos">
+        <div role="tabpanel" class="tab-pane active" id="Postulaciones">
 
 		    <table class="table table-striped">
 		        <thead>
@@ -60,8 +60,58 @@
 		        </tbody>
 		    </table>
 		    </div>
-        	<div role="tabpanel" class="tab-pane" id="Enviados">
-        		bla
+        	<div role="tabpanel" class="tab-pane" id="Oportunidades">
+        		Oportunidades por publicar:
+        		<table class="table table-striped">
+			        <tbody>
+			        {% for oportunityResearch in oportunityResearches %}
+			            <tr>
+			                <td style="width: 90px;">
+			                    {% if oportunityResearch.creationDate %}{{ oportunityResearch.creationDate|date('d-m-Y') }}{% endif %}
+			                    </td>
+			                <td>
+			                    <a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}">
+			                        <strong style="font-size:13pt;" >{{ oportunityResearch.name }}</strong>
+			                    </a>
+			                    <br>
+			                    {{ oportunityResearch.description }}
+			                    <div class="tagline" style="margin-top:10px;">
+			                        Keywords: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			                        {% for keyword in oportunityResearch.oportunityKeywords() %}
+			                            <a href="{{ path('oportunityresearch_search')}}?keyword={{keyword.keyword}}" role="button" class="btn btn-default btn-xs">{{ keyword.keyword }}</a>
+			                        {% endfor %}
+			                    </div>
+			                    <div class="tagline">
+			                        Prerequisitos:&nbsp;
+			                        {% if oportunityResearch.prerequisites() |length == 0 %} no tiene.{% endif %}
+			                        {% for prerequisite in oportunityResearch.prerequisites() %}
+			                            <a href="{{ path('oportunityresearch_search')}}?prerequisite={{prerequisite.courseNumber}}" role="button" class="btn btn-danger btn-xs">{{ prerequisite.courseNumber }}</a>
+			                        {% endfor %}
+			                    </div>
+			                    <p style="font-size:10pt; color:grey;">
+			                        Tiene un método de evaluación {{ oportunityResearch.getModalityText() }}, con <a href="{{ path('oportunityresearch_applications', { 'id': oportunityResearch.id }) }}">{{ oportunityResearch.applications|length }}</a> postulaciones, tiene {{ oportunityResearch.getOpenVacants() }}/{{ oportunityResearch.vacants }} vacantes disponibles
+			                    </p>
+			                </td>
+			                
+			                
+			                <td style="width:200px">
+			                    Mentor(es):
+			                    <ul style="padding-left:18px;">
+			                        {% for mentor in oportunityResearch.getMentors() %}
+			                            <li>
+			                                <a href="{{ path('oportunityresearch_search')}}?mentor={{mentor.id}}">{{ mentor.getShowName() }}</a>
+			                            </li>
+			                        {% endfor %}
+			                    </ul>
+			                </td>
+			                <td style="width:68px">
+			                    <a href="{{ path('oportunityresearch_show', { 'id': oportunityResearch.id }) }}" class="btn btn-info btn-sm" role="button" style="margin-bottom: 10px; width:52px">Ver</a>
+			                    <a href="{{ path('oportunityresearch_edit', { 'id': oportunityResearch.id }) }}" class="btn btn-primary btn-sm" role="button" style="width:52px">Editar</a>
+			                </td>
+			            </tr>
+			        {% endfor %}
+			        </tbody>
+			    </table>
 		    </div>
       </div>
     </div>

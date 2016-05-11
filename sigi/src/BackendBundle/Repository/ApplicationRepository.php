@@ -10,6 +10,61 @@ namespace BackendBundle\Repository;
  */
 class ApplicationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findUnattendedFromMentor($mentor)
+    {
+        $TimeLimit = $this->getEntityManager()->getRepository('BackendBundle:TimeLimit')->findOneByName('Plazo para que el mentor acepte/rechaze la postulación');
+
+        $deadlineAction = date('Y-m-d', strtotime('-'.$TimeLimit->getDays().' days'));
+
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT a FROM BackendBundle:Application a
+                JOIN a.oportunityResearch o
+                LEFT JOIN o.mainMentor mm
+                LEFT JOIN o.secondaryMentor sm
+                LEFT JOIN o.thertiaryMentor tm
+                WHERE a.state = 1
+                AND a.lastUpdateDate < :deadlineAction
+                AND ( mm.id = :mentorId
+                OR sm.id = :mentorId
+                OR tm.id = :mentorId )'
+            )->setParameters(array('mentorId' => $mentor->getId(), 'deadlineAction' => $deadlineAction));
+     
+        try {
+            $returnResults = $query->getResult();
+
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            $returnResults = null;
+        }
+
+        return $returnResults;
+    }
+
+    public function findUnattendedFromStudent($student)
+    {
+        $TimeLimit = $this->getEntityManager()->getRepository('BackendBundle:TimeLimit')->findOneByName('Plazo para que el alumno acepte/rechaze la postulación');
+
+        $deadlineAction = date('Y-m-d', strtotime('-'.$TimeLimit->getDays().' days'));
+
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT a FROM BackendBundle:Application a
+                JOIN a.student s
+                WHERE a.state = 2
+                AND a.lastUpdateDate < :deadlineAction
+                AND s.id = :studentId'
+            )->setParameters(array('studentId' => $student->getId(), 'deadlineAction' => $deadlineAction));
+     
+        try {
+            $returnResults = $query->getResult();
+
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            $returnResults = null;
+        }
+
+        return $returnResults;
+    }
+
     public function findUnattended($state)
     {
         if($state == 1)

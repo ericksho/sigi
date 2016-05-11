@@ -11,6 +11,29 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class OportunityResearchRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findUnattendedFromMentor($mentor)
+    {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT o FROM BackendBundle:oportunityResearch o
+                LEFT JOIN o.mainMentor mm
+                LEFT JOIN o.secondaryMentor sm
+                LEFT JOIN o.thertiaryMentor tm
+                WHERE o.publish = FALSE
+                AND ( mm.id = :mentorId
+                OR sm.id = :mentorId
+                OR tm.id = :mentorId )'
+            )->setParameters(array('mentorId' => $mentor->getId()));
+     
+        try {
+            $returnResults = $query->getResult();
+
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            $returnResults = null;
+        }
+
+        return $returnResults;
+    }
 
     public function findOportunitiesByName($name)
     {

@@ -37,11 +37,14 @@ class MiscController extends Controller
     public function mentorPendingAction()
     {
         $em = $this->getDoctrine()->getManager();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
 
-        $applications = $em->getRepository('BackendBundle:Application')->findUnattended(1);
+        $applications = $em->getRepository('BackendBundle:Application')->findUnattendedFromMentor($currentUser->getMentor());
+        $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findUnattendedFromMentor($currentUser->getMentor());
 
         return $this->render('misc/mentorPending.html.twig', array(
             'applications' => $applications,
+            'oportunityResearches' => $oportunityResearches,
         ));
     }
 
