@@ -58,10 +58,12 @@ class MiscController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $oportunityResearches = $em->getRepository('BackendBundle:OportunityResearch')->findPublished();
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        $applications = $em->getRepository('BackendBundle:Application')->findUnattendedFromStudent($currentUser->getStudent());
 
         return $this->render('misc/studentPending.html.twig', array(
-            'oportunityResearches' => $oportunityResearches,
+            'applications' => $applications,
         ));
     }
 

@@ -3,6 +3,49 @@
 {% block body %}
     <h1>Pendientes</h1>
 
-    hola, aqui van los pendientes del alumno
+    <table class="table table-striped">
+		        <thead>
+		            <tr>
+		                <th>Id</th>
+		                <th>Oportunidad</th>
+		                {% if is_granted(['ROLE_MENTOR']) %}
+		                    <th>Alumno</th>
+		                {% endif %}
+		                {% if is_granted([  'ROLE_STUDENT']) %}
+		                    <th>Mentor</th>
+		                {% endif %}
+		                <th>Estado</th>
+		                <th>Fecha de Postulación</th>
+		                <th>Última Actualización</th>
+		                <th></th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		        {% for application in applications %}
+		            <tr>
+		                <td><a href="{{ path('application_show', { 'id': application.id }) }}">{{ application.id }}</a></td>
+		                <td>{{ application.oportunityResearch.getName() }}</td>
+		                {% if is_granted(['ROLE_MENTOR']) %}
+		                    <td>{{ application.student.getNameText() }}</td>
+		                {% endif %}
+		                {% if is_granted(['ROLE_STUDENT']) %}
+		                    <td>
+		                        <ul>
+		                            {% for mentorName in application.oportunityResearch.getMentorsName() %}
+		                                <li>
+		                                    {{ mentorName }}
+		                                </li>
+		                            {% endfor %}
+		                        </ul>
+		                    </td>
+		                {% endif %}
+		                <td>{{ application.getStateText() }}</td>
+		                <td>{% if application.applicationDate %}{{ application.applicationDate|date('d/M/y') }}{% endif %}</td>
+		                <td>{% if application.lastUpdateDate %}{{ application.lastUpdateDate|date('d/M/y H:i:s') }}{% endif %}</td>
+		                <td><a href="{{ path('application_show', { 'id': application.id }) }}" class="btn btn-info btn1" role="button">Ver</a></td>
+		            </tr>
+		        {% endfor %}
+		        </tbody>
+		    </table>
     
 {% endblock %}
