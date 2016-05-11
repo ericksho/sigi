@@ -261,12 +261,21 @@ class OportunityResearchController extends Controller
 
         $mentorFacutly = $em->getRepository('BackendBundle:OportunityResearch')->findMentorFaculties();
 
+        
+
+        if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
+        {
+            $currentMentorId = -1;
+        }
+        else
+        {
+            $currentMentorId = $currentUser->getMentor()->getId();
+        }
+
+
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-
-            //agregar keywords a la oportunidad
-            
 
             $em->persist($oportunityResearch);
             $em->flush();
@@ -279,7 +288,7 @@ class OportunityResearchController extends Controller
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'mentorFacutly' => $mentorFacutly,
-            'currentMentorId' => $currentUser->getMentor()->getId(),
+            'currentMentorId' => $currentMentorId,
         ));
     }
 

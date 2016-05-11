@@ -224,6 +224,9 @@ function checkCMD()
 
 	//ya con el array cargado revisamos si los mentores corresponden a diferente facultades
 	currentMentorId = {{ currentMentorId|raw }};
+
+	//arreglo para cuando se loguea el mentor
+
 	canBeCMD = false;
 
 	smid = document.getElementById("oportunity_research_secondaryMentor").value;
@@ -253,6 +256,11 @@ function checkCMD()
 	}
 
 	isCMD = document.getElementById("oportunity_research_cmd").checked;	
+
+	if({{ currentMentorId|raw }} == -1)
+	{
+		canBeCMD = true;
+	}
 
 	if(!canBeCMD)
 	{
