@@ -39,9 +39,23 @@ class OportunityResearch
     /**
      * @var string
      *
+     * @ORM\Column(name="english_name", type="string", length=125, unique=true)
+     */
+    private $englishName;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="description", type="text")
      */
     private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="english_description", type="text")
+     */
+    private $english_description;
 
     /**
      * @var int
@@ -53,9 +67,30 @@ class OportunityResearch
     /**
      * @var int
      *
+     * @ORM\Column(name="credits", type="integer")
+     */
+    private $credits;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="responsible_mentor", type="integer")
+     */
+    private $responsibleMentor;
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="modality", type="integer")
      */
     private $modality;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="vacants", type="integer")
+     */
+    private $vacants;
 
     /**
      * @var bool
@@ -65,10 +100,16 @@ class OportunityResearch
     private $publish;
 
     /**
-     * @ORM\OneToOne(targetEntity="Research", inversedBy="oportunityResearch")
-     * @ORM\JoinColumn(name="oportunityResearch_id", referencedColumnName="id")
+     * @var bool
+     *
+     * @ORM\Column(name="cmd", type="boolean")
      */
-    private $research;
+    private $cmd;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Research", mappedBy="oportunityResearch")
+     */
+    private $researches;
 
     /**
      * @ORM\OneToMany(targetEntity="Application", mappedBy="oportunityResearch")
@@ -89,15 +130,15 @@ class OportunityResearch
 
     /**
      * @ORM\ManyToMany(targetEntity="Prerequisite", inversedBy="oportunityResearch")
-     * @ORM\JoinTable(name="Prerequisite_oportunityResearchs")
+     * @ORM\JoinTable(name="prerequisites_oportunityResearchs")
      */
-    private $prerequisite;
-
-    public function __construct() {
-        $this->oportunityKeywords = new ArrayCollection();
-        $this->applications = new ArrayCollection();
-        $this->requirements = new ArrayCollection();
-    }
+    private $prerequisites;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Department", inversedBy="oportunities")
+     * @ORM\JoinColumn(name="department_id", referencedColumnName="id")
+     */
+    private $department;
 
     /**
      * @ORM\ManyToOne(targetEntity="Mentor", inversedBy="oportunitiesAsMain")
@@ -116,6 +157,37 @@ class OportunityResearch
      * @ORM\JoinColumn(name="thertiaryMentor_id", referencedColumnName="id")
      */
     private $thertiaryMentor;
+
+    public function __construct() {
+        $this->prerequisites = new ArrayCollection();
+        $this->oportunityKeywords = new ArrayCollection();
+        $this->applications = new ArrayCollection();
+        $this->requirements = new ArrayCollection();
+    }
+
+    /**
+     * Set department
+     *
+     * @param \BackendBundle\Entity\Department $department
+     *
+     * @return OportunityResearch
+     */
+    public function setDepartment(\BackendBundle\Entity\Department $department = null)
+    {
+        $this->department = $department;
+
+        return $this;
+    }
+
+    /**
+     * Get department
+     *
+     * @return \BackendBundle\Entity\Department
+     */
+    public function getDepartment()
+    {
+        return $this->department;
+    }
 
     /**
      * Get id
@@ -224,6 +296,77 @@ class OportunityResearch
     }
 
     /**
+     * Set credits
+     *
+     * @param integer $credits
+     *
+     * @return OportunityResearch
+     */
+    public function setCredits($credits)
+    {
+        $this->credits = $credits;
+
+        return $this;
+    }
+
+    /**
+     * Get credits
+     *
+     * @return int
+     */
+    public function getCredits()
+    {
+        return $this->credits;
+    }
+
+    /**
+     * Set responsibleMentor
+     *
+     * @param integer $responsibleMentor
+     *
+     * @return OportunityResearch
+     */
+    public function setResponsibleMentor($responsibleMentor)
+    {
+        $this->responsibleMentor = $responsibleMentor;
+
+        return $this;
+    }
+
+    /**
+     * Get responsibleMentor
+     *
+     * @return int
+     */
+    public function getResponsibleMentor()
+    {
+        return $this->responsibleMentor;
+    }
+
+    /**
+     * Get mentor that is responsibleMentor
+     *
+     * @return \BackendBundle\Entity\Mentor
+     */
+    public function getMentorResponsibleMentor()
+    {
+        switch ($this->getResponsibleMentor()) {
+            case 1:
+                return $this->getMainMentor();
+                break;
+            case 2:
+                return $this->getSecondaryMentor();
+                break;
+            case 3:
+                return $this->getThertiaryMentor();
+                break;
+            default:
+                return $this->getMainMentor();
+                break;
+        }
+    }
+
+    /**
      * Set modality
      *
      * @param integer $modality
@@ -269,6 +412,65 @@ class OportunityResearch
     public function getPublish()
     {
         return $this->publish;
+    }
+
+    /**
+     * Set cmd
+     *
+     * @param boolean $cmd
+     *
+     * @return OportunityResearch
+     */
+    public function setCmd($cmd)
+    {
+        $this->cmd = $cmd;
+
+        return $this;
+    }
+
+    /**
+     * Get cmd
+     *
+     * @return bool
+     */
+    public function getCmd()
+    {
+        return $this->cmd;
+    }
+
+    /**
+     * Is owner
+     *
+     * @param \BackendBundle\Entity\ $user
+     *
+     * @return bool
+     */
+    public function isOwner(\BackendBundle\Entity\User $user)
+    {
+        $owner = false;
+        if(!is_null($this->mainMentor))
+        {
+            $userMentor =$this->mainMentor->getUser();
+
+            if($userMentor->getId() == $user->getId())
+                $owner = true;
+        }
+        if(!is_null($this->secondaryMentor))
+        {
+            $userMentor =$this->mainMentor->getUser();
+
+            if($userMentor->getId() == $user->getId())
+                $owner = true;
+        }
+        if(!is_null($this->thertiaryMentor))
+        {
+            $userMentor =$this->mainMentor->getUser();
+
+            if($userMentor->getId() == $user->getId())
+                $owner = true;
+        }
+
+        return $owner;
     }
 
     /**
@@ -401,6 +603,60 @@ class OportunityResearch
     }
 
     /**
+     * Get mentorsName
+     *
+     * @return array
+     */
+    public function getMentors()
+    {
+        $mentors = array();
+        $count = 0;
+        $main = $this->mainMentor;
+        $secondary = $this->secondaryMentor;
+        $thertiary = $this->thertiaryMentor;
+
+        if (!is_null($main))
+        {
+            $mentors[$count] = $main;
+            $count = $count + 1;
+        }
+        if(!is_null($secondary))
+        {
+            $mentors[$count] = $secondary;
+            $count = $count + 1;
+        }
+        if(!is_null($thertiary))
+            $mentors[$count] = $thertiary;
+
+        return $mentors;
+    }
+
+/**
+     * Is mentor
+     *
+     * @param \BackendBundle\Entity\Mentor $mentor
+     *
+     * @return bool
+     */
+    public function isMentor(\BackendBundle\Entity\Mentor $mentor)
+    {
+        $isMentor = false;
+        $mentorId = $mentor->getId();
+
+        if(!is_null($this->mainMentor))
+            if($mentorId == $this->mainMentor->getId())
+                $isMentor = true;
+        if(!is_null($this->secondaryMentor))
+            if($mentorId == $this->secondaryMentor->getId())
+                $isMentor = true;
+        if(!is_null($this->thertiaryMentor))
+            if($mentorId == $this->thertiaryMentor->getId())
+                $isMentor = true;
+
+        return $isMentor;
+    }
+
+    /**
      * Get keywords
      *
      * @return array
@@ -408,6 +664,18 @@ class OportunityResearch
     public function getKeywordsArray()
     {
         $keywords = $this->oportunityKeywords->getValues();
+
+        return $keywords;
+    }
+
+    /**
+     * Get keywords
+     *
+     * @return array
+     */
+    public function getKeywords()
+    {
+        $keywords = $this->oportunityKeywords;
 
         return $keywords;
     }
@@ -450,5 +718,201 @@ class OportunityResearch
         $this->oportunityKeywords = $keywords;
         return $this;
     }
-}
 
+    /**
+     * Set researches
+     *
+     * @param \BackendBundle\Entity\Research $researches
+     *
+     * @return OportunityResearch
+     */
+    public function setResearches(\BackendBundle\Entity\Research $researches = null)
+    {
+        $this->researches = $researches;
+
+        return $this;
+    }
+
+    /**
+     * Get researches
+     *
+     * @return \BackendBundle\Entity\Research
+     */
+    public function getResearches()
+    {
+        return $this->researches;
+    }
+
+    /**
+     * Add application
+     *
+     * @param \BackendBundle\Entity\Application $application
+     *
+     * @return OportunityResearch
+     */
+    public function addApplication(\BackendBundle\Entity\Application $application)
+    {
+        $this->applications[] = $application;
+
+        return $this;
+    }
+
+    /**
+     * Remove application
+     *
+     * @param \BackendBundle\Entity\Application $application
+     */
+    public function removeApplication(\BackendBundle\Entity\Application $application)
+    {
+        $this->applications->removeElement($application);
+    }
+
+    /**
+     * Get applications
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getApplications()
+    {
+        return $this->applications;
+    }
+
+
+    /**
+     * Get Prerequisite
+     *
+     * @return array
+     */
+    public function getPrerequisitesArray()
+    {
+        $prerequisites = $this->prerequisites->getValues();
+
+        return $prerequisites;
+    }
+
+    /**
+     * Add prerequisite
+     *
+     * @param \BackendBundle\Entity\Prerequisite $prerequisite
+     *
+     * @return OportunityResearch
+     */
+    public function addPrerequisite(\BackendBundle\Entity\Prerequisite $prerequisite)
+    {
+        $this->prerequisites->add($prerequisite);
+        return $this;
+    }
+
+    /**
+     * Delete prerequisite
+     *
+     * @param \BackendBundle\Entity\Prerequisite $prerequisite
+     *
+     * @return OportunityResearch
+     */
+    public function removePrerequisite(\BackendBundle\Entity\Prerequisite $prerequisite)
+    {
+        $this->prerequisites->removeElement($prerequisite);
+        return $this;
+    }
+
+    /**
+     * Add prerequisite
+     *
+     * @param \BackendBundle\Entity\Prerequisite $prerequisite
+     *
+     * @return OportunityResearch
+     */
+    public function setPrerequisite(ArrayCollection $prerequisite)
+    {
+        $this->prerequisites = $prerequisite;
+        return $this;
+    }
+
+    /**
+     * Get prerequisites
+     *
+     * @return \BackendBundle\Entity\Prerequisite
+     */
+    public function getPrerequisites()
+    {
+        return $this->prerequisites;
+    }
+
+    /**
+     * Get Modality text
+     *
+     * @return string
+     */
+    public function getModalityText()
+    {
+        switch ($this->modality) {
+            case 1:
+                $text = 'Alfa numerico';
+                break;
+            
+            case 2:
+                $text = 'Nota 1-7';
+                break;
+        }
+
+        return $text;
+    }
+
+    /**
+     * Set application
+     *
+     * @param \BackendBundle\Entity\Application $Application
+     *
+     * @return OportunityResearch
+     */
+    public function setApplication(\BackendBundle\Entity\Application $application)
+    {
+        $this->application = $application;
+
+        return $this;
+    }
+
+    /**
+     * Set vacants
+     *
+     * @param integer $vacants
+     *
+     * @return OportunityResearch
+     */
+    public function setVacants($vacants)
+    {
+        $this->vacants = $vacants;
+
+        return $this;
+    }
+
+    /**
+     * Get vacants
+     *
+     * @return int
+     */
+    public function getVacants()
+    {
+        return $this->vacants;
+    }
+
+    /**
+     * Get open vacants
+     *
+     * @return int
+     */
+    public function getOpenVacants()
+    {
+        $usedVacants = 0;
+        foreach ($this->applications as $application) {
+            if ($application->getState() == 3 || $application->getState() == 4 || $application->getState() == 5 || $application->getState() == 6)
+            {
+                $usedVacants = $usedVacants + 1;
+            }
+            
+        }
+        $openVacants = $this->getVacants() - $usedVacants;
+        return $openVacants;
+    }
+}

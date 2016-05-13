@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new BeSimple\SsoAuthBundle\BeSimpleSsoAuthBundle(),
             new JMose\CommandSchedulerBundle\JMoseCommandSchedulerBundle(),
+            new Develoid\TranslatorBundle\DeveloidTranslatorBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {

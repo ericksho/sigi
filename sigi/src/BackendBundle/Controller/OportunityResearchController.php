@@ -277,6 +277,18 @@ class OportunityResearchController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
+            if($oportunityResearch->getEnglishName() == "")
+            {
+                $translation = $this->get('develoid_translator.yandex_translator')->translate($oportunityResearch->getName(), 'es', 'en');
+                $oportunityResearch->setEnglishName($translation);
+            }
+
+            if($oportunityResearch->getEnglishDescription() == "")
+            {
+                $translation = $this->get('develoid_translator.yandex_translator')->translate($oportunityResearch->getDescription(), 'es', 'en');
+                $oportunityResearch->setEnglishDescription($translation);
+            }
+
             $em->persist($oportunityResearch);
             $em->flush();
 

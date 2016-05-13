@@ -39,9 +39,23 @@ class OportunityResearch
     /**
      * @var string
      *
+     * @ORM\Column(name="english_name", type="string", length=150, unique=true, nullable=true)
+     */
+    private $englishName;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="description", type="text")
      */
     private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="english_description", type="text", nullable=true)
+     */
+    private $english_description;
 
     /**
      * @var int
@@ -900,5 +914,128 @@ class OportunityResearch
         }
         $openVacants = $this->getVacants() - $usedVacants;
         return $openVacants;
+    }
+
+    /**
+     * Set englishName
+     *
+     * @param string $englishName
+     *
+     * @return OportunityResearch
+     */
+    public function setEnglishName($englishName)
+    {
+        $this->englishName = $englishName;
+
+        return $this;
+    }
+
+    /**
+     * Set englishName
+     *
+     * @param string $englishName
+     *
+     * @return OportunityResearch
+     */
+    public function translateEnglishName()
+    {
+        $translator = $this->get('eko.google_translate.translator');
+        $englishName = $translator->translate($this->name, 'en', 'es');
+
+        $this->englishName = $englishName;
+
+        return $this;
+    }
+
+    /**
+     * Get englishName
+     *
+     * @return string
+     */
+    public function getEnglishName()
+    {
+        return $this->englishName;
+    }
+
+    /**
+     * Set englishDescription
+     *
+     * @param string $englishDescription
+     *
+     * @return OportunityResearch
+     */
+    public function setEnglishDescription($englishDescription)
+    {
+        $this->english_description = $englishDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get englishDescription
+     *
+     * @return string
+     */
+    public function getEnglishDescription()
+    {
+        return $this->english_description;
+    }
+
+    /**
+     * Add research
+     *
+     * @param \BackendBundle\Entity\Research $research
+     *
+     * @return OportunityResearch
+     */
+    public function addResearch(\BackendBundle\Entity\Research $research)
+    {
+        $this->researches[] = $research;
+
+        return $this;
+    }
+
+    /**
+     * Remove research
+     *
+     * @param \BackendBundle\Entity\Research $research
+     */
+    public function removeResearch(\BackendBundle\Entity\Research $research)
+    {
+        $this->researches->removeElement($research);
+    }
+
+    /**
+     * Add requirement
+     *
+     * @param \BackendBundle\Entity\Requirement $requirement
+     *
+     * @return OportunityResearch
+     */
+    public function addRequirement(\BackendBundle\Entity\Requirement $requirement)
+    {
+        $this->requirements[] = $requirement;
+
+        return $this;
+    }
+
+    /**
+     * Remove requirement
+     *
+     * @param \BackendBundle\Entity\Requirement $requirement
+     */
+    public function removeRequirement(\BackendBundle\Entity\Requirement $requirement)
+    {
+        $this->requirements->removeElement($requirement);
+    }
+
+    /**
+     * Get requirements
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRequirements()
+    {
+        return $this->requirements;
     }
 }

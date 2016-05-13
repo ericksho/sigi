@@ -95,4 +95,8 @@ jmose_command_scheduler:
         - translation
         - twig
         - yaml
-        
+
+develoid_translator:
+    default: yandex
+    yandex:
+        api_key: trnsl.1.1.20160513T153800Z.291bff4abb05fe78.c61061504d494f1dde529e33aebcdcefc54487b4

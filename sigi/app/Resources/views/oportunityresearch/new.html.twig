@@ -18,7 +18,7 @@
 
     {{ form_start(form) }}
     <div class="row">
-		<div class="col-md-6 group-form">
+		<div class="col-md-7 group-form">
 	    	{% for child in form.children %}
 	    		{% if 'token' not in form_label(child) %}
 					{% if 'left-column-form' in child.vars['attr']['class'] %}
@@ -30,7 +30,7 @@
 		</div>
   		<div class="col-md-1">
   		</div>
-  		<div class="col-md-3 group-form">
+  		<div class="col-md-2 group-form">
   			{% for child in form.children %}
   				{% if 'token' not in form_label(child) %}
 		  			{% if 'right-column-form' in child.vars['attr']['class'] %}

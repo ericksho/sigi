@@ -25,8 +25,7 @@
         "besimple/sso-auth-bundle": "@dev",
         "liuggio/excelbundle": "^2.0",
         "jmose/command-scheduler-bundle": "^1.2",
-        "knplabs/knp-paginator-bundle": "^2.5",
-        "sg/datatablesbundle": "^0.10.0"
+        "develoid/translator-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",

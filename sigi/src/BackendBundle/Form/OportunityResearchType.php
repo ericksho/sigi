@@ -36,7 +36,9 @@ class OportunityResearchType extends AbstractType
 
         $builder
             ->add('name', null,array('label' => 'Nombre','attr' => array('class'=>'form-control left-column-form')))
+            ->add('english_name', null,array('label' => 'Name (Si lo deja en blanco se hará una traducción automatica con Yandex)', 'required' => false,'attr' => array('class'=>'form-control left-column-form')))
             ->add('description', null,array('label' => 'Descripción','attr' => array('class'=>'form-control left-column-form')))
+            ->add('english_description', null,array('label' => 'Description (Si lo deja en blanco se hará una traducción automatica con Yandex)', 'required' => false,'attr' => array('class'=>'form-control left-column-form')))
             ->add('oportunityKeywords', EntityType::class, array(
                 'label' => 'Palabras claves',
                 'required' => false,
@@ -119,10 +121,7 @@ class OportunityResearchType extends AbstractType
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
             function (FormEvent $event) {
-                $data = $event->getData();
-
-                //////////// revisamos si puede ser CDM
-                
+                $data = $event->getData();                
 
                 //////////// revisamos si hay keywords que agregar 
                 if (isset($data['oportunityKeywords']))
