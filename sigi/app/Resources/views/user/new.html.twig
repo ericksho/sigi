@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Nuevo Usuario</h1>
+    <h1>Nuevo Usuario/New User</h1>
 
     {{ form_start(form) }}
 
@@ -27,17 +27,17 @@
 			</div>
 
 			<div class="collapse" id="collapseStudent">
-				<h3>Información del Estudiante</h3>
+				<h3>Información del Estudiante/Student Info</h3>
 			    {{ form_widget(student_form) }}
 			</div>
 
 			<div class="collapse" id="collapseMentor">
-				<h3>Información del Mentor</h3>
+				<h3>Información del Mentor/Mentor Info</h3>
 			    {{ form_widget(mentor_form) }}
 			</div>
 
 			<div class="collapse" id="collapseOther">
-				<h3>Información de Otro usuario</h3>	
+				<h3>Información de Otro usuario/Other Info</h3>	
 			    {{ form_widget(other_form) }}
 			</div>
 		  </div>

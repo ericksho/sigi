@@ -32,17 +32,17 @@
 			</div>
 
 			<div class="collapse" id="collapseStudent">
-				<h3>Información del Estudiante</h3>
+				<h3>Información del Estudiante/Student Info</h3>
 			    {{ form_widget(student_form) }}
 			</div>
 
 			<div class="collapse" id="collapseMentor">
-				<h3>Información del Mentor</h3>
+				<h3>Información del Mentor/Mentor Info</h3>
 			    {{ form_widget(mentor_form) }}
 			</div>
 
 			<div class="collapse" id="collapseOther">
-				<h3>Información de Otro usuario</h3>	
+				<h3>Información de Otro usuario/Other Info</h3>	
 			    {{ form_widget(other_form) }}
 			</div>
 		  </div>
@@ -50,11 +50,11 @@
             {% if not edit_role %}
 
                 <div id="col-right" class="group-form" style:"margin-top: 5px;">
-                    <h3>Contraseña</h3>    
+                    <h3>Contraseña/Password</h3>    
                     
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" id="changePass"> Cambiar Contraseña
+                            <input type="checkbox" id="changePass"> Cambiar Contraseña/Change Password
                         </label>
                     </div>
                     {{ form_widget(password_form) }}

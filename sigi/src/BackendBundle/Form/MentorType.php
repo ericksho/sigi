@@ -21,9 +21,9 @@ class MentorType extends AbstractType
         //$role = $options['role'];
 
         $builder
-            ->add('uc',null,array('attr' => array('class'=>'form-control')))
+            ->add('uc',null,array('label' => 'Es UC/Is UC', 'attr' => array('class'=>'form-control')))
             ->add('department', EntityType::class, array(
-                'label' => 'Facultad/Escuela/Departamento',
+                'label' => 'Facultad/Escuela/Departamento / Faculty/School/Department',
                 'required' => false,
                 'class' => 'BackendBundle:Department',
                 'multiple' => false,

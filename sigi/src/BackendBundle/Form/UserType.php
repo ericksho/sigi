@@ -28,21 +28,21 @@ class UserType extends AbstractType
                 'choices' => array('Administrador' => 'ROLE_ADMIN', 'Estudiante' => 'ROLE_STUDENT', 'Mentor' => 'ROLE_MENTOR', 'Otro' => 'ROLE_OTHER'),
                 // always include this
                 'choices_as_values' => true))
-            ->add('username', null,array('label' => 'Nombre de usuario','attr' => array('class'=>'form-control')))
+            ->add('username', null,array('label' => 'Nombre de usuario/Username','attr' => array('class'=>'form-control')))
             ->add('rut', null,array('label' => 'Rut','attr' => array('class'=>'form-control')))
-            ->add('name', null,array('label' => 'Nombre','attr' => array('class'=>'form-control')))
-            ->add('middleName', null,array('label' => 'Segundo Nombre','attr' => array('class'=>'form-control')))
-            ->add('lastName', null,array('label' => 'Apellido Paterno','attr' => array('class'=>'form-control')))
-            ->add('secondSurname', null,array('label' => 'Apellido Materno','attr' => array('class'=>'form-control')))
+            ->add('name', null,array('label' => 'Nombre/Name','attr' => array('class'=>'form-control')))
+            ->add('middleName', null,array('label' => 'Segundo Nombre/Middle Name','attr' => array('class'=>'form-control')))
+            ->add('lastName', null,array('label' => 'Apellido Paterno/Last Name','attr' => array('class'=>'form-control')))
+            ->add('secondSurname', null,array('label' => 'Apellido Materno/Second Surname','attr' => array('class'=>'form-control')))
             ->add('email', EmailType::class,array('label' => 'Email','attr' => array('class'=>'form-control')))
-            ->add('phone', null,array('label' => 'Telefono','attr' => array('class'=>'form-control')))
+            ->add('phone', null,array('label' => 'Telefono/Phone Number','attr' => array('class'=>'form-control')))
 
         ;
         if (false){
             $builder->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
-                'first_options'  => array('label' => 'Contraseña','attr' => array('disabled' => false, 'class'=>'form-control')),
-                'second_options' => array('label' => 'Repita Contraseña','attr' => array('disabled' => false, 'class'=>'form-control')),
+                'first_options'  => array('label' => 'Contraseña/Password','attr' => array('disabled' => false, 'class'=>'form-control')),
+                'second_options' => array('label' => 'Repita Contraseña/Repeat Password','attr' => array('disabled' => false, 'class'=>'form-control')),
             ));
         }
 
