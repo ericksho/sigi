@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+    {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -68,7 +68,7 @@
 
 
     <table class="table table-striped">
-        <tbody>
+        <tbody id="paginable">
         {% for oportunityResearch in oportunityResearches %}
             <tr>
                 <td style="width: 90px;">
@@ -120,6 +120,7 @@
         {% endfor %}
         </tbody>
     </table>
+    
 
 
     <script type="text/javascript"> 

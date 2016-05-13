@@ -190,6 +190,9 @@
 
 window.addEventListener("load", function(evt) {
       document.getElementById("search-form").style.width = "115px";
+
+      $('<div class="col-md-12 text-center"><ul class="pagination " id="pagerSelector"></ul</div>').insertAfter($('#paginable').parent());
+      $('#paginable').pageMe({pagerSelector:'#pagerSelector',showPrevNext:true,hidePageNumbers:false,perPage:1});
     })
 
   </script>
@@ -200,6 +203,7 @@ window.addEventListener("load", function(evt) {
         {% block javascripts %}
             <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>   
             <script src="{{ asset('bundles/bootstrap/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('js/main.js') }}"></script>
         {% endblock %}
     </body>
 </html>
