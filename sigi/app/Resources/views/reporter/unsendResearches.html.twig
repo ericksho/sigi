@@ -15,7 +15,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="paginable">
         {% for research in researches %}
             <tr>
                 <td><a href="{{ path('research_show', { 'id': research.id }) }}">{{ research.id }}</a></td>

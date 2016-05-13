@@ -13,7 +13,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="paginable">
         {% for department in departments %}
             <tr>
                 <td><a href="{{ path('department_show', { 'id': department.id }) }}">{{ department.id }}</a></td>

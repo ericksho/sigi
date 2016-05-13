@@ -12,7 +12,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="paginable">
         {% for timeLimit in timeLimits %}
             <tr>
                 <td><a href="{{ path('timelimit_show', { 'id': timeLimit.id }) }}">{{ timeLimit.id }}</a></td>

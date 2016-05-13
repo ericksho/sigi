@@ -25,7 +25,7 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="paginable">
                 {% for notification in recieved %}
                     <tr>
                         <td><a href="{{ path('notification_show', { 'id': notification.id }) }}">{{ notification.id }}</a></td>
@@ -57,7 +57,7 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="paginable2">
                 {% for notification in sended %}
                     <tr>
                         <td><a href="{{ path('notification_show', { 'id': notification.id }) }}">{{ notification.id }}</a></td>
@@ -81,11 +81,19 @@
 
     <script type="text/javascript">
 
+window.addEventListener("load", function(evt) {
+      document.getElementById("search-form").style.width = "115px";
+
+      $('<div class="col-md-12 text-center"><ul class="pagination " id="pagerSelector2"></ul</div>').insertAfter($('#paginable2').parent());
+      $('#paginable2').pageMe({pagerSelector:'#pagerSelector2',showPrevNext:true,hidePageNumbers:false,perPage:10});
+    })
+
         $('#myTabs a').click(function (e) {
           e.preventDefault()
           $(this).tab('show')
         })
-    </script>
+
+  </script>
 
 
 {% endblock %}

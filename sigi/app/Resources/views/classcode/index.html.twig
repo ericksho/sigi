@@ -17,7 +17,7 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="paginable">
         {% for classCode in classCodes %}
             <tr>
                 <td>{{ classCode.initialsCode }}{{ "%04d"|format(classCode.numbersCode) }}</td>

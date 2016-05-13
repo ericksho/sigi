@@ -20,7 +20,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="paginable">
         {% for application in applications %}
             <tr>
                 <td><a href="{{ path('application_show', { 'id': application.id }) }}">{{ application.id }}</a></td>

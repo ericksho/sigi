@@ -11,7 +11,7 @@
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="paginable">
         {% for prerequisite in prerequisites %}
             <tr>
                 <td><a href="{{ path('prerequisite_show', { 'id': prerequisite.id }) }}">{{ prerequisite.id }}</a></td>

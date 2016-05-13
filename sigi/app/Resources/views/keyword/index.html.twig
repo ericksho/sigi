@@ -12,7 +12,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="paginable">
         {% for keyword in keywords %}
             <tr>
                 <td><a href="{{ path('keyword_show', { 'id': keyword.id }) }}">{{ keyword.id }}</a></td>

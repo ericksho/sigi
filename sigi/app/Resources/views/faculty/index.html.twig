@@ -12,7 +12,7 @@
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="paginable">
         {% for faculty in faculties %}
             <tr>
                 <td><a href="{{ path('faculty_show', { 'id': faculty.id }) }}">{{ faculty.id }}</a></td>

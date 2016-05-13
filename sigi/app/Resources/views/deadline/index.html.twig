@@ -14,7 +14,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="paginable">
         {% for deadline in deadlines %}
             <tr>
                 <td><a href="{{ path('deadline_show', { 'id': deadline.id }) }}">{{ deadline.id }}</a></td>

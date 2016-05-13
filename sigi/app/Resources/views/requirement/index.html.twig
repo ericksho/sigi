@@ -14,7 +14,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="paginable">
         {% for requirement in requirements %}
             <tr>
                 <td><a href="{{ path('requirement_show', { 'id': requirement.id }) }}">{{ requirement.id }}</a></td>
