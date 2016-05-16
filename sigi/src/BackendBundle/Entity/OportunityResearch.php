@@ -39,7 +39,7 @@ class OportunityResearch
     /**
      * @var string
      *
-     * @ORM\Column(name="english_name", type="string", length=150, unique=true, nullable=true)
+     * @ORM\Column(name="english_name", type="string", length=150, unique=false, nullable=true)
      */
     private $englishName;
 

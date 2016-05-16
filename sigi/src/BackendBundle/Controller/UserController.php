@@ -28,6 +28,7 @@ use BackendBundle\Form\MentorType;
 use BackendBundle\Entity\Other;
 use BackendBundle\Form\OtherType;
 
+
 /**
  * User controller.
  *
@@ -68,7 +69,8 @@ class UserController extends Controller
         $mentor = new Mentor();
         $other = new Other();
 
-        $form = $this->createForm('BackendBundle\Form\UserType', $user,array('pass'=>'yes'));
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(new UserType($em), $user,array('pass'=>'yes'));
         $form->handleRequest($request);
 
         //student form
@@ -193,15 +195,16 @@ class UserController extends Controller
 
         $deleteForm = $this->createDeleteForm($user);
 
+        $em = $this->getDoctrine()->getManager();  
         if(true)//$this->get('security.token_storage')->getToken()->getUser()->getId() == $user->getid()) //si es el mismo usuario
         {
-            $editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('pass'=>'yes', 'edit_role'=>'no'));
+            $editForm = $this->createForm(new UserType($em), $user,array('pass'=>'yes', 'edit_role'=>'no'));
             $pass = TRUE; //puede cambiar contraseña
             $edit_role = FALSE; // no puede cambiar el rol
         }
         else
         {
-            $editForm = $this->createForm('BackendBundle\Form\UserType', $user,array('pass'=>'no','edit_role'=>'yes'));
+            $editForm = $this->createForm(new UserType($em), $user,array('pass'=>'no','edit_role'=>'yes'));
             $pass = FALSE;
             $edit_role = TRUE;
         }

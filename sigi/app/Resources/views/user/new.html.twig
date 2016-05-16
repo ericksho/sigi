@@ -14,9 +14,41 @@
 
     {{ form_start(form) }}
 
-		  	<div id="column-container" >
+		<div id="column-container" >
 		  <div id="col-left" class="group-form">
-		  	{{ form_widget(form) }}
+
+            {% for child in form.children %}
+
+                {% if 'token' not in form_label(child)%}
+                    {% if 'rut' in form_label(child) %}
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#wrut" aria-controls="wrut" role="tab" data-toggle="tab">Rut</a></li>
+                            <li role="presentation"><a href="#wpassport" aria-controls="wpassport" role="tab" data-toggle="tab">No tengo Rut/I don't have a Rut</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="wrut">
+                                {{ form_label(child) }}
+                                {{ form_widget(child) }}
+                            </div>
+                          
+                    {% endif %}
+                    {% if 'passportNumber' in form_label(child) %}
+                            <div role="tabpanel" class="tab-pane fade" id="wpassport">
+                                {{ form_label(child) }}
+                                {{ form_widget(child) }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if 'passportNumber' not in form_label(child) and 'rut' not in form_label(child) %}
+                        <div>
+                            {{ form_label(child) }}
+                            {{ form_widget(child) }}
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+            {% endfor %}
+          
 		  </div>
 
 		  <div id="col-right" class="group-form">
@@ -54,6 +86,13 @@
 
 window.onload = function() {
 
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      var activeTab = e.target;
+      $("#"+activeTab.getAttribute("aria-controls")+" *").attr('disabled', false);
+      var activeTab = e.relatedTarget // previous active tab
+      $("#"+activeTab.getAttribute("aria-controls")+" *").attr('disabled', true);
+    })
+
     addVerifierDigit();
 
     $(".js-basic-single").select2({
@@ -70,6 +109,10 @@ window.onload = function() {
 
 function isValid()
 {
+    //en el caso que no se use
+    if(document.getElementById("user_rut").getAttribute("disabled") == "disabled") 
+        return true;
+
     var rut = document.getElementById("user_rut").value + "-" + document.getElementById("vd").value;
     if(!validaRut(rut))
     { 
@@ -94,11 +137,11 @@ function addVerifierDigit()
     input.style.marginLeft = "3px";
     document.getElementById("user_rut").parentElement.appendChild(input);
 
-    document.getElementById("user_rut").style.width = "87%";
+    document.getElementById("user_rut").style.width = "86%";
     document.getElementById("user_rut").style.display = "inline";
     document.getElementById("user_rut").style.marginRight = "3px";
 
-    document.getElementById("user_rut").parentElement.childNodes[0].style.display = "block";
+    document.getElementById("user_rut").parentElement.firstElementChild.style.display = "block";
 
     if(document.getElementById("user_rut").value.length > 0)
     {

@@ -10,4 +10,32 @@ namespace BackendBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function getNextSyntheticRut()
+    {
+    	$nextSyntheticRut = 1;
+
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT u.rut FROM BackendBundle:User u'
+            );
+     
+        try {
+            $ruts = $query->getResult();
+
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            $ruts = null;
+        }
+
+        if(count($ruts) > 0 )
+        {
+        	for ($i = 1; $i <= count($ruts); $i++) 
+        	{
+        		$nextSyntheticRut = $i;
+			    if($i < $ruts[$i])
+			    	break;
+			}
+        }
+
+        return $nextSyntheticRut;
+    }
 }

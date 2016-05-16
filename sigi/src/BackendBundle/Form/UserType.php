@@ -2,6 +2,7 @@
 
 namespace BackendBundle\Form;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -11,8 +12,19 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+
 class UserType extends AbstractType
 {
+    protected $em;
+
+    function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -29,7 +41,8 @@ class UserType extends AbstractType
                 // always include this
                 'choices_as_values' => true))
             ->add('username', null,array('label' => 'Nombre de usuario/Username','attr' => array('class'=>'form-control')))
-            ->add('rut', null,array('label' => 'Rut','attr' => array('class'=>'form-control')))
+            ->add('rut', null,array('label' => 'Rut', 'required' => false,'attr' => array('class'=>'form-control')))
+            ->add('passportNumber', null,array('label' => 'Numero de pasaporte/Passport Number', 'required' => false,'attr' => array('class'=>'form-control')))
             ->add('name', null,array('label' => 'Nombre/Name','attr' => array('class'=>'form-control')))
             ->add('middleName', null,array('label' => 'Segundo Nombre/Middle Name','attr' => array('class'=>'form-control')))
             ->add('lastName', null,array('label' => 'Apellido Paterno/Last Name','attr' => array('class'=>'form-control')))
@@ -51,6 +64,22 @@ class UserType extends AbstractType
             $builder->add('role', HiddenType::class)
             ;
         }
+
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) {
+                $data = $event->getData();                
+
+                //////////// revisamos si hay keywords que agregar 
+                if (!isset($data['rut']))
+                {   
+                    $em = $this->em;
+                    $nextSyntheticRut = $em->getRepository('BackendBundle:User')->getNextSyntheticRut();
+                    $data['rut'] = $nextSyntheticRut;
+                    $event->setData($data);
+                }
+            }
+        );
     }
 
 

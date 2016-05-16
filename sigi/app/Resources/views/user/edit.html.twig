@@ -18,10 +18,44 @@
 	    <div id="column-container" >
 		  <div id="col-left" class="group-form">
 
-            {% if not edit_role %}
-                <label>Rol: </label> {{ user.getRoleText()}}
-            {% endif %}
-		  	{{ form_widget(edit_form) }}
+            <div>
+                {% if not edit_role %}
+                    <label>Rol: </label> {{ user.getRoleText()}}
+                {% endif %}
+            </div>
+
+
+            {% for child in edit_form.children %}
+
+                {% if 'token' not in form_label(child) and 'role' not in form_label(child) %}
+                    {% if 'rut' in form_label(child) %}
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#wrut" aria-controls="wrut" role="tab" data-toggle="tab">Rut</a></li>
+                            <li role="presentation"><a href="#wpassport" aria-controls="wpassport" role="tab" data-toggle="tab">No tengo Rut/I don't have a Rut</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="wrut">
+                                {{ form_label(child) }}
+                                {{ form_widget(child) }}
+                            </div>
+                          
+                    {% endif %}
+                    {% if 'passportNumber' in form_label(child) %}
+                            <div role="tabpanel" class="tab-pane fade" id="wpassport">
+                                {{ form_label(child) }}
+                                {{ form_widget(child) }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if 'passportNumber' not in form_label(child) and 'rut' not in form_label(child) %}
+                        <div>
+                            {{ form_label(child) }}
+                            {{ form_widget(child) }}
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+		  	{% endfor %}
 		  </div>
 
 		  <div id="col-right" class="group-form">
@@ -78,10 +112,13 @@
 	{% endif %}
 
 <script type="text/javascript">
-
 window.onload = function() {
 
     addVerifierDigit();
+
+    $("#user_rut").attr('disabled', true);
+    $("#vd").attr('disabled', true);
+    $("#user_passportNumber").attr('disabled', true);
 
     $('#myForm').on('submit', function(e){
         e.preventDefault();
@@ -144,11 +181,11 @@ function addVerifierDigit()
     input.style.marginLeft = "3px";
     document.getElementById("user_rut").parentElement.appendChild(input);
 
-    document.getElementById("user_rut").style.width = "87%";
+    document.getElementById("user_rut").style.width = "86%";
     document.getElementById("user_rut").style.display = "inline";
     document.getElementById("user_rut").style.marginRight = "3px";
 
-    document.getElementById("user_rut").parentElement.childNodes[0].style.display = "block";
+    document.getElementById("user_rut").parentElement.firstElementChild.style.display = "block";
 
     if(document.getElementById("user_rut").value.length > 0)
     {

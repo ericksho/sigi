@@ -81,6 +81,12 @@ class User  implements UserInterface, \Serializable
     /**
      * @var string
      *
+     * @ORM\Column(name="passport_number", type="string", length=15, unique=false)
+     */
+    private $passportNumber;
+    /**
+     * @var string
+     *
      * @ORM\Column(name="name", type="string", length=20)
      */
     private $name;
@@ -739,5 +745,29 @@ class User  implements UserInterface, \Serializable
     public function getRestorer()
     {
         return $this->restorer;
+    }
+
+    /**
+     * Set passportNumber
+     *
+     * @param string $passportNumber
+     *
+     * @return User
+     */
+    public function setPassportNumber($passportNumber)
+    {
+        $this->passportNumber = $passportNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get passportNumber
+     *
+     * @return string
+     */
+    public function getPassportNumber()
+    {
+        return $this->passportNumber;
     }
 }
