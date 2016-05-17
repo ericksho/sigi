@@ -287,7 +287,8 @@ class ApplicationController extends Controller
                 //enviar por email
                 $today = date("d-M-Y");
 
-                $url = $this->getParameter('web_dir').'/research/'.$research->getId();
+                $url = $this->getParameter('web_dir').'/research/'.$research->getId().'/edit';
+                $url2 = $this->getParameter('web_dir').'/application/'.$application->getId().'/edit';
 
                 $message = \Swift_Message::newInstance()
                   ->setSubject('Error en una nueva sigla')
@@ -299,6 +300,7 @@ class ApplicationController extends Controller
                   'Hola, se acaba de crear una investigación con error en su sigla, por favor revisar' .
                   ' <br> '.
                   'Para revisar la investigación, haz click <a href="'.$url.'">aquí</a><br>'.
+                  'Luego revise la aplicacion y dejela en el estado 3 "Confirmado por ambos, en proceso", haz click <a href="'.$url2.'">aquí</a> para ver la aplicacion<br>'.
                   'Atte. <br> Gestión IPre'.
                   '<br><br><br>Por favor, no responda este email</body>' .
                   '</html>',
