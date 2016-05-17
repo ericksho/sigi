@@ -38,4 +38,31 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 
         return $nextSyntheticRut;
     }
+
+    public function getAdminsMailArray()
+    {
+        $returnResults = null;
+
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT u FROM BackendBundle:User u
+                WHERE u.role like \'%ROLE_ADMIN%\'');
+     
+        try 
+        {
+            $admins = $query->getResult();
+
+            $returnResults = array();
+
+            foreach ($admins as $user) 
+            {
+                $returnResults[$user->getEmail()] = $user->getShowName();
+            }
+            
+        } catch (\Doctrine\ORM\NoResultException $e) {
+            
+        }
+
+        return $returnResults;
+    }
 }

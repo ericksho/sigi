@@ -1,0 +1,13 @@
+cron expression for server:
+0 8 * * *
+command: php sigi/sigi/app/console scheduler:execute --env=env -vvv [--dump] [--no-output]
+
+run app:
+php sigi/sigi/app/console server:run
+
+update bundles (standing in sigi/sigi/)
+composer update
+
+update database
+php sigi/sigi/app/console doctrine:schema:update --force
+

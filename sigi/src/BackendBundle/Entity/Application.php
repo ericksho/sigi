@@ -130,6 +130,9 @@ class Application
             case 'No confirmado por Alumno':
                 return 8;
                 break;
+            case 'Error en la sigla':
+                return 9;
+                break;    
             
             default:
                 return 0;
@@ -170,6 +173,9 @@ class Application
                 break;
             case 8:
                 return 'No confirmado por Alumno';
+                break;
+            case 9:
+                return 'Error en la sigla';
                 break;
             
             default:

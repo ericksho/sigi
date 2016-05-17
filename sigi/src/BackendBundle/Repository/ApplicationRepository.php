@@ -135,11 +135,14 @@ class ApplicationRepository extends \Doctrine\ORM\EntityRepository
         try 
         {
             $classCodeObject = $query->getResult();
-            $classCodeObject = $classCodeObject[0];
+            if(count($classCodeObject) > 0 )
+                $classCodeObject = $classCodeObject[0];
+            else
+                return array('initialsCode' => "ERR", 'numbersCode' => "0000", 'name' => "Sigla no encontrada");      
         }
-        catch (\Doctrine\ORM\NoResultException $e) 
+        catch (Exception $e) 
         { 
-            return "ERROR404";
+            return array('initialsCode' => "ERR", 'numbersCode' => "0000", 'name' => "Sigla no encontrada");
         }
 
         //si su code es XXXX usamos el del depto

@@ -1,0 +1,10 @@
+crons:
+enviar notificaciones pendientes (una vez al dia a las 8 am)
+0 8 * * *
+
+enviar programacion de ramos (At 08:00 on the 1st in Apr, May, Jun, Sep, Oct and Nov)
+0 8 1 4-6,9-11 *
+
+enviar inscripciones de alumnos (At 08:00 on the 15th in Apr, May, Jun, Sep, Oct and Nov)
+0 8 15 4-6,9-11 *
+

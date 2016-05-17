@@ -277,6 +277,38 @@ class ApplicationController extends Controller
             $research->setInitialsCode($classCodeArray['initialsCode']);
             $research->setnumbersCode($classCodeArray['numbersCode']);
 
+            /* si encontramos un ERR0000, enviamos un mail al administrador */
+            if($classCodeArray['initialsCode'] == "ERR" && $classCodeArray['numbersCode'] == "0000")
+            {
+                $application->setState(9); //aceptado por el estudiante
+
+                $emailsArray = $em->getRepository('BackendBundle:User')->getAdminsMailArray();
+
+                //enviar por email
+                $today = date("d-M-Y");
+
+                $url = $this->getParameter('web_dir').'/research/'.$research->getId();
+
+                $message = \Swift_Message::newInstance()
+                  ->setSubject('Error en una nueva sigla')
+                  ->setFrom('gestionIPre@ing.puc.cl')
+                  ->setTo($emailsArray)
+                  ->setBody('<html>' .
+                  ' <head></head>' .
+                  ' <body>' .
+                  'Hola, se acaba de crear una investigación con error en su sigla, por favor revisar' .
+                  ' <br> '.
+                  'Para revisar la investigación, haz click <a href="'.$url.'">aquí</a><br>'.
+                  'Atte. <br> Gestión IPre'.
+                  '<br><br><br>Por favor, no responda este email</body>' .
+                  '</html>',
+                  'text/html')
+                ;
+
+                $this->get('mailer')->send($message);
+            }
+            /* fin email */
+
             $section = $em->getRepository('BackendBundle:Research')->getSection($classCodeArray, $research);
 
             $research->setSection($section);
