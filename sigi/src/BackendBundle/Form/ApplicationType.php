@@ -21,6 +21,7 @@ class ApplicationType extends AbstractType
         $studentId = $options['studentId'];
         $oportunityId = $options['oportunityId'];
         $choices_array = $options['choices_array'];
+        $stateArray = $options['stateArray'];
 
         if(is_null($studentId) && is_null($oportunityId) && is_null($choices_array))
         {
@@ -45,7 +46,7 @@ class ApplicationType extends AbstractType
                     ->add('state', ChoiceType::class, array(
                         'label' => 'Estado',
                         'attr' => array('class'=>'form-control'),
-                        'choices'  => array('Postulado por Alumno' =>  1 , 'Aceptado por Mentor' =>  2 , 'Confirmado por Ambos, en proceso' =>  3 , 'Sigla Enviada a Dara' =>  4 , 'Inscripción alumno Enviada a Dara' =>  5 , 'Sigla inscrita en Banner' =>  6 , 'No seleccionado por Mentor' =>  7 , 'No confirmado por Alumno' =>  8),
+                        'choices'  => $stateArray,
                         // *this line is important*
                         'choices_as_values' => true,
                     ))
@@ -100,6 +101,7 @@ class ApplicationType extends AbstractType
             'studentId' => null,
             'oportunityId' => null,
             'choices_array' => null, 
+            'stateArray' => null, 
         ));
     }
 }

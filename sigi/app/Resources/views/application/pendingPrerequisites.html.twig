@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Lista de Postulaciones Pendientes</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Oportunidad</th>
+                <th>Alumno</th>
+                <th>Mentor</th>
+                <th>Estado</th>
+                <th>Fecha de Postulación</th>
+                <th>Última Actualización</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="paginable">
+        {% for application in applications %}
+            <tr>
+                <td><a href="{{ path('application_show', { 'id': application.id }) }}">{{ application.id }}</a></td>
+                <td>{{ application.oportunityResearch.getName() }}</td>
+                <td>{{ application.student.getNameText() }}</td>
+                <td>
+                    <ul>
+                        {% for mentorName in application.oportunityResearch.getMentorsName() %}
+                            <li>
+                                {{ mentorName }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>{{ application.getStateText() }}</td>
+                <td>{% if application.applicationDate %}{{ application.applicationDate|date('d/M/y') }}{% endif %}</td>
+                <td>{% if application.lastUpdateDate %}{{ application.lastUpdateDate|date('d/M/y H:i:s') }}{% endif %}</td>
+                <td>
+                    <a href="{{ path('application_show', { 'id': application.id }) }}" class="btn btn-info btn1" role="button">Ver</a>
+                    {% if is_granted('ROLE_ADMIN')%}
+                        <a href="{{ path('application_edit', { 'id': application.id }) }}" class="btn btn-primary btn1" role="button">Editar</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

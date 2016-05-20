@@ -50,6 +50,25 @@ class ApplicationController extends Controller
     }
 
     /**
+     * Lists all Application with state 10.
+     *
+     * @Route("/pendingPrerequisites", name="pending_prerequisites")
+     * @Method("GET")
+     */
+    public function pendingPrerequisitesAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        $applications = $em->getRepository('BackendBundle:Application')->findByState(10);
+        
+        return $this->render('application/pendingPrerequisites.html.twig', array(
+            'applications' => $applications,
+        ));
+    }
+
+    /**
      * Creates a new Application entity.
      *
      * @Route("/new", name="application_new")
@@ -87,6 +106,8 @@ class ApplicationController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+          /********** ESTO ES TEMPORAL HASTA QUE SIDING PROVEA RECURSOS 746E ***************/
+          /*
             //notificacion de systema a mentor
             $notification1 = new Notification();
             $mentor = $application->getOportunityResearch()->getMainMentor();
@@ -101,11 +122,16 @@ class ApplicationController extends Controller
             $reciever = $application->getStudent()->getUser();
             $message = "Felicitaciones, su postulación a la oportunidad de investigación: ".$application->getOportunityResearch()->getName()." ha sido ingresada y notifiacada al mentor, este se pondrá en contacto con usted para coordinar su reunión";
             $notification2->sendSystemMessage($reciever, $message);  
+          */
+            $application->setState(10);
+            /********** ESTO ES TEMPORAL HASTA QUE SIDING PROVEA RECURSOS ***************/
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($application);
-            $em->persist($notification1);
-            $em->persist($notification2);
+            /********** ESTO ES TEMPORAL HASTA QUE SIDING PROVEA RECURSOS 746E ***************/
+            //$em->persist($notification1);
+            //$em->persist($notification2);
+            /********** ESTO ES TEMPORAL HASTA QUE SIDING PROVEA RECURSOS ***************/
             $em->flush();
 
             return $this->redirectToRoute('application_show', array('id' => $application->getId()));
@@ -335,12 +361,42 @@ class ApplicationController extends Controller
     public function editAction(Request $request, Application $application)
     {
         $deleteForm = $this->createDeleteForm($application);
-        $editForm = $this->createForm('BackendBundle\Form\ApplicationType', $application);
+        $editForm = $this->createForm('BackendBundle\Form\ApplicationType', $application, array('stateArray' => array_flip($application->getStateArray())));
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+          /********** ESTO ES TEMPORAL HASTA QUE SIDING PROVEA RECURSOS 746E ***************/
+            if( $application->getState() == 10 )
+            {
+              //notificacion de systema a mentor
+              $notification1 = new Notification();
+              $mentor = $application->getOportunityResearch()->getMainMentor();
+              $reciever = $mentor->getUser();
+              $message = "Un nuevo alumno ha postulado a su oportunidad de investigación: ".$application->getOportunityResearch()->getName().
+              " porfavor pongase en contacto con el para coordinar su reunión.".
+              '@<'.$currentUser->getId().'>@';
+              $notification1->sendSystemMessage($reciever, $message);  
+
+              //notificacion de systema a estudiante
+              $notification2 = new Notification();
+              $reciever = $application->getStudent()->getUser();
+              $message = "Felicitaciones, su postulación a la oportunidad de investigación: ".$application->getOportunityResearch()->getName()." ha sido ingresada y notifiacada al mentor, este se pondrá en contacto con usted para coordinar su reunión";
+              $notification2->sendSystemMessage($reciever, $message);  
+            }
+          /********** ESTO ES TEMPORAL HASTA QUE SIDING PROVEA RECURSOS ***************/
+
+
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($application);
+            /********** ESTO ES TEMPORAL HASTA QUE SIDING PROVEA RECURSOS 746E ***************/
+            if( $application->getState() == 10 )
+            {
+              $em->persist($notification1);
+              $em->persist($notification2);
+            }
+            /********** ESTO ES TEMPORAL HASTA QUE SIDING PROVEA RECURSOS ***************/
             $em->flush();
 
             return $this->redirectToRoute('application_edit', array('id' => $application->getId()));

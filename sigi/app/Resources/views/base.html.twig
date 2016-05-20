@@ -57,13 +57,14 @@
                       <li><a href="{{ path('mentor_pendings')}}">Pendientes</a></li>
                     {% endif %}
 
+                    {% if is_granted('ROLE_ADMIN')%}
+                      <li><a href="{{ path('pending_prerequisites')}}">Pendientes</a></li>
+                    {% endif %}
+
                     {% if is_granted(['ROLE_MENTOR','ROLE_STUDENT']) %}
                       <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Postulaciones <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                          {% if is_granted('ROLE_STUDENT')  and not is_granted('ROLE_ADMIN')%}
-                            <li><a href="{{path('application_new')}}">Crear Nueva</a></li>
-                          {% endif %}
                           <li><a href="{{path('application_index')}}">Ver Listado</a></li>
                         </ul>
                       </li>
