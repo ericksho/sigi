@@ -9,3 +9,5 @@ php app/console doctrine:query:sql "select COLUMN_NAME from INFORMATION_SCHEMA.C
 
 
 gestionipre@ing.puc.cl
+
+heroku config:set SECRET=f3bb896506e84e0b2ec954bafecbe8479a08f20b
